@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bluebells Shop</title>
+  <link rel="stylesheet" href="shop.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="logo">💙 Bluebells</div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html" class="active">Shop</a>
+    <a href="admin.html">Admin</a>
+    <a href="cart.html">🛒 Cart <span id="cart-count">0</span></a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Elegant Accessories 💎</h1>
+  <p>Upgrade your style with Bluebells collection</p>
+</section>
+
+<section class="search">
+  <input type="text" id="search" placeholder="Search accessories... 🔍">
+</section>
+
+<section class="shop">
+  <div id="productsGrid"></div>
+</section>
+
+<div id="empty" class="empty" style="display:none;">
+  <h2>No products yet 😢</h2>
+  <p>Add products from Admin page</p>
+</div>
+
+<script src="api.js"></script>
+<script src="cart-manager.js"></script>
+<script src="shop-api.js"></script>
+
+</body>
+</html>

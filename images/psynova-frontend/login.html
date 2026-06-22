@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Psynova</title>
+
+  <link rel="stylesheet" href="global.css">
+  <link rel="stylesheet" href="auth.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+
+    <div class="logo">Psynova</div>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="doctors.html">Doctors</a>
+      <a href="login.html" class="active">Login</a>
+    </nav>
+
+  </header>
+
+  <!-- LOGIN CENTER -->
+  <main class="center-page">
+
+    <div class="auth-box">
+
+      <h2>Welcome Back 👋</h2>
+      <p class="subtitle">Login to continue</p>
+
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Password">
+
+      <button onclick="login()" class="primary-btn">Login</button>
+
+      <p class="switch">
+        Don’t have account? <a href="signup.html">Sign up</a>
+      </p>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2026 Psynova. All rights reserved.</p>
+  </footer>
+
+  <script src="auth.js"></script>
+
+</body>
+
+</html>

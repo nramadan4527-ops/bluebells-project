@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Psynova</title>
+  <link rel="stylesheet" href="welcome.css">
+</head>
+<body>
+
+  <div class="container">
+    <div class="card">
+      <h2 class="logo">PSYNOVA</h2>
+
+      <h3>Welcome</h3>
+      <p>Choose how you want to continue.</p>
+
+      <div class="options">
+        <!-- Patient -->
+        <div class="box">
+          <div class="icon">👤</div>
+          <h4>Continue as Patient</h4>
+          <p>Book therapy sessions with licensed professionals.</p>
+
+          <button onclick="register('patient')">Register as Patient</button>
+          <span onclick="login('patient')">Login as Patient</span>
+        </div>
+
+        <!-- Doctor -->
+        <div class="box">
+          <div class="icon">🩺</div>
+          <h4>Continue as Doctor</h4>
+          <p>Provide therapy sessions and manage patients.</p>
+
+          <button onclick="register('doctor')">Register as Doctor</button>
+          <span onclick="login('doctor')">Login as Doctor</span>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 Psynova Health. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script src="welcome.js"></script>
+</body>
+</html>

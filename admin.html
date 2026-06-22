@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div class="confirmation-page">
+
+  <div class="confirmation-card">
+
+    <!-- Icon -->
+    <div class="success-icon">✓</div>
+
+    <h1>Admin Dashboard</h1>
+    <p class="subtitle">Add, edit and manage products</p>
+
+    <!-- Admin Form -->
+    <div class="admin-panel">
+      <h2>Add / Edit Product</h2>
+
+      <input type="text" id="productName" placeholder="Product Name">
+      <input type="number" id="productPrice" placeholder="Product Price">
+      <textarea id="productDesc" placeholder="Product Description"></textarea>
+
+      <!-- Image Upload -->
+      <input type="file" id="productImage" accept="image/*" onchange="previewImage(event)">
+
+      <!-- Image Preview -->
+      <div class="image-preview">
+        <img id="preview" src="" alt="Preview">
+      </div>
+
+      <button class="btn" onclick="addProduct()">Save Product</button>
+    </div>
+
+    <!-- Products List -->
+    <div class="products">
+      <h3>Products List</h3>
+      <ul id="productList"></ul>
+    </div>
+
+    <p class="note">Products are saved automatically</p>
+
+  </div>
+
+</div>
+
+<script src="api.js"></script>
+<script src="auth-manager.js"></script>
+<script src="admin-api.js"></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+/* ===== BACKGROUND ===== */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #e5e7eb;
+
+  background: linear-gradient(
+    -45deg,
+    #020617,
+    #020b2d,
+    #020617,
+    #1e3a8a
+  );
+  background-size: 400% 400%;
+  animation: bgMove 18s ease infinite;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  background: rgba(59,130,246,0.35);
+  border-radius: 50%;
+  filter: blur(140px);
+}
+
+.hero-content {
+  position: relative;
+  max-width: 600px;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 64px;
+  margin: 0;
+  color: #93c5fd;
+  letter-spacing: 2px;
+}
+
+.hero p {
+  margin: 15px 0 35px;
+  color: #c7d2fe;
+  font-size: 18px;
+}
+
+/* Buttons */
+.hero-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.btn {
+  padding: 14px 26px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+  color: white;
+}
+
+.btn.outline {
+  border: 1px solid #60a5fa;
+  color: #60a5fa;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ===== STORY ===== */
+.story {
+  padding: 80px 20px;
+  text-align: center;
+  max-width: 700px;
+  margin: auto;
+}
+
+.story h2 {
+  color: #93c5fd;
+  margin-bottom: 20px;
+}
+
+.story p {
+  color: #cbd5f5;
+  line-height: 1.8;
+}
+
+/* ===== VALUES ===== */
+.values {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 25px;
+  padding: 60px 25px;
+}
+
+.value-card {
+  background: rgba(2,6,23,0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 30px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  transition: 0.3s;
+}
+
+.value-card:hover {
+  transform: translateY(-6px);
+}
+
+.value-card h3 {
+  color: #93c5fd;
+  margin-bottom: 10px;
+}
+
+.value-card p {
+  color: #cbd5f5;
+  font-size: 14px;
+}
+
+/* ===== CTA ===== */
+.cta {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.cta h2 {
+  color: #93c5fd;
+  margin-bottom: 25px;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #94a3b8;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}

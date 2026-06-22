@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wallet</title>
+  <link rel="stylesheet" href="wallet.css">
+</head>
+<body>
+
+<div class="container">
+
+  <h2>Add Money to Wallet</h2>
+  <p class="subtitle">Add funds to your wallet to book therapy sessions</p>
+
+  <!-- Balance -->
+  <div class="balance-box">
+    <p>Current Balance</p>
+    <h3>$75.00</h3>
+  </div>
+
+  <!-- Amount -->
+  <div class="card">
+    <h4>Select Amount</h4>
+    <div class="amounts">
+      <button onclick="selectAmount(10)">$10</button>
+      <button onclick="selectAmount(25)">$25</button>
+      <button class="active" onclick="selectAmount(50)">$50</button>
+      <button onclick="selectAmount(100)">$100</button>
+    </div>
+
+    <input type="number" id="customAmount" placeholder="Or enter custom amount">
+  </div>
+
+  <!-- Payment -->
+  <div class="card">
+    <h4>Payment Method</h4>
+    <div class="payment-method active">💳 Credit Card</div>
+
+    <h4>Card Details</h4>
+    <input type="text" placeholder="Cardholder Name">
+    <input type="text" placeholder="Card Number">
+
+    <div class="row">
+      <input type="text" placeholder="MM/YY">
+      <input type="text" placeholder="CVV">
+    </div>
+  </div>
+
+  <button class="pay-btn">Add Money</button>
+
+</div>
+
+<script src="wallet.js"></script>
+</body>
+</html>

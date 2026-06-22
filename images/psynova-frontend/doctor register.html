@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Doctor Registration</title>
+  <link rel="stylesheet" href="doctor register.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>PSYNOVA</h2>
+  <h3>Doctor Registration</h3>
+
+  <form id="doctorForm">
+
+    <h4>Personal Information</h4>
+    <input type="text" id="fullName" placeholder="Full Name" required>
+    <input type="email" id="email" placeholder="Email Address" required>
+    <input type="tel" id="phone" placeholder="Phone Number">
+
+    <select id="gender">
+      <option>Select Gender</option>
+      <option>Male</option>
+      <option>Female</option>
+    </select>
+
+    <h4>Professional Information</h4>
+    <input type="text" id="specialty" placeholder="Specialty">
+    <input type="number" id="experience" placeholder="Years of Experience">
+    <input type="number" id="price" placeholder="Session Price">
+
+    <textarea id="bio" placeholder="Professional Bio"></textarea>
+
+    <h4>Verification</h4>
+    <input type="file" id="license">
+
+    <h4>Availability</h4>
+    <input type="time" id="startTime">
+    <input type="time" id="endTime">
+
+    <h4>Security</h4>
+    <input type="password" id="password1" placeholder="Password" required>
+    <input type="password" id="password2" placeholder="Confirm Password" required>
+
+    <button type="submit">Create Doctor Account</button>
+
+  </form>
+</div>
+
+<script src="doctor register.js"></script>
+</body>
+</html>

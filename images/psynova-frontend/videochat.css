@@ -1,0 +1,97 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #111827;
+  color: white;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+.video-section {
+  flex: 2;
+  position: relative;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#remoteVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.small {
+  position: absolute;
+  width: 200px;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 10px;
+  border: 2px solid white;
+}
+
+/* controls */
+.controls {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.end {
+  background: red;
+  color: white;
+}
+
+.chat-section {
+  flex: 1;
+  background: #f9fafb;
+  color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+.messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.message {
+  padding: 8px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  max-width: 70%;
+}
+
+.me {
+  background: #3b82f6;
+  color: white;
+  margin-left: auto;
+}
+
+.other {
+  background: #e5e7eb;
+}
+
+.input-box {
+  display: flex;
+  padding: 10px;
+}
+
+input {
+  flex: 1;
+  padding: 8px;
+}

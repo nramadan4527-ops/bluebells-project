@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Call</title>
+  <link rel="stylesheet" href="videochat.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Video -->
+  <div class="video-section">
+    <video id="remoteVideo" autoplay></video>
+    <video id="localVideo" autoplay muted class="small"></video>
+
+    <div class="controls">
+      <button onclick="toggleMute()">🎤</button>
+      <button onclick="toggleCamera()">📷</button>
+      <button class="end" onclick="endCall()">❌</button>
+    </div>
+  </div>
+
+  <!-- Chat -->
+  <div class="chat-section">
+    <h3 id="roleTitle"></h3>
+
+    <div id="messages" class="messages"></div>
+
+    <div class="input-box">
+      <input id="msgInput" placeholder="Type message...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="videochat.js"></script>
+</body>
+</html>

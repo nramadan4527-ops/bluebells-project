@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Patient Login</title>
+  <link rel="stylesheet" href="patient login.css">
+</head>
+<body>
+
+<div class="container">
+
+  <div class="card">
+    <h2 class="logo">PSYNOVA</h2>
+
+    <h3>Patient Login</h3>
+    <p class="subtitle">Access your account and continue your mental wellness journey</p>
+
+    <div class="input-group">
+      <input type="text" placeholder="Enter your username">
+    </div>
+
+    <div class="input-group password">
+      <input type="password" id="password" placeholder="Enter your password">
+      <span onclick="togglePassword()">👁</span>
+    </div>
+
+    <div class="actions">
+      <a href="#">Forgot Password?</a>
+    </div>
+
+    <button onclick="login()">Login</button>
+
+    <p class="or">OR CONTINUE WITH</p>
+
+    <div class="google-btn" onclick="googleLogin()">
+      <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png">
+      Google
+    </div>
+
+    <p class="bottom-text">
+      Don’t have an account? <span>Register as Patient</span>
+    </p>
+  </div>
+
+  <footer>
+    <p>© 2026 Psynova Health. All sessions are encrypted and confidential.</p>
+  </footer>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

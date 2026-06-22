@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Patient Registration</title>
+  <link rel="stylesheet" href="register.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Patient Registration</h2>
+  <p class="subtitle">Create your account and start your mental wellness journey.</p>
+
+  <div class="card">
+
+    <!-- Personal Info -->
+    <h3>Personal Information</h3>
+
+    <div class="row">
+      <input type="text" id="fullName" placeholder="Full Name">
+    </div>
+
+    <div class="row two">
+      <input type="email" id="email" placeholder="Email">
+      <input type="text" id="phone" placeholder="Phone">
+    </div>
+
+    <div class="row two">
+      <select id="gender">
+        <option>Select gender</option>
+        <option>Male</option>
+        <option>Female</option>
+      </select>
+
+      <input type="date" id="dob">
+    </div>
+
+    <!-- Health -->
+    <h3>Basic Health Information</h3>
+
+    <div class="row">
+      <select id="concern">
+        <option>Select concern</option>
+        <option>Anxiety</option>
+        <option>Depression</option>
+        <option>Stress</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <textarea id="description" placeholder="Briefly describe your experience"></textarea>
+    </div>
+
+    <!-- Doctor Gender -->
+    <h3>Preferred Doctor Gender</h3>
+    <div class="radio-group">
+      <label><input type="radio" name="docGender"> No preference</label>
+      <label><input type="radio" name="docGender"> Male</label>
+      <label><input type="radio" name="docGender"> Female</label>
+    </div>
+
+    <!-- Wallet -->
+    <h3>Wallet & Security</h3>
+    <div class="row two">
+      <input type="password" placeholder="Password" required>
+      <input type="password" placeholder="Confirm Password" required>
+    </div>
+
+    <button id="registerForm" onclick="submitForm()">Create Account</button>
+
+  </div>
+</div>
+
+<script src="patient register.js"></script>
+</body>
+</html>

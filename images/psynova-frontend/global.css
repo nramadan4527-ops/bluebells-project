@@ -1,0 +1,207 @@
+/* ===== VARIABLES ===== */
+:root {
+  --main: #2EC4B6;
+  --dark: #1F2937;
+  --gray: #6B7280;
+  --bg: #F9FAFB;
+}
+
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial;
+  background: var(--bg);
+  color: var(--dark);
+}
+
+/* ===== NAVBAR ===== */
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 15px;
+  background: white;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: var(--main);
+}
+
+/* ===== BUTTON ===== */
+.btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: var(--main);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* ===== HERO ===== */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 80px 120px;
+}
+
+.hero-text {
+  max-width: 520px;
+}
+
+.hero-text h1 {
+  font-size: 48px;
+  line-height: 1.2;
+}
+
+.hero-text span {
+  color: var(--main);
+}
+
+.hero-text p {
+  color: var(--gray);
+  margin: 20px 0;
+  line-height: 1.6;
+}
+
+.hero-img img {
+  width: 420px;
+  max-width: 100%;
+}
+
+/* ===== HOW SECTION ===== */
+.how {
+  text-align: center;
+  padding: 80px;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background: var(--main);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* ===== DOCTORS ===== */
+.doctors {
+  text-align: center;
+  padding: 80px 120px;
+}
+
+.doctor-cards {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.doctor {
+  background: var(--main);
+  color: white;
+  padding: 25px;
+  width: 200px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background: var(--dark);
+  color: white;
+  margin-top: 80px;
+}
+body {
+  font-family: Arial;
+  background: #f5f7fb;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+  padding: 30px;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: white;
+  max-width: 600px;
+  margin: auto;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  text-align: left;
+}
+
+h3 {
+  margin-top: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 15px;
+  margin: 10px 0;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin-top: 20px;
+  cursor: pointer;
+}

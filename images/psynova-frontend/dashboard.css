@@ -1,0 +1,97 @@
+body {
+  font-family: Arial;
+  text-align: center;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  padding: 20px;
+  background: #2EC4B6;
+  color: white;
+}
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 15px;
+  background: white;
+}
+
+nav a {
+  text-decoration: none;
+  color: #1F2937;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: #2EC4B6;
+}
+.roles {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 80px 120px;
+}
+
+.role {
+  background: white;
+  padding: 30px;
+  width: 300px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.role h3 {
+  color: var(--main);
+  margin-bottom: 10px;
+}
+
+.role p {
+  color: var(--gray);
+}
+/* desktop styles فوق */
+
+.doctor-cards {
+  display: flex;
+  gap: 25px;
+}
+
+/* 👇 responsive هنا تحت خالص */
+@media (max-width: 768px) {
+  .doctor-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+/* يخلي المحتوى في النص بين navbar و footer */
+.page-content {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* navbar شكل ثابت ومرتب */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* footer ثابت وشكل clean */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background: #1F2937;
+  color: white;
+  margin-top: auto;
+}
