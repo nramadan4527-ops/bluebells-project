@@ -1,5 +1,6 @@
 
-/* ================== Global ================== */
+
+/* ================== GLOBAL ================== */
 * {
   margin: 0;
   padding: 0;
@@ -21,7 +22,7 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* ================== Navbar ================== */
+/* ================== NAVBAR ================== */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -29,149 +30,145 @@ body {
   padding: 18px 50px;
   background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
-/* ================== Logo ================== */
 .logo {
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: #1e3a8a;
-  padding: 10px 30px;
-  border-radius: 50px;
-
-  background: linear-gradient(135deg, #dbeafe, #f8fbff);
-  box-shadow:
-    0 8px 25px rgba(37, 99, 235, 0.35),
-    inset 0 0 0 1px rgba(255,255,255,0.6);
-
-  transition: all 0.4s ease;
-  cursor: pointer;
-}
-
-.logo:hover {
-  transform: translateY(-3px) scale(1.06);
-  box-shadow: 0 14px 40px rgba(37,99,235,0.45);
-}
-
-/* ================== NAV LINKS ================== */
-.navbar nav {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.navbar nav a {
-  text-decoration: none;
-  color: #c7d2fe;
-  font-size: 16px;
-  padding: 8px 14px;
-  border-radius: 10px;
-  transition: 0.3s ease;
-}
-
-.navbar nav a:hover {
-  background: rgba(96, 165, 250, 0.15);
-  color: #ffffff;
-}
-
-.navbar nav a.active {
+  font-size: 22px;
+  font-weight: bold;
   color: #93c5fd;
+}
+
+.navbar a {
+  color: #c7d2fe;
+  text-decoration: none;
+  margin-left: 15px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.navbar a:hover {
+  background: rgba(96, 165, 250, 0.15);
 }
 
 /* ================== HERO ================== */
 .hero {
-  min-height: 90vh;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.hero h1 {
+  font-size: 38px;
+  color: #93c5fd;
+}
+
+.hero p {
+  color: #c7d2fe;
+  margin-top: 10px;
+}
+
+/* ================== SEARCH ================== */
+.search {
   display: flex;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  margin: 30px 0;
+}
+
+.search input {
+  width: 60%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+/* ================== PRODUCTS GRID ================== */
+.shop {
   padding: 40px;
 }
 
-.hero-content {
-  max-width: 600px;
-  background: rgba(15, 23, 42, 0.65);
-  padding: 50px;
-  border-radius: 25px;
-  backdrop-filter: blur(14px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+#productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
 }
 
-/* ===== GRADIENT TEXT FIX ===== */
-.hero-content h1 {
-  font-size: 42px;
-  margin-bottom: 15px;
-
-  background: linear-gradient(90deg, #93c5fd, #ffffff);
-
-  -webkit-background-clip: text;
-  background-clip: text;
-
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
-.hero-content p {
-  font-size: 18px;
-  color: #c7d2fe;
-  margin-bottom: 30px;
-}
-
-/* ================== BUTTONS ================== */
-.btn {
-  padding: 14px 35px;
-  border-radius: 50px;
-  background: linear-gradient(135deg, #2563eb, #1e40af);
-  color: #fff;
-  text-decoration: none;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  box-shadow: 0 10px 25px rgba(37,99,235,0.4);
-}
-
-.btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 45px rgba(37,99,235,0.6);
-}
-
-/* ================== SECTIONS ================== */
-section {
-  padding: 80px 60px;
-}
-
-/* ================== FOOTER ================== */
-footer {
+/* ================== PRODUCT CARD ================== */
+.product-card {
+  background: rgba(15, 23, 42, 0.75);
+  border-radius: 16px;
+  padding: 15px;
   text-align: center;
-  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  transition: 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+}
+
+.product-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.product-card h3 {
+  margin: 10px 0 5px;
+  color: #93c5fd;
+}
+
+.product-card p {
+  font-size: 14px;
+  color: #c7d2fe;
+}
+
+.price {
+  margin: 8px 0;
+  font-weight: bold;
+  color: #60a5fa;
+}
+
+/* ================== ADD BUTTON ================== */
+.add-btn {
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-btn:hover {
+  transform: scale(1.05);
+}
+
+/* ================== EMPTY ================== */
+.empty {
+  text-align: center;
+  margin-top: 40px;
   color: #94a3b8;
-  background: rgba(15,23,42,0.9);
 }
 
 /* ================== RESPONSIVE ================== */
 @media (max-width: 768px) {
+
+  .search input {
+    width: 90%;
+  }
+
   .navbar {
-    padding: 15px 20px;
     flex-direction: column;
     gap: 10px;
-  }
-
-  .navbar nav {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .hero-content {
-    padding: 30px;
-  }
-
-  .hero-content h1 {
-    font-size: 28px;
   }
 }
