@@ -3,8 +3,14 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
-// Load environment variables
-dotenv.config();
+// Load environment variables from backend/.env reliably
+const path = require('path');
+dotenv.config({ path: path.join(__dirname, '.env') });
+
+// Fallback if MONGODB_URI is not set
+if (!process.env.MONGODB_URI) {
+  process.env.MONGODB_URI = 'mongodb://localhost:27017/bluebells';
+}
 
 const app = express();
 

@@ -177,12 +177,25 @@ function clearInputs() {
 }
 
 /* ===== Initialize on Page Load ===== */
-window.addEventListener("load", () => {
-  if (!Auth.isLoggedIn()) {
-    alert("Please login first");
-    window.location.href = "admin-login.html";
-    return;
-  }
+window.addEventListener("load", async () => {
+  try {
+    if (!Auth.isLoggedIn()) {
+      window.location.replace("admin-login.html");
+      return;
+    }
 
-  loadProducts();
+    const verify = await Auth.verifyToken();
+    if (!verify || verify.valid !== true) {
+      // token invalid or expired
+      Auth.logout();
+      window.location.replace("admin-login.html");
+      return;
+    }
+
+    await loadProducts();
+  } catch (err) {
+    console.error(err);
+    Auth.logout();
+    window.location.replace("admin-login.html");
+  }
 });

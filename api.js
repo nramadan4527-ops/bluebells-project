@@ -2,11 +2,19 @@
 const BACKEND_LOCAL_IP = "192.168.1.102";
 // Public backend tunnel (created when running localtunnel for port 5000)
 const LOCAL_TUNNEL_BACKEND = "https://eager-owls-vanish.loca.lt";
-const API_BASE_URL = window.location.hostname.endsWith("loca.lt")
-  ? `${LOCAL_TUNNEL_BACKEND}/api`
-  : window.location.protocol.startsWith("http")
-    ? `${window.location.protocol}//${window.location.hostname}:5000/api`
-    : `http://${BACKEND_LOCAL_IP}:5000/api`;
+
+// Determine API base URL:
+// - If running from loca.lt tunnel, use tunnel.
+// - If served over http(s), use same host with port 5000.
+// - If opened from file:// (or protocol not http), default to localhost:5000.
+let API_BASE_URL;
+if (window.location.hostname.endsWith("loca.lt")) {
+  API_BASE_URL = `${LOCAL_TUNNEL_BACKEND}/api`;
+} else if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+  API_BASE_URL = `${window.location.protocol}//${window.location.hostname}:5000/api`;
+} else {
+  API_BASE_URL = `http://localhost:5000/api`;
+}
 
 // Product API
 const ProductAPI = {

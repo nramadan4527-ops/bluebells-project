@@ -13,19 +13,9 @@
     .error-msg { color: #dc2626; font-size: 14px; margin-top: 10px; }
     .success-msg { color: #16a34a; font-size: 14px; margin-top: 10px; }
     .loading { opacity: 0.6; pointer-events: none; }
-    .top-nav { display:flex; justify-content:space-between; align-items:center; padding:12px 20px; background:#ffffff; border-bottom:1px solid #eee; position:sticky; top:0; z-index:10; }
-    .top-nav .brand { font-weight:700; color:#111827; }
-    .top-nav a { color:#2563eb; text-decoration:none; font-weight:600; }
   </style>
 </head>
 <body>
-
-<header class="top-nav">
-  <div class="brand">Bluebells Admin</div>
-  <nav>
-    <a href="admin.html">Dashboard</a>
-  </nav>
-</header>
 
 <section class="login">
 
@@ -121,8 +111,8 @@
 
       successMsg.innerText = "Login successful! Redirecting... ✅";
       setTimeout(() => {
-        window.location.replace("admin.html");
-      }, 800);
+        window.location.href = "admin.html";
+      }, 1500);
 
     } catch (err) {
       console.error(err);
