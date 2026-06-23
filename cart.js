@@ -71,5 +71,7 @@ function checkout() {
 
   window.location.href = "confirmation.html";
 }
+document.getElementById("debug-cart").innerText =
+JSON.stringify(cart, null, 2);
 
 renderCart();
