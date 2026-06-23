@@ -38,10 +38,10 @@ function removeItem(index) {
   renderCart();
 }
 
-// ===== Checkout =====
+// ===== Checkout + SAVE ORDER =====
 function checkout() {
   if (cart.length === 0) {
-    alert("Your cart is empty 🛒");
+    alert("Cart is empty 🛒");
     return;
   }
 
@@ -56,10 +56,16 @@ function checkout() {
     return;
   }
 
-  localStorage.setItem("lastOrder", JSON.stringify({
+  const order = {
+    id: Date.now(),
+    customer,
     items: cart,
-    customer: customer
-  }));
+    total: cart.reduce((sum, i) => sum + Number(i.price), 0)
+  };
+
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+  orders.push(order);
+  localStorage.setItem("orders", JSON.stringify(orders));
 
   cart = [];
   localStorage.setItem("cart", JSON.stringify(cart));

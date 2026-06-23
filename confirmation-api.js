@@ -1,35 +1,13 @@
-let orderData = JSON.parse(localStorage.getItem("lastOrder")) || {};
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
+let lastOrder = orders[orders.length - 1] || {};
 
-let items = orderData.items || [];
-let customer = orderData.customer || {};
+document.getElementById("c-name").innerText = lastOrder.customer?.name || "";
+document.getElementById("c-phone").innerText = lastOrder.customer?.phone || "";
+document.getElementById("c-address").innerText = lastOrder.customer?.address || "";
+document.getElementById("c-total").innerText = lastOrder.total || 0;
 
-const nameEl = document.getElementById("c-name");
-const phoneEl = document.getElementById("c-phone");
-const addressEl = document.getElementById("c-address");
-const totalEl = document.getElementById("c-total");
-const productsEl = document.getElementById("c-products");
+const list = document.getElementById("c-products");
 
-// ===== Customer =====
-nameEl.innerText = customer.name || "-";
-phoneEl.innerText = customer.phone || "-";
-addressEl.innerText = customer.address || "-";
-
-// ===== Products =====
-let total = 0;
-productsEl.innerHTML = "";
-
-items.forEach(item => {
-  total += Number(item.price);
-
-  productsEl.innerHTML += `
-    <li>${item.name} - ${item.price} EGP</li>
-  `;
+(lastOrder.items || []).forEach(item => {
+  list.innerHTML += `<li>${item.name} - ${item.price} EGP</li>`;
 });
-
-totalEl.innerText = total + " EGP";
-
-// ===== Repeat Order =====
-document.getElementById("repeatOrderBtn").onclick = function () {
-  localStorage.setItem("cart", JSON.stringify(items));
-  window.location.href = "cart.html";
-};

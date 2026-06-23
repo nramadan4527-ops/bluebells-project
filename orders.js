@@ -1,48 +1,40 @@
-// Get orders from localStorage or create from orderData
 let orders = JSON.parse(localStorage.getItem("orders")) || [];
-const orderData = JSON.parse(localStorage.getItem("orderData"));
-
-// Add current order to orders list if it exists and is new
-if (orderData && orders.length === 0) {
-  orders.push(orderData);
-  localStorage.setItem("orders", JSON.stringify(orders));
-}
 
 const container = document.getElementById("ordersList");
 
-function showOrders() {
+function renderOrders() {
   container.innerHTML = "";
 
   if (orders.length === 0) {
-    container.innerHTML = "<p>No orders yet ❌</p>";
+    container.innerHTML = "<p>No orders yet 😢</p>";
     return;
   }
 
-  orders.forEach((order, index) => {
-    let productsHTML = "";
-
-    const items = order.items || [];
-    items.forEach(p => {
-      productsHTML += `<li>${p.name} × ${p.qty || 1} - ${p.price * (p.qty || 1)} EGP</li>`;
-    });
-
+  orders.forEach((order, i) => {
     container.innerHTML += `
       <div class="order-card">
-        <h3>Order #${index + 1}</h3>
 
-        <p><strong>Name:</strong> ${order.name}</p>
-        <p><strong>Address:</strong> ${order.address}</p>
-        <p><strong>Phone:</strong> ${order.phone}</p>
+        <h3>Order #${order.id}</h3>
 
-        <p><strong>Products:</strong></p>
-        <ul class="product-list">
-          ${productsHTML}
-        </ul>
+        <p>👤 ${order.customer.name}</p>
+        <p>📞 ${order.customer.phone}</p>
+        <p>📍 ${order.customer.address}</p>
 
-        <p><strong>Total:</strong> ${order.total} EGP</p>
+        <h4>Items:</h4>
+        ${order.items.map(p => `<p>${p.name} - ${p.price}</p>`).join("")}
+
+        <h4>Total: ${order.total} EGP</h4>
+
+        <button onclick="deleteOrder(${i})">Delete</button>
       </div>
     `;
   });
 }
 
-showOrders();
+function deleteOrder(i) {
+  orders.splice(i, 1);
+  localStorage.setItem("orders", JSON.stringify(orders));
+  renderOrders();
+}
+
+renderOrders();
