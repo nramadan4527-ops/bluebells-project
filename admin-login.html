@@ -109,10 +109,16 @@
         throw new Error(result.error);
       }
 
+      // Ensure token is available and redirect with token in URL so admin page can pick it up immediately
+      const token = Auth.getToken();
       successMsg.innerText = "Login successful! Redirecting... ✅";
       setTimeout(() => {
-        window.location.href = "admin.html";
-      }, 1500);
+        if (token) {
+          window.location.replace(`admin.html?token=${encodeURIComponent(token)}`);
+        } else {
+          window.location.replace('admin.html');
+        }
+      }, 500);
 
     } catch (err) {
       console.error(err);

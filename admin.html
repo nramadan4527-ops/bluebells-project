@@ -9,6 +9,24 @@
 </head>
 <body>
 
+<script>
+  // Capture token passed from login redirect (admin.html?token=...)
+  (function() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const t = params.get('token');
+      if (t) {
+        localStorage.setItem('authToken', t);
+        // remove token from URL
+        params.delete('token');
+        const newSearch = params.toString();
+        const newUrl = window.location.pathname + (newSearch ? ('?' + newSearch) : '');
+        history.replaceState({}, document.title, newUrl);
+      }
+    } catch (e) { /* ignore */ }
+  })();
+</script>
+
 <div class="confirmation-page">
 
   <div class="confirmation-card">
