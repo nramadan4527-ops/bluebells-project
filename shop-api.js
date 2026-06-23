@@ -3,6 +3,7 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 const grid = document.getElementById("productsGrid");
 const empty = document.getElementById("empty");
+const cartCount = document.getElementById("cart-count");
 
 // ===== Render Products =====
 function renderProducts(list = products) {
@@ -19,7 +20,6 @@ function renderProducts(list = products) {
     grid.innerHTML += `
       <div class="product-card">
         <img src="${p.image}">
-
         <h3>${p.name}</h3>
         <p>${p.desc}</p>
         <span>${p.price} EGP</span>
@@ -33,20 +33,16 @@ function renderProducts(list = products) {
 }
 
 // ===== Add To Cart =====
-function addToCart(index) {
-  const product = products[index];
-
-  cart.push(product);
-
+function addToCart(i) {
+  cart.push(products[i]);
   localStorage.setItem("cart", JSON.stringify(cart));
-
   updateCartCount();
 }
 
 // ===== Cart Count =====
 function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  document.getElementById("cart-count").innerText = cart.length;
+  cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cartCount.innerText = cart.length;
 }
 
 // ===== Search =====

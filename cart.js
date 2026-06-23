@@ -31,12 +31,10 @@ function renderCart() {
   cartCount.innerText = cart.length;
 }
 
-// ===== Remove Item =====
+// ===== Remove =====
 function removeItem(index) {
   cart.splice(index, 1);
-
   localStorage.setItem("cart", JSON.stringify(cart));
-
   renderCart();
 }
 
