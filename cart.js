@@ -40,3 +40,16 @@ function removeItem(index) {
 
 // ===== Init =====
 renderCart();
+function checkout() {
+  if (cart.length === 0) {
+    alert("Your cart is empty 🛒");
+    return;
+  }
+
+  alert("Order placed successfully 🎉");
+
+  cart = [];
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  renderCart();
+}
