@@ -7,73 +7,88 @@
 
   <link rel="stylesheet" href="admin.css">
 
+  <!-- Auth Token Handler -->
   <script>
-    // MUST run FIRST before auth-manager.js loads - capture token from URL and store in localStorage
     (function() {
       try {
         const params = new URLSearchParams(window.location.search);
         const t = params.get('token');
+
         if (t) {
           localStorage.setItem('authToken', t);
-          console.log('[admin.html HEAD] Captured and stored token from URL');
-          // remove token from URL
+
           params.delete('token');
-          const newSearch = params.toString();
-          const newUrl = window.location.pathname + (newSearch ? ('?' + newSearch) : '');
+          const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
           history.replaceState({}, document.title, newUrl);
         }
-      } catch (e) { 
-        console.error('[admin.html HEAD] Error:', e);
+      } catch (e) {
+        console.error(e);
       }
     })();
   </script>
 </head>
+
 <body>
 
-<div class="confirmation-page">
+<div class="admin-container">
 
+  <!-- ===== HEADER ===== -->
   <div class="confirmation-card">
 
-    <!-- Icon -->
     <div class="success-icon">✓</div>
 
     <h1>Admin Dashboard</h1>
-    <p class="subtitle">Add, edit and manage products</p>
+    <p class="subtitle">Manage products & orders</p>
 
-    <!-- Admin Form -->
+    <!-- ===== PRODUCT FORM ===== -->
     <div class="admin-panel">
-      <h2>Add / Edit Product</h2>
+
+      <h2>➕ Add / Edit Product</h2>
 
       <input type="text" id="productName" placeholder="Product Name">
       <input type="number" id="productPrice" placeholder="Product Price">
       <textarea id="productDesc" placeholder="Product Description"></textarea>
 
-      <!-- Image Upload -->
       <input type="file" id="productImage" accept="image/*" onchange="previewImage(event)">
 
-      <!-- Image Preview -->
       <div class="image-preview">
-        <img id="preview" src="" alt="Preview">
+        <img id="preview" src="">
       </div>
 
       <button class="btn" onclick="addProduct()">Save Product</button>
     </div>
 
-    <!-- Products List -->
+    <!-- ===== PRODUCTS LIST ===== -->
     <div class="products">
-      <h3>Products List</h3>
+      <h3>🛍 Products List</h3>
       <ul id="productList"></ul>
     </div>
 
-    <p class="note">Products are saved automatically</p>
+    <!-- ===== ORDERS DASHBOARD (NEW) ===== -->
+    <div class="orders-section">
+
+      <h3>📊 Orders Dashboard</h3>
+
+      <div id="ordersList"></div>
+
+    </div>
+
+    <p class="note">Everything is saved in localStorage</p>
 
   </div>
 
 </div>
 
+<!-- ===== SCRIPTS ===== -->
 <script src="api.js"></script>
 <script src="auth-manager.js"></script>
+
+<!-- Products -->
 <script src="product-api.js"></script>
 <script src="admin-api.js"></script>
+
+<!-- Orders -->
+<script src="orders.js"></script>
+
 </body>
 </html>
