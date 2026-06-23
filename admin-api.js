@@ -1,194 +1,101 @@
-/* ===== Admin Panel with Backend API ===== */
-
-let products = [];
+let products = productAPI.getAll();
 let editIndex = null;
 
-/* ===== Load Products from Backend ===== */
-async function loadProducts() {
-  try {
-    const token = Auth.getToken();
-    products = await ProductAPI.getAll();
-    renderProducts();
-  } catch (err) {
-    console.error("Error loading products:", err);
-    alert("Error loading products. Make sure backend is running.");
-  }
-}
-
-/* ===== Render Products List ===== */
 function renderProducts() {
   const list = document.getElementById("productList");
   list.innerHTML = "";
 
-  products.forEach((product, index) => {
+  products.forEach((p, i) => {
     list.innerHTML += `
       <li>
-        <img src="${product.image}" class="product-img" style="max-width: 100px; border-radius: 8px;">
+        <img src="${p.image}" class="product-img">
+        <strong>${p.name}</strong> - ${p.price} EGP
+        <p>${p.desc}</p>
 
-        <strong>${product.name}</strong> - ${product.price} EGP
-        <br>
-        <small>${product.description}</small>
-        <br><br>
-
-        <button class="action-btn edit" onclick="editProduct(${index})">Edit</button>
-        <button class="action-btn delete" onclick="deleteProduct(${index})">Delete</button>
+        <button onclick="editProduct(${i})">Edit</button>
+        <button onclick="deleteProduct(${i})">Delete</button>
       </li>
     `;
   });
 }
 
-/* ===== Preview Image ===== */
 function previewImage(event) {
-  const preview = document.getElementById("preview");
   const file = event.target.files[0];
-
   if (!file) return;
 
   const reader = new FileReader();
-  reader.onload = function () {
-    preview.src = reader.result;
-    preview.parentElement.style.display = "block";
+  reader.onload = () => {
+    document.getElementById("preview").src = reader.result;
+    document.querySelector(".image-preview").style.display = "block";
   };
-
   reader.readAsDataURL(file);
 }
 
-/* ===== Add Product to Backend ===== */
-async function addProduct() {
-  const name = document.getElementById("productName").value.trim();
+function addProduct() {
+  const name = document.getElementById("productName").value;
   const price = document.getElementById("productPrice").value;
   const desc = document.getElementById("productDesc").value;
   const imageInput = document.getElementById("productImage");
 
   if (!name || !price) {
-    alert("Please fill in name and price");
+    alert("Fill required fields");
     return;
   }
 
-  if (editIndex === null && imageInput.files.length === 0) {
-    alert("Please select an image");
-    return;
-  }
-
-  if (imageInput.files.length > 0) {
-    const reader = new FileReader();
-    reader.onload = function () {
-      saveProductToBackend(reader.result, name, price, desc);
+  const save = (img) => {
+    const product = {
+      name,
+      price,
+      desc,
+      image: img
     };
-    reader.readAsDataURL(imageInput.files[0]);
-  } else {
-    saveProductToBackend(products[editIndex].image, name, price, desc);
-  }
-}
-
-/* ===== Save Product to Backend ===== */
-async function saveProductToBackend(imageData, name, price, desc) {
-  try {
-    const token = Auth.getToken();
-
-    if (!token) {
-      alert("You must be logged in to add products");
-      return;
-    }
-
-    const productData = {
-      name: name,
-      price: Number(price),
-      description: desc,
-      image: imageData,
-      category: "Accessories",
-      stock: 10
-    };
-
-    let response;
 
     if (editIndex !== null) {
-      response = await ProductAPI.update(products[editIndex]._id, productData, token);
-      if (!response.error) {
-        products[editIndex] = response.product;
-        editIndex = null;
-      }
+      products[editIndex] = product;
+      productAPI.update(editIndex, product);
+      editIndex = null;
     } else {
-      response = await ProductAPI.create(productData, token);
-      if (!response.error) {
-        products.push(response.product);
-      }
+      productAPI.add(product);
+      products.push(product);
     }
 
-    if (response.error) {
-      throw new Error(response.error);
-    }
-
-    alert("Product saved successfully!");
-    clearInputs();
     renderProducts();
+    clearInputs();
+  };
 
-  } catch (err) {
-    console.error("Save error:", err);
-    alert("Error saving product: " + err.message);
+  if (imageInput.files[0]) {
+    const reader = new FileReader();
+    reader.onload = () => save(reader.result);
+    reader.readAsDataURL(imageInput.files[0]);
+  } else {
+    save(products[editIndex]?.image || "");
   }
 }
 
-/* ===== Edit Product ===== */
-function editProduct(index) {
-  const p = products[index];
+function editProduct(i) {
+  const p = products[i];
 
   document.getElementById("productName").value = p.name;
   document.getElementById("productPrice").value = p.price;
-  document.getElementById("productDesc").value = p.description;
+  document.getElementById("productDesc").value = p.desc;
 
   document.getElementById("preview").src = p.image;
   document.querySelector(".image-preview").style.display = "block";
 
-  editIndex = index;
+  editIndex = i;
 }
 
-/* ===== Delete Product from Backend ===== */
-async function deleteProduct(index) {
-  if (!confirm("Delete this product?")) return;
-
-  try {
-    const token = Auth.getToken();
-    const response = await ProductAPI.delete(products[index]._id, token);
-
-    if (response.error) {
-      throw new Error(response.error);
-    }
-
-    products.splice(index, 1);
-    renderProducts();
-    alert("Product deleted!");
-
-  } catch (err) {
-    console.error("Delete error:", err);
-    alert("Error deleting product: " + err.message);
-  }
+function deleteProduct(i) {
+  productAPI.delete(i);
+  products = productAPI.getAll();
+  renderProducts();
 }
 
-/* ===== Clear Inputs ===== */
 function clearInputs() {
   document.getElementById("productName").value = "";
   document.getElementById("productPrice").value = "";
   document.getElementById("productDesc").value = "";
   document.getElementById("productImage").value = "";
-
-  document.getElementById("preview").src = "";
-  document.querySelector(".image-preview").style.display = "none";
 }
 
-/* ===== Initialize on Page Load ===== */
-window.addEventListener("load", () => {
-  console.log('[admin-api.js] Page loaded');
-  console.log('[admin-api.js] Token:', Auth.getToken() ? 'yes' : 'no');
-  console.log('[admin-api.js] isLoggedIn:', Auth.isLoggedIn());
-  console.log('[admin-api.js] Admin:', Auth.getAdmin());
-
-  if (!Auth.isLoggedIn()) {
-    alert("You must log in before managing products.");
-    window.location.replace("login.html");
-    return;
-  }
-
-  console.log('[admin-api.js] Loading products...');
-  loadProducts();
-});
+renderProducts();
