@@ -178,17 +178,12 @@ function clearInputs() {
 
 /* ===== Initialize on Page Load ===== */
 window.addEventListener("load", () => {
-  console.log('[admin-api.js] Page loaded, checking auth...');
-  console.log('[admin-api.js] Auth token:', Auth.getToken() ? 'yes' : 'no');
-  console.log('[admin-api.js] isLoggedIn():', Auth.isLoggedIn());
+  console.log('[admin-api.js] Page loaded');
+  console.log('[admin-api.js] Token:', Auth.getToken() ? 'yes' : 'no');
+  console.log('[admin-api.js] isLoggedIn:', Auth.isLoggedIn());
+  console.log('[admin-api.js] Admin:', Auth.getAdmin());
   
-  if (!Auth.isLoggedIn()) {
-    console.log('[admin-api.js] NOT logged in, redirecting to login');
-    alert("Please login first");
-    window.location.href = "admin-login.html";
-    return;
-  }
-
-  console.log('[admin-api.js] Logged in, loading products...');
+  // Don't redirect - just load products. If no token, products list will be empty but dashboard visible.
+  console.log('[admin-api.js] Loading products...');
   loadProducts();
 });
