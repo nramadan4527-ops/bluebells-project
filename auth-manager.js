@@ -4,6 +4,7 @@ class AuthManager {
   constructor() {
     this.token = localStorage.getItem("authToken");
     this.admin = JSON.parse(localStorage.getItem("admin") || "{}");
+    console.log('[AuthManager] Constructor: token =', this.token ? 'yes' : 'no', ', admin =', this.admin && this.admin.username ? this.admin.username : 'none');
   }
 
   async login(username, password) {
