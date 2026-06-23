@@ -31,25 +31,30 @@ function renderCart() {
   cartCount.innerText = cart.length;
 }
 
-// ===== Remove =====
+// ===== Remove Item =====
 function removeItem(index) {
   cart.splice(index, 1);
   localStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
 
-// ===== Init =====
-renderCart();
+// ===== Checkout =====
 function checkout() {
   if (cart.length === 0) {
     alert("Your cart is empty 🛒");
     return;
   }
 
-  alert("Order placed successfully 🎉");
+  // save order
+  localStorage.setItem("lastOrder", JSON.stringify(cart));
 
+  // clear cart
   cart = [];
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  renderCart();
+  // go to confirmation
+  window.location.href = "confirmation.html";
 }
+
+// ===== Init =====
+renderCart();
