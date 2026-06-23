@@ -182,8 +182,13 @@ window.addEventListener("load", () => {
   console.log('[admin-api.js] Token:', Auth.getToken() ? 'yes' : 'no');
   console.log('[admin-api.js] isLoggedIn:', Auth.isLoggedIn());
   console.log('[admin-api.js] Admin:', Auth.getAdmin());
-  
-  // Don't redirect - just load products. If no token, products list will be empty but dashboard visible.
+
+  if (!Auth.isLoggedIn()) {
+    alert("You must log in before managing products.");
+    window.location.replace("login.html");
+    return;
+  }
+
   console.log('[admin-api.js] Loading products...');
   loadProducts();
 });
