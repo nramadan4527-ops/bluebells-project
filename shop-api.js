@@ -1,4 +1,8 @@
+// ===== Load Products =====
 let products = JSON.parse(localStorage.getItem("products")) || [];
+
+// ===== Cart =====
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 const grid = document.getElementById("productsGrid");
 const empty = document.getElementById("empty");
@@ -24,7 +28,7 @@ function renderProducts(list = products) {
         <p>${p.desc}</p>
         <span>${p.price} EGP</span>
 
-        <!-- 🔥 زرار الإضافة تحت الصورة -->
+        <!-- Add to Cart Button -->
         <button class="add-btn" onclick="addToCart(${i})">
           Add to Cart 🛒
         </button>
@@ -33,19 +37,20 @@ function renderProducts(list = products) {
   });
 }
 
-// ===== Cart =====
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
+// ===== Add To Cart =====
 function addToCart(index) {
   const product = products[index];
 
   cart.push(product);
+
   localStorage.setItem("cart", JSON.stringify(cart));
 
   updateCartCount();
+
   alert("Added to cart 🛒");
 }
 
+// ===== Cart Count =====
 function updateCartCount() {
   if (cartCount) {
     cartCount.innerText = cart.length;
