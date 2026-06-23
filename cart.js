@@ -29,11 +29,17 @@ function renderCart() {
     `;
   });
 
-  subtotal.innerText = total + " EGP";
-  cartTotal.innerText = total + " EGP";
+  if (subtotal) subtotal.innerText = total + " EGP";
+  if (cartTotal) cartTotal.innerText = total + " EGP";
 
   if (cartCount) {
     cartCount.innerText = cart.reduce((sum, i) => sum + (i.qty || 1), 0);
+  }
+
+  // debug (safe)
+  const debug = document.getElementById("debug-cart");
+  if (debug) {
+    debug.innerText = JSON.stringify(cart, null, 2);
   }
 }
 
@@ -71,7 +77,5 @@ function checkout() {
 
   window.location.href = "confirmation.html";
 }
-document.getElementById("debug-cart").innerText =
-JSON.stringify(cart, null, 2);
 
 renderCart();
