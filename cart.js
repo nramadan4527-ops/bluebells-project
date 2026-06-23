@@ -1,4 +1,3 @@
-
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 const cartItems = document.getElementById("cartItems");
@@ -8,12 +7,11 @@ const cartCount = document.getElementById("cart-count");
 
 function renderCart() {
   cartItems.innerHTML = "";
-
   let total = 0;
 
   cart.forEach((item, index) => {
-
-    let price = Number(item.price) * (item.qty || 1);
+    const qty = item.qty || 1;
+    const price = Number(item.price) * qty;
     total += price;
 
     cartItems.innerHTML += `
@@ -22,25 +20,19 @@ function renderCart() {
         <div>
           <h3>${item.name}</h3>
           <p>${price} EGP</p>
-          <p>Qty: ${item.qty || 1}</p>
+          <p>Qty: ${qty}</p>
           <button onclick="removeItem(${index})">Remove</button>
         </div>
       </div>
     `;
   });
 
-  if (subtotal) subtotal.innerText = total + " EGP";
-  if (cartTotal) cartTotal.innerText = total + " EGP";
+  subtotal.innerText = total + " EGP";
+  cartTotal.innerText = total + " EGP";
+  cartCount.innerText = cart.reduce((sum, i) => sum + (i.qty || 1), 0);
 
-  if (cartCount) {
-    cartCount.innerText = cart.reduce((sum, i) => sum + (i.qty || 1), 0);
-  }
-
-  // debug (safe)
   const debug = document.getElementById("debug-cart");
-  if (debug) {
-    debug.innerText = JSON.stringify(cart, null, 2);
-  }
+  debug.innerText = JSON.stringify(cart, null, 2);
 }
 
 function removeItem(index) {
@@ -55,24 +47,29 @@ function checkout() {
     return;
   }
 
-  const customer = {
-    name: document.getElementById("c-name-input").value,
-    phone: document.getElementById("c-phone-input").value,
-    address: document.getElementById("c-address-input").value
-  };
+  const name = document.getElementById("c-name-input").value.trim();
+  const phone = document.getElementById("c-phone-input").value.trim();
+  const address = document.getElementById("c-address-input").value.trim();
+
+  if (!name || !phone || !address) {
+    alert("Please fill all customer info");
+    return;
+  }
 
   const order = {
     id: Date.now(),
-    customer,
+    customer: { name, phone, address },
     items: cart,
-    total: cart.reduce((sum, i) => sum + Number(i.price) * (i.qty || 1), 0)
+    total: cart.reduce(
+      (sum, i) => sum + Number(i.price) * (i.qty || 1),
+      0
+    )
   };
 
   let orders = JSON.parse(localStorage.getItem("orders")) || [];
   orders.push(order);
 
   localStorage.setItem("orders", JSON.stringify(orders));
-
   localStorage.removeItem("cart");
 
   window.location.href = "confirmation.html";
