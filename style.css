@@ -1,5 +1,5 @@
 
-/* ================== Global ================== */
+/* ================== GLOBAL ================== */
 * {
   margin: 0;
   padding: 0;
@@ -21,7 +21,7 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* ================== Navbar ================== */
+/* ================== NAVBAR ================== */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -35,7 +35,7 @@ body {
   z-index: 100;
 }
 
-/* ===== Logo ===== */
+/* LOGO */
 .logo {
   font-size: 26px;
   font-weight: 800;
@@ -45,7 +45,6 @@ body {
   border-radius: 50px;
 
   background: linear-gradient(135deg, #dbeafe, #f8fbff);
-
   box-shadow:
     0 8px 25px rgba(37, 99, 235, 0.35),
     inset 0 0 0 1px rgba(255,255,255,0.6);
@@ -59,35 +58,32 @@ body {
   box-shadow: 0 14px 40px rgba(37,99,235,0.45);
 }
 
-/* ===== Navbar Links (FIXED CLEAN VERSION) ===== */
+/* NAV LINKS */
 .navbar nav {
   display: flex;
   align-items: center;
-  gap: 10px; /* 🔥 spacing between links */
+  gap: 12px;
 }
 
 .navbar nav a {
   text-decoration: none;
   color: #c7d2fe;
   font-size: 16px;
-
   padding: 8px 14px;
   border-radius: 10px;
-
   transition: 0.3s ease;
 }
 
 .navbar nav a:hover {
   background: rgba(96, 165, 250, 0.15);
-  color: #ffffff;
+  color: #fff;
 }
 
-/* active link */
 .navbar nav a.active {
   color: #93c5fd;
 }
 
-/* ================== Hero ================== */
+/* ================== HERO ================== */
 .hero {
   min-height: 90vh;
   display: flex;
@@ -110,9 +106,14 @@ body {
   font-size: 42px;
   margin-bottom: 15px;
 
+  /* ===== GRADIENT TEXT FIX ===== */
   background: linear-gradient(90deg, #93c5fd, #ffffff);
+
   -webkit-background-clip: text;
+  background-clip: text;
+
   -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .hero-content p {
@@ -121,7 +122,7 @@ body {
   margin-bottom: 30px;
 }
 
-/* ================== Buttons ================== */
+/* ================== BUTTONS ================== */
 .btn {
   padding: 14px 35px;
   border-radius: 50px;
@@ -140,12 +141,12 @@ body {
   box-shadow: 0 18px 45px rgba(37,99,235,0.6);
 }
 
-/* ================== Sections ================== */
+/* ================== SECTIONS ================== */
 section {
   padding: 80px 60px;
 }
 
-/* ================== Footer ================== */
+/* ================== FOOTER ================== */
 footer {
   text-align: center;
   padding: 20px;
@@ -154,30 +155,26 @@ footer {
 }
 
 /* ================== MOBILE RESPONSIVE ================== */
-
 @media (max-width: 768px) {
 
   .navbar {
-    padding: 15px 20px;
     flex-direction: column;
+    padding: 15px 20px;
     gap: 10px;
     text-align: center;
-  }
-
-  .logo {
-    font-size: 20px;
-    padding: 8px 18px;
   }
 
   .navbar nav {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
   }
 
-  .navbar nav a {
-    font-size: 14px;
-    padding: 6px 10px;
+  .hero-content {
+    padding: 30px;
+  }
+
+  .hero-content h1 {
+    font-size: 28px;
   }
 }
 
@@ -186,7 +183,7 @@ footer {
 
   .navbar nav {
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
   }
 
   .navbar nav a {

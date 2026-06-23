@@ -8,7 +8,7 @@ function render(list) {
   productsGrid.innerHTML = "";
 
   if (list.length === 0) {
-    productsGrid.innerHTML = "<p>No products found 😢</p>";
+    productsGrid.innerHTML = "<p style='text-align:center;color:#ccc'>No products found 😢</p>";
     return;
   }
 
@@ -16,19 +16,21 @@ function render(list) {
     productsGrid.innerHTML += `
       <div class="product-card">
         <img src="${p.image}" />
-        <h3>${p.name}</h3>
-        <p class="price">${p.price} EGP</p>
-        <p>${p.desc}</p>
-        <button class="add-btn">Add to Cart</button>
+
+        <div class="product-content">
+          <h3>${p.name}</h3>
+          <div class="price">${p.price} EGP</div>
+          <p>${p.desc}</p>
+
+          <button class="add-btn">Add to Cart</button>
+        </div>
       </div>
     `;
   });
 }
 
-// أول تحميل
 render(allProducts);
 
-// search live
 searchInput.addEventListener("input", () => {
   const value = searchInput.value.toLowerCase();
 
