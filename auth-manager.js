@@ -4,12 +4,13 @@ class AuthManager {
   constructor() {
     this.token = localStorage.getItem("authToken");
     this.admin = JSON.parse(localStorage.getItem("admin") || "{}");
-    console.log('[AuthManager] Constructor: token =', this.token ? 'yes' : 'no', ', admin =', this.admin && this.admin.username ? this.admin.username : 'none');
   }
 
   async login(username, password) {
     try {
       const response = await AuthAPI.login(username, password);
+
+      console.log("LOGIN RESPONSE:", response);
 
       if (response.error) {
         throw new Error(response.error);
@@ -22,20 +23,6 @@ class AuthManager {
       localStorage.setItem("admin", JSON.stringify(this.admin));
 
       return { success: true, admin: this.admin };
-    } catch (err) {
-      return { success: false, error: err.message };
-    }
-  }
-
-  async register(username, email, password) {
-    try {
-      const response = await AuthAPI.register(username, email, password, this.token);
-      
-      if (response.error) {
-        throw new Error(response.error);
-      }
-
-      return { success: true, admin: response.admin };
     } catch (err) {
       return { success: false, error: err.message };
     }
