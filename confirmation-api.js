@@ -1,23 +1,24 @@
-let order = JSON.parse(localStorage.getItem("lastOrder")) || [];
+let orderData = JSON.parse(localStorage.getItem("lastOrder")) || {};
 
-// ===== Elements =====
+let items = orderData.items || [];
+let customer = orderData.customer || {};
+
 const nameEl = document.getElementById("c-name");
 const phoneEl = document.getElementById("c-phone");
 const addressEl = document.getElementById("c-address");
 const totalEl = document.getElementById("c-total");
 const productsEl = document.getElementById("c-products");
 
-// ===== Fake customer data =====
-nameEl.innerText = "Bluebells Customer";
-phoneEl.innerText = "0123456789";
-addressEl.innerText = "Cairo, Egypt";
+// ===== Customer =====
+nameEl.innerText = customer.name || "-";
+phoneEl.innerText = customer.phone || "-";
+addressEl.innerText = customer.address || "-";
 
-// ===== Render Order =====
+// ===== Products =====
 let total = 0;
-
 productsEl.innerHTML = "";
 
-order.forEach(item => {
+items.forEach(item => {
   total += Number(item.price);
 
   productsEl.innerHTML += `
@@ -29,6 +30,6 @@ totalEl.innerText = total + " EGP";
 
 // ===== Repeat Order =====
 document.getElementById("repeatOrderBtn").onclick = function () {
-  localStorage.setItem("cart", JSON.stringify(order));
+  localStorage.setItem("cart", JSON.stringify(items));
   window.location.href = "cart.html";
 };

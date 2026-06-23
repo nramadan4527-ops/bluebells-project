@@ -31,7 +31,7 @@ function renderCart() {
   cartCount.innerText = cart.length;
 }
 
-// ===== Remove Item =====
+// ===== Remove =====
 function removeItem(index) {
   cart.splice(index, 1);
   localStorage.setItem("cart", JSON.stringify(cart));
@@ -45,14 +45,25 @@ function checkout() {
     return;
   }
 
-  // save order
-  localStorage.setItem("lastOrder", JSON.stringify(cart));
+  const customer = {
+    name: document.getElementById("c-name-input").value,
+    phone: document.getElementById("c-phone-input").value,
+    address: document.getElementById("c-address-input").value
+  };
 
-  // clear cart
+  if (!customer.name || !customer.phone || !customer.address) {
+    alert("Please fill all customer info ❌");
+    return;
+  }
+
+  localStorage.setItem("lastOrder", JSON.stringify({
+    items: cart,
+    customer: customer
+  }));
+
   cart = [];
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  // go to confirmation
   window.location.href = "confirmation.html";
 }
 

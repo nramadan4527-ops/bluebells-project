@@ -17,7 +17,7 @@
   <nav>
     <a href="shop.html">Shop</a>
 
-    <a href="cart.html" class="active">
+    <a href="cart.html">
       🛒 Cart <span id="cart-count">0</span>
     </a>
   </nav>
@@ -25,40 +25,39 @@
 
 <section class="cart-page">
 
-  <!-- Cart Items -->
-  <div class="cart-container">
-    <div class="cart-items" id="cartItems"></div>
+  <!-- CUSTOMER INFO -->
+  <div class="customer-form">
+    <h3>📦 Customer Info</h3>
 
-    <!-- Order Summary -->
-    <div class="cart-summary">
+    <input type="text" id="c-name-input" placeholder="Full Name">
+    <input type="text" id="c-phone-input" placeholder="Phone Number">
+    <input type="text" id="c-address-input" placeholder="Address">
+  </div>
 
-      <h2>🧾 Order Summary</h2>
+  <!-- CART ITEMS -->
+  <div id="cartItems"></div>
 
-      <div class="summary-row">
-        <span>Subtotal</span>
-        <span id="subtotal">0 EGP</span>
-      </div>
+  <!-- ORDER SUMMARY -->
+  <div class="cart-summary">
+    <h2>🧾 Order Summary</h2>
 
-      <div class="summary-row">
-        <span>Shipping</span>
-        <span>Free</span>
-      </div>
-
-      <div class="summary-row total">
-        <span>Total</span>
-        <span id="cartTotal">0 EGP</span>
-      </div>
-
-      <button class="checkout-btn" onclick="checkout()">
-        Proceed to Checkout
-      </button>
-
+    <div class="summary-row">
+      <span>Subtotal</span>
+      <span id="subtotal">0 EGP</span>
     </div>
+
+    <div class="summary-row total">
+      <span>Total</span>
+      <span id="cartTotal">0 EGP</span>
+    </div>
+
+    <button class="checkout-btn" onclick="checkout()">
+      Proceed to Checkout
+    </button>
   </div>
 
 </section>
 
 <script src="cart.js"></script>
-
 </body>
 </html>
