@@ -1,12 +1,8 @@
-// ===== Load Products =====
 let products = JSON.parse(localStorage.getItem("products")) || [];
-
-// ===== Cart =====
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 const grid = document.getElementById("productsGrid");
 const empty = document.getElementById("empty");
-const cartCount = document.getElementById("cart-count");
 
 // ===== Render Products =====
 function renderProducts(list = products) {
@@ -22,13 +18,12 @@ function renderProducts(list = products) {
   list.forEach((p, i) => {
     grid.innerHTML += `
       <div class="product-card">
-        <img src="${p.image}" alt="${p.name}">
+        <img src="${p.image}">
 
         <h3>${p.name}</h3>
         <p>${p.desc}</p>
         <span>${p.price} EGP</span>
 
-        <!-- Add to Cart Button -->
         <button class="add-btn" onclick="addToCart(${i})">
           Add to Cart 🛒
         </button>
@@ -46,15 +41,12 @@ function addToCart(index) {
   localStorage.setItem("cart", JSON.stringify(cart));
 
   updateCartCount();
-
-  alert("Added to cart 🛒");
 }
 
 // ===== Cart Count =====
 function updateCartCount() {
-  if (cartCount) {
-    cartCount.innerText = cart.length;
-  }
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cart-count").innerText = cart.length;
 }
 
 // ===== Search =====
