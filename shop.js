@@ -1,5 +1,5 @@
 
-/* ===== Load Products from LocalStorage ===== */
+/* ===== Load Products ===== */
 let products = JSON.parse(localStorage.getItem("products")) || [];
 
 const grid = document.getElementById("productsGrid");
@@ -33,11 +33,17 @@ function renderProducts(list = products) {
   });
 }
 
-/* ===== Add To Cart (FIXED) ===== */
+/* ===== ADD TO CART ===== */
 function shopAddToCart(index) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let products = JSON.parse(localStorage.getItem("products")) || [];
 
   let product = products[index];
+
+  if (!product) {
+    console.log("Product not found!");
+    return;
+  }
 
   let existing = cart.find(item => item.name === product.name);
 
@@ -48,7 +54,6 @@ function shopAddToCart(index) {
       name: product.name,
       price: Number(product.price),
       image: product.image,
-      desc: product.desc || "",
       qty: 1
     });
   }
@@ -58,9 +63,11 @@ function shopAddToCart(index) {
   updateCartCount();
 
   alert("Added to cart 💙");
+
+  console.log("ADDED:", product);
 }
 
-/* ===== Cart Count (FIXED SAFE VERSION) ===== */
+/* ===== CART COUNT ===== */
 function updateCartCount() {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -75,7 +82,7 @@ function updateCartCount() {
   }
 }
 
-/* ===== Search ===== */
+/* ===== SEARCH ===== */
 searchInput.addEventListener("input", function () {
   let value = this.value.toLowerCase();
 
@@ -86,6 +93,6 @@ searchInput.addEventListener("input", function () {
   renderProducts(filtered);
 });
 
-/* ===== Init ===== */
+/* ===== INIT ===== */
 renderProducts();
 updateCartCount();
