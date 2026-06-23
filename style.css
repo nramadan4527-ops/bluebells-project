@@ -34,7 +34,7 @@ body {
   z-index: 100;
 }
 
-/* ===== Creative Logo ===== */
+/* ===== Logo ===== */
 .logo {
   font-size: 26px;
   font-weight: 800;
@@ -113,9 +113,11 @@ body {
 .hero-content h1 {
   font-size: 42px;
   margin-bottom: 15px;
+
+  /* ✅ FIXED GRADIENT TEXT */
   background: linear-gradient(90deg, #93c5fd, #ffffff);
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
