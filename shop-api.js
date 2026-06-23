@@ -1,8 +1,10 @@
-let products = productAPI.getAll();
+let products = JSON.parse(localStorage.getItem("products")) || [];
 
 const grid = document.getElementById("productsGrid");
 const empty = document.getElementById("empty");
+const cartCount = document.getElementById("cart-count");
 
+// ===== Render Products =====
 function renderProducts(list = products) {
   grid.innerHTML = "";
 
@@ -13,16 +15,54 @@ function renderProducts(list = products) {
 
   empty.style.display = "none";
 
-  list.forEach(p => {
+  list.forEach((p, i) => {
     grid.innerHTML += `
       <div class="product-card">
-        <img src="${p.image}">
+        <img src="${p.image}" alt="${p.name}">
+
         <h3>${p.name}</h3>
         <p>${p.desc}</p>
         <span>${p.price} EGP</span>
+
+        <!-- 🔥 زرار الإضافة تحت الصورة -->
+        <button class="add-btn" onclick="addToCart(${i})">
+          Add to Cart 🛒
+        </button>
       </div>
     `;
   });
 }
 
+// ===== Cart =====
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function addToCart(index) {
+  const product = products[index];
+
+  cart.push(product);
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  updateCartCount();
+  alert("Added to cart 🛒");
+}
+
+function updateCartCount() {
+  if (cartCount) {
+    cartCount.innerText = cart.length;
+  }
+}
+
+// ===== Search =====
+document.getElementById("search").addEventListener("input", function () {
+  const value = this.value.toLowerCase();
+
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(value)
+  );
+
+  renderProducts(filtered);
+});
+
+// ===== Init =====
 renderProducts();
+updateCartCount();
