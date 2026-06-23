@@ -1,6 +1,8 @@
+// ===== Load products =====
 let products = productAPI.getAll();
 let editIndex = null;
 
+// ===== Render Products =====
 function renderProducts() {
   const list = document.getElementById("productList");
   list.innerHTML = "";
@@ -9,6 +11,7 @@ function renderProducts() {
     list.innerHTML += `
       <li>
         <img src="${p.image}" class="product-img">
+
         <strong>${p.name}</strong> - ${p.price} EGP
         <p>${p.desc}</p>
 
@@ -19,26 +22,28 @@ function renderProducts() {
   });
 }
 
+// ===== Preview Image =====
 function previewImage(event) {
   const file = event.target.files[0];
   if (!file) return;
 
   const reader = new FileReader();
-  reader.onload = () => {
+  reader.onload = function () {
     document.getElementById("preview").src = reader.result;
     document.querySelector(".image-preview").style.display = "block";
   };
   reader.readAsDataURL(file);
 }
 
+// ===== Add / Update Product =====
 function addProduct() {
-  const name = document.getElementById("productName").value;
+  const name = document.getElementById("productName").value.trim();
   const price = document.getElementById("productPrice").value;
   const desc = document.getElementById("productDesc").value;
   const imageInput = document.getElementById("productImage");
 
   if (!name || !price) {
-    alert("Fill required fields");
+    alert("Please fill required fields");
     return;
   }
 
@@ -51,13 +56,17 @@ function addProduct() {
     };
 
     if (editIndex !== null) {
-      products[editIndex] = product;
+      // ===== UPDATE =====
       productAPI.update(editIndex, product);
+      products[editIndex] = product;
       editIndex = null;
     } else {
+      // ===== ADD =====
       productAPI.add(product);
-      products.push(product);
     }
+
+    // 🔥 always refresh from storage
+    products = productAPI.getAll();
 
     renderProducts();
     clearInputs();
@@ -72,6 +81,7 @@ function addProduct() {
   }
 }
 
+// ===== Edit Product =====
 function editProduct(i) {
   const p = products[i];
 
@@ -85,17 +95,24 @@ function editProduct(i) {
   editIndex = i;
 }
 
+// ===== Delete Product =====
 function deleteProduct(i) {
   productAPI.delete(i);
+
   products = productAPI.getAll();
   renderProducts();
 }
 
+// ===== Clear Inputs =====
 function clearInputs() {
   document.getElementById("productName").value = "";
   document.getElementById("productPrice").value = "";
   document.getElementById("productDesc").value = "";
   document.getElementById("productImage").value = "";
+
+  document.getElementById("preview").src = "";
+  document.querySelector(".image-preview").style.display = "none";
 }
 
+// ===== Init =====
 renderProducts();
