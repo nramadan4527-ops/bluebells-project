@@ -2,19 +2,11 @@
 let products = JSON.parse(localStorage.getItem("products")) || [];
 
 const grid = document.getElementById("productsGrid");
-const empty = document.getElementById("empty");
 const searchInput = document.getElementById("search");
 
 /* ===== Render Products ===== */
 function renderProducts(list = products) {
   grid.innerHTML = "";
-
-  if (list.length === 0) {
-    empty.style.display = "block";
-    return;
-  } else {
-    empty.style.display = "none";
-  }
 
   list.forEach((p, index) => {
     grid.innerHTML += `
@@ -30,11 +22,11 @@ function renderProducts(list = products) {
   });
 }
 
-/* ===== ADD TO CART (ONE FUNCTION ONLY) ===== */
+/* ===== ADD TO CART ===== */
 function shopAddToCart(index) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
   let product = products[index];
+
   if (!product) return;
 
   let existing = cart.find(item => item.name === product.name);
@@ -59,7 +51,6 @@ function shopAddToCart(index) {
 /* ===== CART COUNT ===== */
 function updateCartCount() {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
   let totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
 
   const counter = document.getElementById("cart-count");
@@ -67,15 +58,13 @@ function updateCartCount() {
 }
 
 /* ===== SEARCH ===== */
-if (searchInput) {
-  searchInput.addEventListener("input", function () {
-    let value = this.value.toLowerCase();
-    let filtered = products.filter(p =>
-      p.name.toLowerCase().includes(value)
-    );
-    renderProducts(filtered);
-  });
-}
+searchInput.addEventListener("input", function () {
+  let value = this.value.toLowerCase();
+  let filtered = products.filter(p =>
+    p.name.toLowerCase().includes(value)
+  );
+  renderProducts(filtered);
+});
 
 /* ===== INIT ===== */
 renderProducts();
