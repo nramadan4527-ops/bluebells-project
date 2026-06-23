@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Shop | Bluebells</title>
+  <title>Bluebells Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="shop.css">
 </head>
 
@@ -14,26 +17,28 @@
   <nav>
     <a href="index.html">Home</a>
     <a href="shop.html" class="active">Shop</a>
-    <a href="admin.html">Admin</a>
-
-    <a href="cart.html">
-      🛒 Cart <span id="cart-count">0</span>
-    </a>
+    <a href="cart.html">🛒 Cart</a>
   </nav>
 </header>
 
-<section class="search">
-  <input type="text" id="search" placeholder="Search products...">
+<!-- HERO -->
+<section class="hero">
+  <h1>Elegant Accessories 💎</h1>
+  <p>Discover your style with Bluebells</p>
 </section>
 
-<section class="shop">
+<!-- SEARCH -->
+<section class="search">
+  <input type="text" id="search" placeholder="Search products... 🔍">
+</section>
+
+<!-- PRODUCTS -->
+<section>
   <div id="productsGrid"></div>
 </section>
 
-<div id="empty" style="display:none;">
-  <h2>No products yet 😢</h2>
-</div>
-
+<script src="api.js"></script>
+<script src="product-api.js"></script>
 <script src="shop-api.js"></script>
 
 </body>

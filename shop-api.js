@@ -1,61 +1,41 @@
-let products = JSON.parse(localStorage.getItem("products")) || [];
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-const grid = document.getElementById("productsGrid");
-const empty = document.getElementById("empty");
-const cartCount = document.getElementById("cart-count");
+const searchInput = document.getElementById("search");
+const productsGrid = document.getElementById("productsGrid");
 
-// ===== Render Products =====
-function renderProducts(list = products) {
-  grid.innerHTML = "";
+let allProducts = productAPI.getAll();
 
-  if (!list.length) {
-    empty.style.display = "block";
+function render(list) {
+  productsGrid.innerHTML = "";
+
+  if (list.length === 0) {
+    productsGrid.innerHTML = "<p>No products found 😢</p>";
     return;
   }
 
-  empty.style.display = "none";
-
-  list.forEach((p, i) => {
-    grid.innerHTML += `
+  list.forEach(p => {
+    productsGrid.innerHTML += `
       <div class="product-card">
-        <img src="${p.image}">
+        <img src="${p.image}" />
         <h3>${p.name}</h3>
+        <p class="price">${p.price} EGP</p>
         <p>${p.desc}</p>
-        <span>${p.price} EGP</span>
-
-        <button class="add-btn" onclick="addToCart(${i})">
-          Add to Cart 🛒
-        </button>
+        <button class="add-btn">Add to Cart</button>
       </div>
     `;
   });
 }
 
-// ===== Add To Cart =====
-function addToCart(i) {
-  cart.push(products[i]);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  updateCartCount();
-}
+// أول تحميل
+render(allProducts);
 
-// ===== Cart Count =====
-function updateCartCount() {
-  cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cartCount.innerText = cart.length;
-}
+// search live
+searchInput.addEventListener("input", () => {
+  const value = searchInput.value.toLowerCase();
 
-// ===== Search =====
-document.getElementById("search").addEventListener("input", function () {
-  const value = this.value.toLowerCase();
-
-  const filtered = products.filter(p =>
-    p.name.toLowerCase().includes(value)
+  const filtered = allProducts.filter(p =>
+    p.name.toLowerCase().includes(value) ||
+    p.desc.toLowerCase().includes(value)
   );
 
-  renderProducts(filtered);
+  render(filtered);
 });
-
-// ===== Init =====
-renderProducts();
-updateCartCount();
