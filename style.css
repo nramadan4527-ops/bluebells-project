@@ -152,3 +152,50 @@ footer {
   color: #94a3b8;
   background: rgba(15,23,42,0.9);
 }
+
+/* ================== MOBILE RESPONSIVE ================== */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .logo {
+    font-size: 20px;
+    padding: 8px 18px;
+  }
+
+  .navbar nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .navbar nav a {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+}
+
+/* extra small phones */
+@media (max-width: 480px) {
+
+  .navbar nav {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .navbar nav a {
+    width: 100%;
+    text-align: center;
+    background: rgba(96, 165, 250, 0.08);
+  }
+
+  .navbar nav a:hover {
+    background: rgba(96, 165, 250, 0.18);
+  }
+}
