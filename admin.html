@@ -6,30 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="admin.css">
+
+  <script>
+    // MUST run FIRST before auth-manager.js loads - capture token from URL and store in localStorage
+    (function() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const t = params.get('token');
+        if (t) {
+          localStorage.setItem('authToken', t);
+          console.log('[admin.html HEAD] Captured and stored token from URL');
+          // remove token from URL
+          params.delete('token');
+          const newSearch = params.toString();
+          const newUrl = window.location.pathname + (newSearch ? ('?' + newSearch) : '');
+          history.replaceState({}, document.title, newUrl);
+        }
+      } catch (e) { 
+        console.error('[admin.html HEAD] Error:', e);
+      }
+    })();
+  </script>
 </head>
 <body>
-
-<script>
-  // Capture token passed from login redirect (admin.html?token=...)
-  (function() {
-    try {
-      const params = new URLSearchParams(window.location.search);
-      const t = params.get('token');
-      console.log('[admin.html] Token from URL:', t ? 'yes' : 'no');
-      if (t) {
-        localStorage.setItem('authToken', t);
-        console.log('[admin.html] Stored token to localStorage');
-        // remove token from URL
-        params.delete('token');
-        const newSearch = params.toString();
-        const newUrl = window.location.pathname + (newSearch ? ('?' + newSearch) : '');
-        history.replaceState({}, document.title, newUrl);
-      }
-    } catch (e) { 
-      console.error('[admin.html] Error capturing token:', e);
-    }
-  })();
-</script>
 
 <div class="confirmation-page">
 
