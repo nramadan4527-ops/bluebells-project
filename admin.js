@@ -1,18 +1,22 @@
 
-/* ===== LOAD PRODUCTS ===== */
 let products = JSON.parse(localStorage.getItem("products")) || [];
 
-const productsContainer = document.getElementById("products");
-const error = document.getElementById("error");
-
-/* ===== RENDER ===== */
+/* ===== RENDER PRODUCTS ===== */
 function renderProducts() {
-  productsContainer.innerHTML = "";
+  const container = document.getElementById("products");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  if (products.length === 0) {
+    container.innerHTML = "<p>No products yet 🛒</p>";
+    return;
+  }
 
   products.forEach((p, index) => {
-    productsContainer.innerHTML += `
+    container.innerHTML += `
       <div class="admin-product">
-        <img src="${p.image}">
+        <img src="${p.image}" alt="${p.name}">
         <h4>${p.name}</h4>
         <p>${p.price} EGP</p>
 
@@ -22,11 +26,12 @@ function renderProducts() {
   });
 }
 
-/* ===== ADD PRODUCT (FIXED) ===== */
+/* ===== ADD PRODUCT ===== */
 function addProduct() {
   const name = document.getElementById("name").value.trim();
   const price = document.getElementById("price").value.trim();
   const imageFile = document.getElementById("image").files[0];
+  const error = document.getElementById("error");
 
   error.innerText = "";
 
@@ -39,7 +44,7 @@ function addProduct() {
 
   reader.onload = function () {
     const newProduct = {
-      name,
+      name: name,
       price: Number(price),
       image: reader.result
     };
@@ -50,6 +55,7 @@ function addProduct() {
 
     renderProducts();
 
+    // clear inputs
     document.getElementById("name").value = "";
     document.getElementById("price").value = "";
     document.getElementById("image").value = "";

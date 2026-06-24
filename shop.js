@@ -1,10 +1,8 @@
-// ===== Load Products =====
 let products = JSON.parse(localStorage.getItem("products")) || [];
 
-const grid = document.getElementById("productsGrid");
-const searchInput = document.getElementById("search");
+const grid = document.getElementById("products-container");
 
-// ===== Render =====
+/* ===== RENDER PRODUCTS ===== */
 function renderProducts(list = products) {
   grid.innerHTML = "";
 
@@ -13,14 +11,14 @@ function renderProducts(list = products) {
     return;
   }
 
-  list.forEach(p => {
+  list.forEach((p, index) => {
     grid.innerHTML += `
       <div class="product-card">
         <img src="${p.image}">
         <h3>${p.name}</h3>
         <p>${p.price} EGP</p>
 
-        <button onclick='addToCart(${JSON.stringify(p)})'>
+        <button onclick="addToCart(${index})">
           Add to Cart 🛒
         </button>
       </div>
@@ -28,17 +26,42 @@ function renderProducts(list = products) {
   });
 }
 
-// ===== Search =====
-if (searchInput) {
-  searchInput.addEventListener("input", function () {
-    const val = this.value.toLowerCase();
-    const filtered = products.filter(p =>
-      p.name.toLowerCase().includes(val)
-    );
-    renderProducts(filtered);
-  });
+/* ===== ADD TO CART ===== */
+function addToCart(index) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let product = products[index];
+
+  let existing = cart.find(i => i.name === product.name);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({
+      name: product.name,
+      price: Number(product.price),
+      image: product.image,
+      qty: 1
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  updateCartCount();
+
+  alert("Added to cart 💙");
 }
 
-// ===== Init =====
+/* ===== CART COUNT ===== */
+function updateCartCount() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+
+  const counter = document.getElementById("cart-count");
+  if (counter) counter.innerText = totalQty;
+}
+
+/* ===== INIT ===== */
 renderProducts();
 updateCartCount();
