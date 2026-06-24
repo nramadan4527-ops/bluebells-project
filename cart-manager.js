@@ -1,15 +1,10 @@
-// ===== Shopping Cart Management =====
+// ===== Cart Manager =====
 let cart = [];
 
 function initCart() {
   const stored = localStorage.getItem("cart");
-  if (stored) {
-    try {
-      cart = JSON.parse(stored);
-    } catch (e) {
-      cart = [];
-    }
-  }
+  cart = stored ? JSON.parse(stored) : [];
+  updateCartCount();
 }
 
 function saveCart() {
@@ -18,15 +13,20 @@ function saveCart() {
 }
 
 function addToCart(product) {
-  const id = product._id || product.id;
+  console.log("ADD CLICKED", product); // 🔥 مهم
 
-  const existing = cart.find(item => item.id === id);
+  if (!product || !product.id) {
+    alert("Product data missing");
+    return;
+  }
+
+  const existing = cart.find(item => item.id === product.id);
 
   if (existing) {
     existing.qty += 1;
   } else {
     cart.push({
-      id: id,
+      id: product.id,
       name: product.name,
       price: Number(product.price),
       image: product.image,
@@ -35,43 +35,13 @@ function addToCart(product) {
   }
 
   saveCart();
-  alert(`${product.name} added to cart 💙`);
-}
-
-function removeFromCart(id) {
-  cart = cart.filter(item => item.id !== id);
-  saveCart();
-}
-
-function updateCartQty(id, qty) {
-  const item = cart.find(item => item.id === id);
-  if (!item) return;
-
-  item.qty = qty;
-
-  if (item.qty <= 0) {
-    removeFromCart(id);
-  } else {
-    saveCart();
-  }
-}
-
-function clearCart() {
-  cart = [];
-  saveCart();
-}
-
-function getCartTotal() {
-  return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  alert("Added to cart 💙");
 }
 
 function updateCartCount() {
-  const count = cart.reduce((sum, item) => sum + item.qty, 0);
-  const elements = document.querySelectorAll("#cart-count");
-  elements.forEach(el => el.innerText = count);
+  const count = cart.reduce((sum, i) => sum + i.qty, 0);
+  document.querySelectorAll("#cart-count")
+    .forEach(el => el.innerText = count);
 }
 
-window.addEventListener("load", () => {
-  initCart();
-  updateCartCount();
-});
+window.addEventListener("load", initCart);

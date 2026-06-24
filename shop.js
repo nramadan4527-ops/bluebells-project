@@ -8,13 +8,19 @@ const searchInput = document.getElementById("search");
 function renderProducts(list = products) {
   grid.innerHTML = "";
 
-  list.forEach((p, index) => {
+  list.forEach(product => {
     grid.innerHTML += `
       <div class="product-card">
-        <img src="${p.image}" alt="${p.name}">
-        <h3>${p.name}</h3>
-        <p>${p.price} EGP</p>
-        <button onclick="shopAddToCart(${index})">
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>${product.price} EGP</p>
+
+        <button onclick='addToCart({
+          id: ${product.id},
+          name: "${product.name}",
+          price: ${product.price},
+          image: "${product.image}"
+        })'>
           Add to Cart 🛒
         </button>
       </div>
@@ -22,45 +28,10 @@ function renderProducts(list = products) {
   });
 }
 
-/* ===== ADD TO CART ===== */
-function shopAddToCart(index) {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  let product = products[index];
-
-  if (!product) return;
-
-  let existing = cart.find(item => item.name === product.name);
-
-  if (existing) {
-    existing.qty += 1;
-  } else {
-    cart.push({
-      name: product.name,
-      price: Number(product.price),
-      image: product.image,
-      qty: 1
-    });
-  }
-
-  localStorage.setItem("cart", JSON.stringify(cart));
-  updateCartCount();
-
-  alert("Added to cart 💙");
-}
-
-/* ===== CART COUNT ===== */
-function updateCartCount() {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  let totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-
-  const counter = document.getElementById("cart-count");
-  if (counter) counter.innerText = totalQty;
-}
-
 /* ===== SEARCH ===== */
 searchInput.addEventListener("input", function () {
-  let value = this.value.toLowerCase();
-  let filtered = products.filter(p =>
+  const value = this.value.toLowerCase();
+  const filtered = products.filter(p =>
     p.name.toLowerCase().includes(value)
   );
   renderProducts(filtered);
@@ -68,4 +39,3 @@ searchInput.addEventListener("input", function () {
 
 /* ===== INIT ===== */
 renderProducts();
-updateCartCount();
