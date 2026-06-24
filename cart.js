@@ -1,4 +1,5 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
 const cartContainer = document.getElementById("cartItems");
 const cartTotal = document.getElementById("cartTotal");
 
@@ -13,21 +14,29 @@ function renderCart() {
 
   let total = 0;
 
-  cart.forEach((item) => {
-    total += Number(item.price);
+  cart.forEach((item, index) => {
+    const price = Number(item.price); // 👈 مهم
+    total += price;
 
     cartContainer.innerHTML += `
       <div class="cart-item">
         <img src="${item.image}">
-        <div>
+        <div class="cart-info">
           <h4>${item.name}</h4>
-          <p>${item.price} EGP</p>
+          <p>${price} EGP</p>
+          <button onclick="removeFromCart(${index})">Delete</button>
         </div>
       </div>
     `;
   });
 
   cartTotal.innerHTML = `<h3>Total: ${total} EGP</h3>`;
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
 }
 
 renderCart();
