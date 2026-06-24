@@ -1,67 +1,36 @@
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+function checkout() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-const itemsDiv = document.getElementById("checkout-items");
-const totalEl = document.getElementById("total");
-const cartCount = document.getElementById("cart-count");
-const msg = document.getElementById("msg");
-
-function renderCheckout() {
-  itemsDiv.innerHTML = "";
-
-  let total = 0;
-  let count = 0;
-
-  cart.forEach(item => {
-    const qty = item.qty || 1;
-    const price = Number(item.price) * qty;
-
-    total += price;
-    count += qty;
-
-    itemsDiv.innerHTML += `
-      <div class="checkout-item">
-        <span>${item.name} × ${qty}</span>
-        <span>${price} EGP</span>
-      </div>
-    `;
-  });
-
-  totalEl.innerText = total + " EGP";
-  cartCount.innerText = count;
-}
-
-renderCheckout();
-
-document.getElementById("checkoutForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-
-  const name = document.getElementById("name").value.trim();
-  const address = document.getElementById("address").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-
-  if (!name || !address || !phone) {
-    msg.innerText = "Please fill all fields";
+  if (cart.length === 0) {
+    alert("Cart is empty 🛒");
     return;
   }
 
-  const orderData = {
+  const name = document.getElementById("c-name-input").value;
+  const phone = document.getElementById("c-phone-input").value;
+  const address = document.getElementById("c-address-input").value;
+
+  if (!name || !phone || !address) {
+    alert("Please fill all info ❌");
+    return;
+  }
+
+  const order = {
     id: Date.now(),
-    name,
-    address,
-    phone,
+    customer: { name, phone, address },
     items: cart,
-    total: cart.reduce(
-      (sum, item) => sum + Number(item.price) * (item.qty || 1),
-      0
-    )
+    total: cart.reduce((sum, i) => sum + (i.price * (i.qty || 1)), 0)
   };
 
-  localStorage.setItem("orderData", JSON.stringify(orderData));
-  localStorage.removeItem("cart");
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+  orders.push(order);
 
-  msg.innerText = "Order placed successfully 💙";
+  localStorage.setItem("orders", JSON.stringify(orders));
 
-  setTimeout(() => {
-    window.location.href = "confirmation.html";
-  }, 2000);
-});
+  // clear cart AFTER saving order
+  localStorage.setItem("cart", JSON.stringify([]));
+
+  alert("Order placed successfully 💙");
+
+  window.location.href = "confirmation.html";
+}
