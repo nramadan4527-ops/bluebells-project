@@ -1,24 +1,27 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+// ===== RENDER CART =====
 function renderCart() {
   const cartItems = document.getElementById("cartItems");
+
   if (!cartItems) return;
 
   cartItems.innerHTML = "";
 
   let total = 0;
 
-  cart.forEach((item, i) => {
+  cart.forEach((item) => {
 
-    let price = item.price * (item.qty || 1);
-    total += price;
+    let itemTotal = item.price * (item.qty || 1);
+    total += itemTotal;
 
     cartItems.innerHTML += `
       <div class="cart-item">
-        <img src="${item.image}">
+        <img src="${item.image}" width="70">
+
         <div>
-          <h4>${item.name}</h4>
-          <p>${price} EGP</p>
+          <h3>${item.name}</h3>
+          <p>${item.price} EGP</p>
           <p>Qty: ${item.qty || 1}</p>
         </div>
       </div>
@@ -27,14 +30,23 @@ function renderCart() {
 
   document.getElementById("subtotal").innerText = total;
   document.getElementById("cartTotal").innerText = total;
-  document.getElementById("cart-count").innerText =
-    cart.reduce((s, i) => s + (i.qty || 1), 0);
+
+  updateCartCount();
 }
 
+// ===== CART COUNT =====
+function updateCartCount() {
+  let totalQty = cart.reduce((s, i) => s + (i.qty || 1), 0);
+
+  let counter = document.getElementById("cart-count");
+  if (counter) counter.innerText = totalQty;
+}
+
+// ===== CHECKOUT =====
 function checkout() {
 
   if (cart.length === 0) {
-    alert("Cart empty");
+    alert("Cart is empty 🛒");
     return;
   }
 
@@ -43,7 +55,7 @@ function checkout() {
   const address = document.getElementById("c-address-input").value;
 
   if (!name || !phone || !address) {
-    alert("Fill all data");
+    alert("Fill all fields ❌");
     return;
   }
 
@@ -58,9 +70,14 @@ function checkout() {
   orders.push(order);
 
   localStorage.setItem("orders", JSON.stringify(orders));
+
+  // clear cart
+  cart = [];
   localStorage.setItem("cart", JSON.stringify([]));
 
   window.location.href = "confirmation.html";
 }
 
+// ===== INIT =====
 renderCart();
+updateCartCount();
