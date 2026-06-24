@@ -196,3 +196,7 @@ footer {
     background: rgba(96, 165, 250, 0.18);
   }
 }
+.logo {
+  width: 120px;   /* كَبّري أو صغّري */
+  height: auto;
+}
