@@ -1,67 +1,76 @@
+// ===== Get Cart from localStorage =====
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+// ===== Elements =====
 const cartItemsDiv = document.getElementById("cartItems");
 const totalPriceSpan = document.getElementById("totalPrice");
 
-/* Render Cart */
+// ===== Render Cart =====
 function renderCart() {
   cartItemsDiv.innerHTML = "";
   let total = 0;
 
   if (cart.length === 0) {
-    cartItemsDiv.innerHTML = "<p>Your cart is empty</p>";
+    cartItemsDiv.innerHTML = "<p class='empty'>Your cart is empty</p>";
     totalPriceSpan.innerText = "0";
     return;
   }
 
   cart.forEach((item, index) => {
-    total += item.price * item.quantity;
+    const price = Number(item.price);
+    const quantity = Number(item.quantity || 1);
+
+    total += price * quantity;
 
     cartItemsDiv.innerHTML += `
       <div class="cart-item">
-        <img src="${item.image}">
-        <div>
+        <img src="${item.image}" alt="${item.name}">
+        <div class="item-info">
           <h4>${item.name}</h4>
-          <p>${item.price} EGP</p>
-          <p>Qty: ${item.quantity}</p>
+          <p>${price} EGP</p>
+          <span>Qty: ${quantity}</span>
         </div>
         <button onclick="removeItem(${index})">✖</button>
       </div>
     `;
   });
 
-  totalPriceSpan.innerText = total;
+  totalPriceSpan.innerText = total.toFixed(2);
 }
 
-/* Remove Item */
+// ===== Remove Item =====
 function removeItem(index) {
   cart.splice(index, 1);
   localStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
 
-/* Checkout */
+// ===== Checkout =====
 function checkout() {
-  const name = document.getElementById("custName").value;
-  const phone = document.getElementById("custPhone").value;
-  const address = document.getElementById("custAddress").value;
+  const name = document.getElementById("custName").value.trim();
+  const phone = document.getElementById("custPhone").value.trim();
+  const address = document.getElementById("custAddress").value.trim();
 
   if (!name || !phone || !address) {
-    alert("Please fill all customer info");
+    alert("Please fill all customer information");
     return;
   }
 
-  const customerInfo = {
-    name,
-    phone,
-    address,
-    cart,
-    total: totalPriceSpan.innerText
+  const orderData = {
+    name: name,
+    phone: phone,
+    address: address,
+    cart: cart,
+    total: Number(totalPriceSpan.innerText)
   };
 
-  localStorage.setItem("orderData", JSON.stringify(customerInfo));
+  localStorage.setItem("orderData", JSON.stringify(orderData));
+
+  // optional: clear cart after checkout
+  // localStorage.removeItem("cart");
 
   window.location.href = "confirmation.html";
 }
 
+// ===== Init =====
 renderCart();
