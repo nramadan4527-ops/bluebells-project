@@ -1,66 +1,69 @@
-// ===== Login Page Script =====
 
-document.getElementById("loginForm").addEventListener("submit", async function (e) {
-  e.preventDefault();
+/* ===== LOAD PRODUCTS ===== */
+let products = JSON.parse(localStorage.getItem("products")) || [];
 
-  const username = document.getElementById("username").value.trim();
-  const passwordValue = document.getElementById("password").value.trim();
+const productsContainer = document.getElementById("products");
+const error = document.getElementById("error");
 
-  const errorMsg = document.getElementById("error");
-  const successMsg = document.getElementById("success");
-  const btn = this.querySelector("button");
+/* ===== RENDER ===== */
+function renderProducts() {
+  productsContainer.innerHTML = "";
 
-  // reset messages
-  errorMsg.innerText = "";
-  successMsg.innerText = "";
+  products.forEach((p, index) => {
+    productsContainer.innerHTML += `
+      <div class="admin-product">
+        <img src="${p.image}">
+        <h4>${p.name}</h4>
+        <p>${p.price} EGP</p>
 
-  // validation
-  if (!username || !passwordValue) {
-    errorMsg.innerText = "Please enter username and password ❌";
+        <button onclick="deleteProduct(${index})">Delete</button>
+      </div>
+    `;
+  });
+}
+
+/* ===== ADD PRODUCT (FIXED) ===== */
+function addProduct() {
+  const name = document.getElementById("name").value.trim();
+  const price = document.getElementById("price").value.trim();
+  const imageFile = document.getElementById("image").files[0];
+
+  error.innerText = "";
+
+  if (!name || !price || !imageFile) {
+    error.innerText = "Please fill all fields ❌";
     return;
   }
 
-  // loading state
-  btn.classList.add("loading");
-  btn.innerText = "Logging in...";
+  const reader = new FileReader();
 
-  try {
-    // call auth manager
-    const result = await Auth.login(username, passwordValue);
+  reader.onload = function () {
+    const newProduct = {
+      name,
+      price: Number(price),
+      image: reader.result
+    };
 
-    console.log("LOGIN RESULT:", result);
+    products.push(newProduct);
 
-    // check result
-    if (!result.success) {
-      throw new Error(result.error);
-    }
+    localStorage.setItem("products", JSON.stringify(products));
 
-    // success message
-    successMsg.innerText = "Login successful! Redirecting... ✅";
+    renderProducts();
 
-    // redirect
-    setTimeout(() => {
-      window.location.replace("admin.html");
-    }, 700);
+    document.getElementById("name").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("image").value = "";
+  };
 
-  } catch (err) {
-    console.error(err);
-    errorMsg.innerText = err.message || "Login failed ❌";
-  } finally {
-    btn.classList.remove("loading");
-    btn.innerText = "Login";
-  }
-});
-
-
-// ===== Password Toggle =====
-const toggle = document.getElementById("togglePassword");
-const password = document.getElementById("password");
-
-if (toggle && password) {
-  toggle.addEventListener("click", () => {
-    const type = password.type === "password" ? "text" : "password";
-    password.type = type;
-    toggle.classList.toggle("fa-eye-slash");
-  });
+  reader.readAsDataURL(imageFile);
 }
+
+/* ===== DELETE PRODUCT ===== */
+function deleteProduct(index) {
+  products.splice(index, 1);
+  localStorage.setItem("products", JSON.stringify(products));
+  renderProducts();
+}
+
+/* ===== INIT ===== */
+renderProducts();
