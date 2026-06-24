@@ -1,120 +1,84 @@
-/* ===== GLOBAL ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 body {
-  min-height: 100vh;
-  background: linear-gradient(
-    -45deg,
-    #fdf6e3,
-    #efe2c8,
-    #e7d3a3,
-    #fdf6e3
-  );
+  background: linear-gradient(-45deg, #fdf6e3, #efe2c8, #e7d3a3);
   background-size: 400% 400%;
-  animation: bgMove 18s ease infinite;
-  color: #2e2a25;
+  animation: bg 15s ease infinite;
 }
 
-@keyframes bgMove {
+@keyframes bg {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* ===== NAVBAR (FIXED + CLEAN) ===== */
+/* ===== NAVBAR ===== */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 35px;
-  background: rgba(255, 248, 235, 0.75);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-/* LOGO */
-.logo-box {
-  padding: 18px 35px;
-  border-radius: 40px;
-  background: rgba(255,255,255,0.7);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  padding: 18px 30px;
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.6);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .logo-img {
-  width: 150px;
-  max-width: 100%;
-  display: block;
+  width: 180px;
 }
 
-/* NAV LINKS FIXED */
-.navbar nav {
+/* ===== NAV LINKS ===== */
+nav {
   display: flex;
-  align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
-.navbar nav a {
+nav a {
   text-decoration: none;
   color: #5a4a2f;
-  padding: 10px 16px;
-  border-radius: 12px;
-  transition: 0.3s ease;
-  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 10px;
 }
 
-.navbar nav a:hover {
-  background: rgba(184,155,94,0.25);
-  transform: translateY(-2px);
-}
-
-.navbar nav a.active {
-  background: rgba(184,155,94,0.35);
+nav a:hover,
+nav a.active {
+  background: rgba(184,155,94,0.3);
 }
 
 /* ===== HERO ===== */
 .shop-hero {
   text-align: center;
-  padding: 80px 20px 50px;
+  padding: 60px 20px;
 }
 
 .shop-hero h1 {
-  font-size: 42px;
-  font-family: "Playfair Display", serif;
+  font-size: 40px;
   color: #8c6a3f;
 }
 
-.shop-hero p {
-  color: #6b5a3c;
-  margin-top: 10px;
-  font-size: 16px;
-}
-
-/* ===== PRODUCTS GRID ===== */
+/* ===== PRODUCTS ===== */
 .products {
-  padding: 40px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  padding: 40px;
 }
 
 /* ===== PRODUCT CARD ===== */
 .product-card {
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(15px);
-  border-radius: 24px;
-  padding: 22px;
+  background: rgba(255,255,255,0.7);
+  padding: 20px;
+  border-radius: 20px;
   text-align: center;
-  box-shadow: 0 20px 45px rgba(0,0,0,0.2);
-  transition: 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  transition: 0.3s;
 }
 
 .product-card:hover {
@@ -123,61 +87,22 @@ body {
 
 .product-card img {
   width: 100%;
-  border-radius: 16px;
-  margin-bottom: 12px;
+  border-radius: 15px;
 }
 
-.product-card h3 {
-  color: #6b4f2c;
-  margin-bottom: 6px;
-  font-size: 18px;
-}
-
-.product-card p {
-  font-weight: 600;
-  color: #8c6a3f;
-}
-
-/* ===== BUTTON (optional لو عندك زرار) ===== */
 .product-card button {
   margin-top: 10px;
-  padding: 10px 14px;
+  padding: 10px;
+  width: 100%;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   background: #8c6a3f;
   color: white;
   cursor: pointer;
-  transition: 0.3s;
 }
 
-.product-card button:hover {
-  background: #6b4f2c;
-}
-
-/* ===== FOOTER ===== */
 footer {
   text-align: center;
-  padding: 25px;
-  background: rgba(255,248,235,0.85);
-  color: #6b4f2c;
-}
-
-/* ===== MOBILE ===== */
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .logo-box {
-    padding: 14px 25px;
-  }
-
-  .shop-hero h1 {
-    font-size: 32px;
-  }
-
-  .products {
-    padding: 20px;
-  }
+  padding: 20px;
+  margin-top: 30px;
 }
