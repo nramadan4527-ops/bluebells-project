@@ -1,71 +1,67 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-const cartContainer = document.getElementById("cartItems");
-const cartTotal = document.getElementById("cartTotal");
+const cartItemsDiv = document.getElementById("cartItems");
+const totalPriceSpan = document.getElementById("totalPrice");
 
+/* Render Cart */
 function renderCart() {
-  cartContainer.innerHTML = "";
+  cartItemsDiv.innerHTML = "";
+  let total = 0;
 
   if (cart.length === 0) {
-    cartContainer.innerHTML = "<p>Your cart is empty</p>";
-    cartTotal.innerHTML = "";
+    cartItemsDiv.innerHTML = "<p>Your cart is empty</p>";
+    totalPriceSpan.innerText = "0";
     return;
   }
 
-  let total = 0;
-
   cart.forEach((item, index) => {
-    const price = Number(item.price); // 👈 مهم
-    total += price;
+    total += item.price * item.quantity;
 
-    cartContainer.innerHTML += `
+    cartItemsDiv.innerHTML += `
       <div class="cart-item">
         <img src="${item.image}">
-        <div class="cart-info">
+        <div>
           <h4>${item.name}</h4>
-          <p>${price} EGP</p>
-          <button onclick="removeFromCart(${index})">Delete</button>
+          <p>${item.price} EGP</p>
+          <p>Qty: ${item.quantity}</p>
         </div>
+        <button onclick="removeItem(${index})">✖</button>
       </div>
     `;
   });
 
-  cartTotal.innerHTML = `<h3>Total: ${total} EGP</h3>`;
+  totalPriceSpan.innerText = total;
 }
 
-function removeFromCart(index) {
+/* Remove Item */
+function removeItem(index) {
   cart.splice(index, 1);
   localStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
 
-renderCart();
+/* Checkout */
 function checkout() {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const name = document.getElementById("custName").value;
+  const phone = document.getElementById("custPhone").value;
+  const address = document.getElementById("custAddress").value;
 
-  if (cart.length === 0) {
-    alert("Cart is empty 🛒");
+  if (!name || !phone || !address) {
+    alert("Please fill all customer info");
     return;
   }
 
-  // خزّني بيانات الأوردر
-  const orderData = {
-    items: cart,
-    total: cart.reduce((sum, i) => sum + i.price * (i.qty || 1), 0)
+  const customerInfo = {
+    name,
+    phone,
+    address,
+    cart,
+    total: totalPriceSpan.innerText
   };
 
-  localStorage.setItem("orderData", JSON.stringify(orderData));
+  localStorage.setItem("orderData", JSON.stringify(customerInfo));
 
-  // روحي على صفحة التأكيد
   window.location.href = "confirmation.html";
 }
-function saveCustomerInfo() {
-  const customer = {
-    name: document.getElementById("custName").value,
-    email: document.getElementById("custEmail").value,
-    phone: document.getElementById("custPhone").value,
-    address: document.getElementById("custAddress").value
-  };
 
-  localStorage.setItem("customerInfo", JSON.stringify(customer));
-}
+renderCart();

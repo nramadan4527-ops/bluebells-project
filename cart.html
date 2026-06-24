@@ -2,59 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Cart | Bluebells</title>
+  <title>Cart</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link rel="stylesheet" href="cart.css">
 </head>
-
 <body>
-<div class="customer-info">
-  <input type="text" id="custName" placeholder="Full Name" required>
-  <input type="email" id="custEmail" placeholder="Email" required>
-  <input type="text" id="custPhone" placeholder="Phone" required>
-  <input type="text" id="custAddress" placeholder="Address" required>
-</div>
 
-<header class="navbar">
-  <div class="logo">
-    <img src="img/logo.png" alt="Bluebells">
+<div class="cart-page">
+
+  <h1>Your Cart</h1>
+
+  <!-- Cart Items -->
+  <div id="cartItems"></div>
+
+  <!-- Total -->
+  <h3>Total: <span id="totalPrice">0</span> EGP</h3>
+
+  <!-- Customer Info -->
+  <div class="customer-info">
+    <h2>Customer Information</h2>
+
+    <input type="text" id="custName" placeholder="Your Name">
+    <input type="text" id="custPhone" placeholder="Phone Number">
+    <input type="text" id="custAddress" placeholder="Address">
   </div>
-  <nav>
-    <a href="shop.html">Shop</a>
-    <a href="cart.html" class="active">
-      Cart <span id="cart-count">0</span>
-    </a>
-  </nav>
-</header>
 
-<main class="page">
-  <section class="cart-wrapper">
+  <!-- Checkout -->
+  <button class="checkout-btn" onclick="checkout()">
+    Checkout
+  </button>
 
-    <h1>Your Cart 🛒</h1>
-
-    <div id="cartItems"></div>
-
-    <div class="summary">
-      <span>Total</span>
-      <strong id="cartTotal">0 EGP</strong>
-    </div>
-
-    <button class="checkout-btn" onclick="checkout()">
-  Checkout
-</button>
-
-  </section>
-</main>
+</div>
 
 <script src="cart.js"></script>
-<div class="customer-info">
-  <input type="text" id="custName" placeholder="Full Name" required>
-  <input type="email" id="custEmail" placeholder="Email" required>
-  <input type="text" id="custPhone" placeholder="Phone" required>
-  <input type="text" id="custAddress" placeholder="Address" required>
-</div>
-
-<a href="confirmation.html" class="btn" onclick="saveCustomerInfo()">Checkout</a>
 </body>
 </html>

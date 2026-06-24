@@ -1,40 +1,16 @@
 const order = JSON.parse(localStorage.getItem("orderData"));
 
-const nameEl = document.getElementById("c-name");
-const phoneEl = document.getElementById("c-phone");
-const addressEl = document.getElementById("c-address");
-const totalEl = document.getElementById("c-total");
-const itemsEl = document.getElementById("c-products");
+if (order) {
+  document.getElementById("c-name").innerText = order.name;
+  document.getElementById("c-phone").innerText = order.phone;
+  document.getElementById("c-address").innerText = order.address;
+  document.getElementById("c-total").innerText = order.total;
 
-if (!order) {
-  itemsEl.innerHTML = "<li>No order found</li>";
-} else {
-  nameEl.innerText = order.customer.name;
-  phoneEl.innerText = order.customer.phone;
-  addressEl.innerText = order.customer.address;
-  totalEl.innerText = order.total + " EGP";
+  const productsUl = document.getElementById("c-products");
 
-  itemsEl.innerHTML = "";
-
-  order.items.forEach(item => {
-    itemsEl.innerHTML += `
-      <li>${item.name} × ${item.qty || 1}</li>
-    `;
+  order.cart.forEach(item => {
+    const li = document.createElement("li");
+    li.innerText = `${item.name} x${item.quantity} - ${item.price} EGP`;
+    productsUl.appendChild(li);
   });
-}
-const order = JSON.parse(localStorage.getItem("orderData"));
-
-if (!order) {
-  document.body.innerHTML = "<h2>No order found</h2>";
-} else {
-  document.getElementById("cartTotal").innerText =
-    order.total + " EGP";
-}
-const customer = JSON.parse(localStorage.getItem("customerInfo"));
-
-if (customer) {
-  document.getElementById("cName").textContent = "Name: " + customer.name;
-  document.getElementById("cEmail").textContent = "Email: " + customer.email;
-  document.getElementById("cPhone").textContent = "Phone: " + customer.phone;
-  document.getElementById("cAddress").textContent = "Address: " + customer.address;
 }
