@@ -9,19 +9,23 @@ document.getElementById("checkoutForm").addEventListener("submit", function (e) 
     return;
   }
 
+  const total = cart.reduce((sum, p) => sum + Number(p.price), 0);
+
   const order = {
     id: Date.now(),
-    customer: document.getElementById("name").value,
-    address: document.getElementById("address").value,
-    phone: document.getElementById("phone").value,
-    products: cart,
+    customer: {
+      name: document.getElementById("name").value,
+      phone: document.getElementById("phone").value,
+      address: document.getElementById("address").value
+    },
+    items: cart,
+    total: total,
     date: new Date().toLocaleString(),
     status: "Pending"
   };
 
   orders.push(order);
   localStorage.setItem("orders", JSON.stringify(orders));
-
   localStorage.removeItem("cart");
 
   alert("Order Confirmed ✅");
