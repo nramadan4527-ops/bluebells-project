@@ -1,38 +1,40 @@
-let products = JSON.parse(localStorage.getItem("products")) || [];
+const products = JSON.parse(localStorage.getItem("products")) || [];
+const grid = document.getElementById("productsGrid");
 
-// ===== ADD TO CART =====
-function addToCart(index) {
+function renderProducts() {
+  grid.innerHTML = "";
+
+  if (products.length === 0) {
+    grid.innerHTML = "<p>No products yet</p>";
+    return;
+  }
+
+  products.forEach(product => {
+    grid.innerHTML += `
+      <div class="product-card">
+        <img src="${product.image}">
+        <h3>${product.name}</h3>
+        <p>${product.price} EGP</p>
+        <button onclick="addToCart(${product.id})">Add to Cart</button>
+      </div>
+    `;
+  });
+}
+
+function addToCart(id) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const product = products.find(p => p.id === id);
 
-  let product = products[index];
-  if (!product) return;
+  const exist = cart.find(item => item.id === id);
 
-  let existing = cart.find(i => i.name === product.name);
-
-  if (existing) {
-    existing.qty = (existing.qty || 1) + 1;
+  if (exist) {
+    exist.qty += 1;
   } else {
-    cart.push({
-      name: product.name,
-      price: Number(product.price),
-      image: product.image,
-      qty: 1
-    });
+    cart.push({ ...product, qty: 1 });
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
-  updateCartCount();
+  alert("Added to cart 💙");
 }
 
-// ===== CART COUNT =====
-function updateCartCount() {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-  let total = cart.reduce((sum, i) => sum + (i.qty || 1), 0);
-
-  let counter = document.getElementById("cart-count");
-  if (counter) counter.innerText = total;
-}
-
-// ===== INIT =====
-updateCartCount();
+renderProducts();
