@@ -1,8 +1,10 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// ===== RENDER CART =====
+// ================= RENDER CART =================
 function renderCart() {
   const cartItems = document.getElementById("cartItems");
+  if (!cartItems) return;
+
   cartItems.innerHTML = "";
 
   let total = 0;
@@ -24,19 +26,19 @@ function renderCart() {
     `;
   });
 
-  document.getElementById("subtotal").innerText = total;
-  document.getElementById("cartTotal").innerText = total;
+  const subtotalEl = document.getElementById("subtotal");
+  const totalEl = document.getElementById("cartTotal");
+  const countEl = document.getElementById("cart-count");
 
-  updateCartCount();
+  if (subtotalEl) subtotalEl.innerText = total;
+  if (totalEl) totalEl.innerText = total;
+
+  if (countEl) {
+    countEl.innerText = cart.reduce((s, i) => s + (i.qty || 1), 0);
+  }
 }
 
-// ===== CART COUNT =====
-function updateCartCount() {
-  let totalQty = cart.reduce((s, i) => s + (i.qty || 1), 0);
-  document.getElementById("cart-count").innerText = totalQty;
-}
-
-// ===== CHECKOUT (FIXED FINAL VERSION) =====
+// ================= CHECKOUT (FINAL FIX) =================
 window.checkout = function () {
 
   if (!cart || cart.length === 0) {
@@ -44,30 +46,36 @@ window.checkout = function () {
     return;
   }
 
-  const name = document.getElementById("c-name-input").value;
-  const phone = document.getElementById("c-phone-input").value;
-  const address = document.getElementById("c-address-input").value;
+  const name = document.getElementById("c-name-input")?.value;
+  const phone = document.getElementById("c-phone-input")?.value;
+  const address = document.getElementById("c-address-input")?.value;
 
   if (!name || !phone || !address) {
-    alert("Fill all fields ❌");
+    alert("Please fill all fields ❌");
     return;
   }
 
   const order = {
     id: Date.now(),
-    customer: { name, phone, address },
+    customer: {
+      name: name,
+      phone: phone,
+      address: address
+    },
     items: cart,
     total: cart.reduce((s, i) => s + i.price * (i.qty || 1), 0)
   };
 
+  // save order
   localStorage.setItem("orderData", JSON.stringify(order));
 
+  // clear cart
   cart = [];
   localStorage.setItem("cart", JSON.stringify([]));
 
+  // redirect (IMPORTANT)
   window.location.href = "confirmation.html";
 };
 
-// INIT
+// ================= INIT =================
 renderCart();
-updateCartCount();
