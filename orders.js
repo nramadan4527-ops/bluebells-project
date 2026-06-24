@@ -18,16 +18,16 @@ function renderOrders() {
         <h3>🧾 Order #${order.id}</h3>
 
         <div class="order-customer">
-          <p>👤 ${order.customer?.name || "-"}</p>
-          <p>📞 ${order.customer?.phone || "-"}</p>
-          <p>📍 ${order.customer?.address || "-"}</p>
+          <p>👤 ${order.name || "-"}</p>
+          <p>📞 ${order.phone || "-"}</p>
+          <p>📍 ${order.address || "-"}</p>
         </div>
 
         <h4>🛍 Items:</h4>
 
         <div class="order-items">
-          ${(order.items || []).map(p => `
-            <p>${p.name} - ${p.price} EGP</p>
+          ${(order.cart || []).map(p => `
+            <p>${p.name} x ${p.qty} — ${p.price} EGP</p>
           `).join("")}
         </div>
 
