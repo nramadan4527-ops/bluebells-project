@@ -1,30 +1,20 @@
-const form = document.getElementById("adminForm");
-
-form.addEventListener("submit", function (e) {
+document.getElementById("adminForm").onsubmit = function (e) {
   e.preventDefault();
 
-  const name = document.getElementById("p-name").value.trim();
+  const name = document.getElementById("p-name").value;
   const price = document.getElementById("p-price").value;
-  const image = document.getElementById("p-image").value.trim();
-
-  if (!name || !price || !image) {
-    alert("Fill all fields ❌");
-    return;
-  }
+  const image = document.getElementById("p-image").value;
 
   const product = {
     id: Date.now(),
     name,
-    price: Number(price),
+    price,
     image
   };
 
   let products = JSON.parse(localStorage.getItem("products")) || [];
   products.push(product);
-
   localStorage.setItem("products", JSON.stringify(products));
 
-  alert("Product added successfully ✅");
-
-  form.reset();
-});
+  alert("ADDED ✅");
+};
