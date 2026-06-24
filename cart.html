@@ -2,57 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Cart | Bluebells</title>
+  <title>Bluebells</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="cart.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header class="navbar">
-  <div class="logo">💙 Bluebells</div>
 
+  <!-- LOGO -->
+  <div class="logo">
+    <img src="img/logo.png" alt="logo">
+    <span>Bluebells</span>
+  </div>
+
+  <!-- MENU -->
   <nav>
+    <a href="index.html">Home</a>
     <a href="shop.html">Shop</a>
-    <a href="cart.html">🛒 Cart <span id="cart-count">0</span></a>
+    <a href="cart.html">Cart <span id="cart-count">0</span></a>
   </nav>
+
 </header>
-
-<section class="cart-page">
-
-  <!-- Customer Info -->
-  <div class="customer-form">
-    <h3>📦 Customer Info</h3>
-
-    <input type="text" id="c-name-input" placeholder="Full Name">
-    <input type="text" id="c-phone-input" placeholder="Phone Number">
-    <input type="text" id="c-address-input" placeholder="Address">
-  </div>
-
-  <!-- CART ITEMS -->
-  <div id="cartItems" class="cart-items"></div>
-
-  <!-- SUMMARY -->
-  <div class="cart-summary">
-    <h2>🧾 Order Summary</h2>
-
-    <div class="summary-row">
-      <span>Subtotal</span>
-      <span id="subtotal">0 EGP</span>
-    </div>
-
-    <div class="summary-row total">
-      <span>Total</span>
-      <span id="cartTotal">0 EGP</span>
-    </div>
-
-    <button class="checkout-btn" onclick="checkout()">
-      Proceed to Checkout
-    </button>
-  </div>
-
-</section>
 
 <script src="cart.js"></script>
 </body>
