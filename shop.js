@@ -1,24 +1,26 @@
-function addToCart(id) {
+let products = JSON.parse(localStorage.getItem("products")) || [];
+const grid = document.getElementById("productsGrid");
+
+function addToCart(product) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  let products = JSON.parse(localStorage.getItem("products")) || [];
-
-  const product = products.find(p => p.id === id);
-  if (!product) return;
-
-  const exist = cart.find(item => item.id === id);
-
-  if (exist) {
-    exist.qty += 1;
-  } else {
-    cart.push({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.image,
-      qty: 1
-    });
-  }
-
+  cart.push(product);
   localStorage.setItem("cart", JSON.stringify(cart));
-  alert("Added to cart 💙");
+  alert("Added to cart");
 }
+
+function renderProducts() {
+  grid.innerHTML = "";
+
+  products.forEach((p) => {
+    grid.innerHTML += `
+      <div class="product">
+        <img src="${p.image}">
+        <h3>${p.name}</h3>
+        <p>${p.price} EGP</p>
+        <button onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
+      </div>
+    `;
+  });
+}
+
+renderProducts();

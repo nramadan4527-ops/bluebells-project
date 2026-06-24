@@ -1,21 +1,35 @@
-document.getElementById("adminForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+let products = JSON.parse(localStorage.getItem("products")) || [];
 
-  const name = document.getElementById("p-name").value;
-  const price = document.getElementById("p-price").value;
-  const image = document.getElementById("p-image").value;
+function addProduct() {
+  const name = document.getElementById("name").value;
+  const price = document.getElementById("price").value;
+  const imageInput = document.getElementById("image");
 
-  let products = JSON.parse(localStorage.getItem("products")) || [];
+  if (!name || !price || imageInput.files.length === 0) {
+    alert("Please fill all fields");
+    return;
+  }
 
-  products.push({
-    id: Date.now(),
-    name,
-    price: Number(price),
-    image
-  });
+  const file = imageInput.files[0];
+  const reader = new FileReader();
 
-  localStorage.setItem("products", JSON.stringify(products));
+  reader.onload = function () {
+    const product = {
+      name: name,
+      price: price,
+      image: reader.result // base64 image
+    };
 
-  alert("Product Added ✅");
-  this.reset();
-});
+    products.push(product);
+    localStorage.setItem("products", JSON.stringify(products));
+
+    alert("Product added successfully");
+
+    // clear inputs
+    document.getElementById("name").value = "";
+    document.getElementById("price").value = "";
+    imageInput.value = "";
+  };
+
+  reader.readAsDataURL(file);
+}
