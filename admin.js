@@ -1,37 +1,16 @@
-
 let products = JSON.parse(localStorage.getItem("products")) || [];
 
-/* ===== RENDER PRODUCTS ===== */
-function renderProducts() {
-  const container = document.getElementById("products");
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  if (products.length === 0) {
-    container.innerHTML = "<p>No products yet 🛒</p>";
-    return;
-  }
-
-  products.forEach((p, index) => {
-    container.innerHTML += `
-      <div class="admin-product">
-        <img src="${p.image}" alt="${p.name}">
-        <h4>${p.name}</h4>
-        <p>${p.price} EGP</p>
-
-        <button onclick="deleteProduct(${index})">Delete</button>
-      </div>
-    `;
-  });
-}
+const nameInput = document.getElementById("name");
+const priceInput = document.getElementById("price");
+const imageInput = document.getElementById("image");
+const productsContainer = document.getElementById("products");
+const error = document.getElementById("error");
 
 /* ===== ADD PRODUCT ===== */
 function addProduct() {
-  const name = document.getElementById("name").value.trim();
-  const price = document.getElementById("price").value.trim();
-  const imageFile = document.getElementById("image").files[0];
-  const error = document.getElementById("error");
+  let name = nameInput.value.trim();
+  let price = priceInput.value.trim();
+  let imageFile = imageInput.files[0];
 
   error.innerText = "";
 
@@ -40,10 +19,13 @@ function addProduct() {
     return;
   }
 
-  const reader = new FileReader();
+  let reader = new FileReader();
 
   reader.onload = function () {
-    const newProduct = {
+    let products = JSON.parse(localStorage.getItem("products")) || [];
+
+    let newProduct = {
+      id: Date.now(),
       name: name,
       price: Number(price),
       image: reader.result
@@ -53,22 +35,55 @@ function addProduct() {
 
     localStorage.setItem("products", JSON.stringify(products));
 
+    clearInputs();
     renderProducts();
 
-    // clear inputs
-    document.getElementById("name").value = "";
-    document.getElementById("price").value = "";
-    document.getElementById("image").value = "";
+    alert("Product added successfully 💙");
   };
 
   reader.readAsDataURL(imageFile);
 }
 
+/* ===== RENDER PRODUCTS ===== */
+function renderProducts() {
+  let products = JSON.parse(localStorage.getItem("products")) || [];
+
+  productsContainer.innerHTML = "";
+
+  if (products.length === 0) {
+    productsContainer.innerHTML = "<p>No products yet</p>";
+    return;
+  }
+
+  products.forEach((p, index) => {
+    productsContainer.innerHTML += `
+      <div class="admin-product">
+        <img src="${p.image}">
+        <h4>${p.name}</h4>
+        <p>${p.price} EGP</p>
+
+        <button onclick="deleteProduct(${index})">Delete</button>
+      </div>
+    `;
+  });
+}
+
 /* ===== DELETE PRODUCT ===== */
 function deleteProduct(index) {
+  let products = JSON.parse(localStorage.getItem("products")) || [];
+
   products.splice(index, 1);
+
   localStorage.setItem("products", JSON.stringify(products));
+
   renderProducts();
+}
+
+/* ===== CLEAR INPUTS ===== */
+function clearInputs() {
+  nameInput.value = "";
+  priceInput.value = "";
+  imageInput.value = "";
 }
 
 /* ===== INIT ===== */

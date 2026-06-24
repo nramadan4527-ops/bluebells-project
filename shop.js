@@ -1,17 +1,11 @@
 let products = JSON.parse(localStorage.getItem("products")) || [];
 
-const grid = document.getElementById("products-container");
+const grid = document.getElementById("productsGrid");
 
-/* ===== RENDER PRODUCTS ===== */
-function renderProducts(list = products) {
+function renderProducts() {
   grid.innerHTML = "";
 
-  if (list.length === 0) {
-    grid.innerHTML = "<p style='text-align:center'>No products found</p>";
-    return;
-  }
-
-  list.forEach((p, index) => {
+  products.forEach((p, index) => {
     grid.innerHTML += `
       <div class="product-card">
         <img src="${p.image}">
@@ -26,7 +20,6 @@ function renderProducts(list = products) {
   });
 }
 
-/* ===== ADD TO CART ===== */
 function addToCart(index) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -39,29 +32,25 @@ function addToCart(index) {
   } else {
     cart.push({
       name: product.name,
-      price: Number(product.price),
+      price: product.price,
       image: product.image,
       qty: 1
     });
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
-
   updateCartCount();
 
   alert("Added to cart 💙");
 }
 
-/* ===== CART COUNT ===== */
 function updateCartCount() {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let total = cart.reduce((s, i) => s + i.qty, 0);
 
-  let totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-
-  const counter = document.getElementById("cart-count");
-  if (counter) counter.innerText = totalQty;
+  let counter = document.getElementById("cart-count");
+  if (counter) counter.innerText = total;
 }
 
-/* ===== INIT ===== */
 renderProducts();
 updateCartCount();
