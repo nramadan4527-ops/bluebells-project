@@ -16,7 +16,7 @@ function renderCart() {
 
     cartItems.innerHTML += `
       <div class="cart-item">
-        <img src="${item.image}">
+        <img src="${item.image}" alt="${item.name}">
         <div>
           <h3>${item.name}</h3>
           <p>${price} EGP</p>
@@ -30,9 +30,6 @@ function renderCart() {
   subtotal.innerText = total + " EGP";
   cartTotal.innerText = total + " EGP";
   cartCount.innerText = cart.reduce((sum, i) => sum + (i.qty || 1), 0);
-
-  const debug = document.getElementById("debug-cart");
-  debug.innerText = JSON.stringify(cart, null, 2);
 }
 
 function removeItem(index) {
@@ -61,7 +58,7 @@ function checkout() {
     customer: { name, phone, address },
     items: cart,
     total: cart.reduce(
-      (sum, i) => sum + Number(i.price) * (i.qty || 1),
+      (sum, item) => sum + Number(item.price) * (item.qty || 1),
       0
     )
   };
