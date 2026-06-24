@@ -5,20 +5,24 @@ const totalEl = document.getElementById("total");
 const cartCount = document.getElementById("cart-count");
 const msg = document.getElementById("msg");
 
-// Render checkout
+// Render checkout items
 function renderCheckout() {
   itemsDiv.innerHTML = "";
+
   let total = 0;
   let count = 0;
 
   cart.forEach(item => {
-    total += item.price * item.qty;
-    count += item.qty;
+    const qty = item.qty || 1;
+    const price = Number(item.price) * qty;
+
+    total += price;
+    count += qty;
 
     itemsDiv.innerHTML += `
       <div class="checkout-item">
-        <span>${item.name} × ${item.qty}</span>
-        <span>${item.price * item.qty} EGP</span>
+        <span>${item.name} × ${qty}</span>
+        <span>${price} EGP</span>
       </div>
     `;
   });
@@ -29,26 +33,35 @@ function renderCheckout() {
 
 renderCheckout();
 
-// Submit Order
+// Submit order
 document.getElementById("checkoutForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const name = document.getElementById("name").value;
-  const address = document.getElementById("address").value;
-  const phone = document.getElementById("phone").value;
+  const name = document.getElementById("name").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+
+  if (!name || !address || !phone) {
+    msg.innerText = "Please fill all fields";
+    return;
+  }
 
   const orderData = {
-    name: name,
-    address: address,
-    phone: phone,
+    id: Date.now(),
+    name,
+    address,
+    phone,
     items: cart,
-    total: cart.reduce((sum, item) => sum + (item.price * item.qty), 0)
+    total: cart.reduce(
+      (sum, item) => sum + Number(item.price) * (item.qty || 1),
+      0
+    )
   };
 
   localStorage.setItem("orderData", JSON.stringify(orderData));
-  msg.innerText = "Order placed successfully 💙";
-
   localStorage.removeItem("cart");
+
+  msg.innerText = "Order placed successfully 💙";
 
   setTimeout(() => {
     window.location.href = "confirmation.html";
