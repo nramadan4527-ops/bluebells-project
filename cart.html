@@ -5,18 +5,15 @@
   <title>Cart | Bluebells</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Cart Style -->
   <link rel="stylesheet" href="cart.css">
 </head>
 
 <body>
 
-<!-- ===== NAVBAR ===== -->
 <header class="navbar">
   <div class="logo">
-    <img src="img/logo.png" alt="Bluebells Logo">
+    <img src="img/logo.png" alt="Bluebells">
   </div>
-
   <nav>
     <a href="shop.html">Shop</a>
     <a href="cart.html" class="active">
@@ -25,31 +22,25 @@
   </nav>
 </header>
 
-<!-- ===== CART PAGE ===== -->
-<div class="container">
+<main class="page">
+  <section class="cart-wrapper">
 
-  <div class="cart-box">
     <h1>Your Cart 🛒</h1>
 
-    <!-- CART ITEMS -->
     <div id="cartItems"></div>
 
-    <!-- TOTAL -->
     <div class="summary">
       <span>Total</span>
       <strong id="cartTotal">0 EGP</strong>
     </div>
 
-    <!-- CHECKOUT -->
     <button class="checkout-btn" onclick="checkout()">
       Checkout
     </button>
-  </div>
 
-</div>
+  </section>
+</main>
 
-<!-- ===== SCRIPT ===== -->
 <script src="cart.js"></script>
-
 </body>
 </html>
