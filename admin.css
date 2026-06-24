@@ -111,3 +111,17 @@ body{
 .card p{
   opacity:.7;
 }
+.delete-btn{
+  margin-top:10px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:6px;
+  background:#e74c3c;
+  color:#fff;
+  cursor:pointer;
+}
+
+.delete-btn:hover{
+  background:#c0392b;
+}

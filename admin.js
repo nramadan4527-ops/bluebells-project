@@ -45,7 +45,7 @@ function addProduct(){
   preview.style.display = "none";
 }
 
-/* Render */
+/* Render Products */
 function renderProducts(){
   adminProducts.innerHTML = "";
 
@@ -55,9 +55,20 @@ function renderProducts(){
         <img src="${p.image}">
         <h4>${p.name}</h4>
         <p>${p.price} EGP</p>
+
+        <button class="delete-btn" onclick="deleteProduct(${p.id})">
+          Delete
+        </button>
       </div>
     `;
   });
+}
+
+/* Delete */
+function deleteProduct(id){
+  products = products.filter(p => p.id !== id);
+  localStorage.setItem("products", JSON.stringify(products));
+  renderProducts();
 }
 
 renderProducts();
