@@ -4,61 +4,52 @@
   <meta charset="UTF-8">
   <title>Cart | Bluebells</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Cart Style -->
   <link rel="stylesheet" href="cart.css">
- 
 </head>
 
 <body>
 
+<!-- ===== NAVBAR ===== -->
 <header class="navbar">
   <div class="logo">
-    <img src="img/logo.png" alt="Bluebells">
+    <img src="img/logo.png" alt="Bluebells Logo">
   </div>
 
   <nav>
     <a href="shop.html">Shop</a>
-    <a class="active">Cart <span id="cart-count">0</span></a>
+    <a href="cart.html" class="active">
+      Cart <span id="cart-count">0</span>
+    </a>
   </nav>
 </header>
 
-<section class="cart-page">
+<!-- ===== CART PAGE ===== -->
+<div class="container">
 
-  <!-- CART ITEMS -->
-  <div id="cartItems"></div>
-<div id="cartTotal" class="cart-total"></div>
-  <!-- SUMMARY -->
-  <div class="cart-summary">
+  <div class="cart-box">
+    <h1>Your Cart 🛒</h1>
 
-    <h3>Order Summary</h3>
+    <!-- CART ITEMS -->
+    <div id="cartItems"></div>
 
-    <div class="summary-row">
-      <span>Subtotal</span>
-      <span id="subtotal">0 EGP</span>
-    </div>
-
-    <div class="summary-row total">
+    <!-- TOTAL -->
+    <div class="summary">
       <span>Total</span>
-      <span id="cartTotal">0 EGP</span>
+      <strong id="cartTotal">0 EGP</strong>
     </div>
 
-    <div class="form">
-      <input id="c-name-input" placeholder="Full Name">
-      <input id="c-phone-input" placeholder="Phone Number">
-      <input id="c-address-input" placeholder="Address">
-    </div>
-
-    <button onclick="checkout()">Checkout 💙</button>
-
+    <!-- CHECKOUT -->
+    <button class="checkout-btn" onclick="checkout()">
+      Checkout
+    </button>
   </div>
 
-</section>
+</div>
 
+<!-- ===== SCRIPT ===== -->
 <script src="cart.js"></script>
-<div id="cartItems"></div>
 
-<span id="subtotal">0</span>
-<span id="cartTotal">0</span>
-<span id="cart-count">0</span>
-<a href="checkout.html" class="checkout-btn">Checkout</a>
 </body>
 </html>
