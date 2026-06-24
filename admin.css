@@ -125,3 +125,18 @@ body{
 .delete-btn:hover{
   background:#c0392b;
 }
+.order-card{
+  background:#f9f9f9;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+
+.order-card h4{
+  margin-bottom:6px;
+}
+
+.order-card ul{
+  margin-top:10px;
+  padding-left:18px;
+}

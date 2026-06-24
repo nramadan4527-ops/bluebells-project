@@ -1,3 +1,5 @@
+const adminOrders = document.getElementById("adminOrders");
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
 let products = JSON.parse(localStorage.getItem("products")) || [];
 
 const adminProducts = document.getElementById("adminProducts");
@@ -72,3 +74,28 @@ function deleteProduct(id){
 }
 
 renderProducts();
+function renderOrders(){
+  adminOrders.innerHTML = "";
+
+  if(orders.length === 0){
+    adminOrders.innerHTML = "<p>No orders yet</p>";
+    return;
+  }
+
+  orders.forEach(o=>{
+    adminOrders.innerHTML += `
+      <div class="order-card">
+        <h4>${o.name}</h4>
+        <p>📞 ${o.phone}</p>
+        <p>📍 ${o.address}</p>
+        <p><strong>Total:</strong> ${o.total} EGP</p>
+
+        <ul>
+          ${o.cart.map(p=>`<li>${p.name} x ${p.qty}</li>`).join("")}
+        </ul>
+      </div>
+    `;
+  });
+}
+
+renderOrders();
