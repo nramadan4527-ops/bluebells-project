@@ -12,34 +12,36 @@
 <body>
 
 <header class="navbar">
-  <div class="logo">💙 Bluebells</div>
+  <div class="logo-box">
+    <img src="img/logo.png" alt="Bluebells Logo" class="logo-img">
+  </div>
 
   <nav>
     <a href="index.html">Home</a>
     <a href="shop.html" class="active">Shop</a>
-    <a href="cart.html">
-      🛒 Cart <span id="cart-count">0</span>
-    </a>
+    <a href="cart.html">Cart <span id="cart-count">0</span></a>
   </nav>
 </header>
 
 <!-- HERO -->
 <section class="shop-hero">
-  <h1>Discover Elegant Accessories ✨</h1>
-  <p>Minimal • Modern • Handmade pieces just for you</p>
+  <h1>Discover Elegant Accessories</h1>
+  <p>Minimal • Handmade • Timeless Beauty</p>
 </section>
 
-<!-- SEARCH BAR -->
+<!-- SEARCH -->
 <section class="shop-controls">
-  <input type="text" id="search" placeholder="Search for rings, bracelets... 🔍">
+  <input type="text" id="search" placeholder="Search rings, bracelets, necklaces…">
 </section>
 
 <!-- PRODUCTS -->
 <section class="shop-container">
   <div id="productsGrid"></div>
 </section>
+
 <script src="productAPI.js"></script>
 <script src="cart-manager.js"></script>
 <script src="shop.js"></script>
+
 </body>
 </html>

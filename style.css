@@ -103,7 +103,11 @@ body {
   margin-bottom: 15px;
   font-family: "Playfair Display", serif;
   background: linear-gradient(90deg, #b89b5e, #6b4f2c);
-  -webkit-background-clip: text;
+  .shop-hero h1 {
+  font-size: 42px;
+  font-family: "Playfair Display", serif;
+  color: #8c6a3f; /* لون ثابت */
+}
   -webkit-text-fill-color: transparent;
 }
 
