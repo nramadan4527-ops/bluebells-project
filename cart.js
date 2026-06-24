@@ -5,23 +5,22 @@ const subtotal = document.getElementById("subtotal");
 const cartTotal = document.getElementById("cartTotal");
 const cartCount = document.getElementById("cart-count");
 
-// ===== Render Cart =====
+// ===== RENDER CART =====
 function renderCart() {
   cartItems.innerHTML = "";
 
   let total = 0;
 
   cart.forEach((item, index) => {
-
-    let price = Number(item.price) * (item.qty || 1);
-    total += price;
+    let itemTotal = Number(item.price) * (item.qty || 1);
+    total += itemTotal;
 
     cartItems.innerHTML += `
       <div class="cart-item">
         <img src="${item.image}">
         <div>
           <h3>${item.name}</h3>
-          <p>${price} EGP</p>
+          <p>${itemTotal} EGP</p>
           <p>Qty: ${item.qty || 1}</p>
           <button onclick="removeItem(${index})">Remove</button>
         </div>
@@ -37,17 +36,15 @@ function renderCart() {
   }
 }
 
-// ===== Remove Item =====
+// ===== REMOVE ITEM =====
 function removeItem(index) {
   cart.splice(index, 1);
   localStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
 
-// ===== CHECKOUT (FIXED 100%) =====
+// ===== CHECKOUT =====
 function checkout() {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
   if (cart.length === 0) {
     alert("Cart is empty 🛒");
     return;
@@ -58,7 +55,7 @@ function checkout() {
   const address = document.getElementById("c-address-input").value;
 
   if (!name || !phone || !address) {
-    alert("Please fill all info ❌");
+    alert("Please fill all customer info ❌");
     return;
   }
 
@@ -73,11 +70,8 @@ function checkout() {
   orders.push(order);
 
   localStorage.setItem("orders", JSON.stringify(orders));
-
-  // clear cart AFTER saving
   localStorage.setItem("cart", JSON.stringify([]));
 
-  // redirect
   window.location.href = "confirmation.html";
 }
 
