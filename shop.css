@@ -1,55 +1,70 @@
-/* ===== GLOBAL ===== */
+/* ================== GLOBAL ================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
 body {
   background: #fdf6e3;
   color: #2e2a25;
+  min-height: 100vh;
 }
 
-/* ===== NAVBAR ===== */
+/* ================== NAVBAR ================== */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
-  background: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.75);
   backdrop-filter: blur(12px);
   position: sticky;
   top: 0;
+  z-index: 100;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* LOGO */
+.logo-box {
+  display: flex;
+  align-items: center;
 }
 
 .logo-img {
-  width: 180px;
+  width: 170px;
+  max-width: 100%;
+  display: block;
 }
 
-/* ===== NAV LINKS ===== */
-nav {
+/* NAV */
+.navbar nav {
   display: flex;
+  align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
-nav a {
+.navbar nav a {
   text-decoration: none;
   color: #5a4a2f;
   padding: 8px 14px;
   border-radius: 10px;
-  transition: 0.3s;
+  transition: 0.3s ease;
+  white-space: nowrap;
 }
 
-nav a:hover,
-nav a.active {
+.navbar nav a:hover,
+.navbar nav a.active {
   background: rgba(184,155,94,0.25);
 }
 
-/* ===== HERO ===== */
+/* ================== HERO ================== */
 .hero {
   text-align: center;
-  padding: 60px 20px;
+  padding: 70px 20px 40px;
 }
 
 .hero h1 {
@@ -58,10 +73,11 @@ nav a.active {
 }
 
 .hero p {
+  margin-top: 10px;
   color: #6b5a3c;
 }
 
-/* ===== PRODUCTS GRID ===== */
+/* ================== PRODUCTS GRID ================== */
 .products {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -69,14 +85,14 @@ nav a.active {
   padding: 40px;
 }
 
-/* ===== PRODUCT CARD (IMPORTANT PART) ===== */
+/* PRODUCT CARD */
 .product-card {
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.85);
   border-radius: 20px;
   padding: 15px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  transition: 0.3s;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  transition: 0.3s ease;
 }
 
 .product-card:hover {
@@ -91,7 +107,7 @@ nav a.active {
 }
 
 .product-card h3 {
-  margin: 10px 0;
+  margin: 10px 0 5px;
   color: #6b4f2c;
 }
 
@@ -100,7 +116,6 @@ nav a.active {
   font-weight: bold;
 }
 
-/* ===== BUTTON ===== */
 .product-card button {
   margin-top: 10px;
   padding: 10px 15px;
@@ -109,15 +124,44 @@ nav a.active {
   background: #8c6a3f;
   color: white;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .product-card button:hover {
   background: #6b4f2c;
 }
 
-/* ===== FOOTER ===== */
+/* ================== FOOTER ================== */
 footer {
   text-align: center;
   padding: 20px;
   color: #6b4f2c;
+  background: rgba(255,248,235,0.85);
+}
+
+/* ================== MOBILE ================== */
+@media (max-width: 768px) {
+
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .logo-img {
+    width: 140px;
+  }
+
+  .navbar nav {
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .products {
+    padding: 20px;
+    gap: 15px;
+  }
 }
