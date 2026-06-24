@@ -17,8 +17,6 @@ if (!order) {
   itemsEl.innerHTML = "";
 
   order.items.forEach(item => {
-    itemsEl.innerHTML += `
-      <li>${item.name} × ${item.qty || 1}</li>
-    `;
+    itemsEl.innerHTML += `<li>${item.name} × ${item.qty || 1}</li>`;
   });
 }

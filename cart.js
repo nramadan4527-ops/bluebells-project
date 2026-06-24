@@ -1,6 +1,6 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// ===== RENDER CART =====
+// ===== RENDER =====
 function renderCart() {
   const cartItems = document.getElementById("cartItems");
   cartItems.innerHTML = "";
@@ -30,7 +30,7 @@ function renderCart() {
   updateCartCount();
 }
 
-// ===== CART COUNT =====
+// ===== COUNT =====
 function updateCartCount() {
   let totalQty = cart.reduce((s, i) => s + (i.qty || 1), 0);
   document.getElementById("cart-count").innerText = totalQty;
@@ -38,6 +38,8 @@ function updateCartCount() {
 
 // ===== CHECKOUT =====
 function checkout() {
+
+  console.log("checkout clicked");
 
   if (cart.length === 0) {
     alert("Cart is empty 🛒");
@@ -60,15 +62,14 @@ function checkout() {
     total: cart.reduce((s, i) => s + i.price * (i.qty || 1), 0)
   };
 
-  // 🔥 أهم سطر (ده اللي اتعدل)
   localStorage.setItem("orderData", JSON.stringify(order));
 
-  // clear cart
   cart = [];
   localStorage.setItem("cart", JSON.stringify([]));
 
   window.location.href = "confirmation.html";
 }
 
+// ===== INIT =====
 renderCart();
 updateCartCount();
