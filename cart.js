@@ -59,3 +59,13 @@ function checkout() {
   // روحي على صفحة التأكيد
   window.location.href = "confirmation.html";
 }
+function saveCustomerInfo() {
+  const customer = {
+    name: document.getElementById("custName").value,
+    email: document.getElementById("custEmail").value,
+    phone: document.getElementById("custPhone").value,
+    address: document.getElementById("custAddress").value
+  };
+
+  localStorage.setItem("customerInfo", JSON.stringify(customer));
+}

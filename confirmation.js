@@ -30,3 +30,11 @@ if (!order) {
   document.getElementById("cartTotal").innerText =
     order.total + " EGP";
 }
+const customer = JSON.parse(localStorage.getItem("customerInfo"));
+
+if (customer) {
+  document.getElementById("cName").textContent = "Name: " + customer.name;
+  document.getElementById("cEmail").textContent = "Email: " + customer.email;
+  document.getElementById("cPhone").textContent = "Phone: " + customer.phone;
+  document.getElementById("cAddress").textContent = "Address: " + customer.address;
+}
