@@ -1,80 +1,54 @@
-// ===== LOAD PRODUCTS =====
 let products = JSON.parse(localStorage.getItem("products")) || [];
-const adminProducts = document.getElementById("adminProducts");
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
 
-// ===== ADD PRODUCT =====
+const productsDiv = document.getElementById("products");
+const ordersDiv = document.getElementById("orders");
+
 function addProduct() {
-  const nameInput = document.getElementById("name");
-  const priceInput = document.getElementById("price");
-  const imageInput = document.getElementById("image");
+  const name = document.getElementById("name").value;
+  const price = Number(document.getElementById("price").value);
+  const image = document.getElementById("image").value;
 
-  const name = nameInput.value.trim();
-  const price = priceInput.value.trim();
-
-  if (!name || !price || imageInput.files.length === 0) {
+  if (!name || !price || !image) {
     alert("Fill all fields");
     return;
   }
 
-  const reader = new FileReader();
+  products.push({
+    id: Date.now(),
+    name,
+    price,
+    image
+  });
 
-  reader.onload = function () {
-    const product = {
-      id: Date.now(),
-      name: name,
-      price: Number(price), // ✅ مهم جداً
-      image: reader.result
-    };
-
-    products.push(product);
-    localStorage.setItem("products", JSON.stringify(products));
-
-    renderAdminProducts();
-
-    // clear form
-    nameInput.value = "";
-    priceInput.value = "";
-    imageInput.value = "";
-
-    alert("Product added successfully ✅");
-  };
-
-  reader.readAsDataURL(imageInput.files[0]);
+  localStorage.setItem("products", JSON.stringify(products));
+  renderProducts();
 }
 
-// ===== RENDER ADMIN PRODUCTS =====
-function renderAdminProducts() {
-  if (!adminProducts) return;
-
-  adminProducts.innerHTML = "";
-
-  if (products.length === 0) {
-    adminProducts.innerHTML = "<p>No products yet</p>";
-    return;
-  }
-
-  products.forEach((p, index) => {
-    adminProducts.innerHTML += `
-      <div class="admin-product">
-        <img src="${p.image}" alt="${p.name}">
-        <div class="admin-product-info">
-          <h4>${p.name}</h4>
-          <p>${p.price} EGP</p>
-          <button onclick="deleteProduct(${index})">Delete</button>
-        </div>
+function renderProducts() {
+  productsDiv.innerHTML = "";
+  products.forEach(p => {
+    productsDiv.innerHTML += `
+      <div class="card">
+        <img src="${p.image}">
+        <h4>${p.name}</h4>
+        <p>${p.price} EGP</p>
       </div>
     `;
   });
 }
 
-// ===== DELETE PRODUCT =====
-function deleteProduct(index) {
-  if (!confirm("Delete this product?")) return;
-
-  products.splice(index, 1);
-  localStorage.setItem("products", JSON.stringify(products));
-  renderAdminProducts();
+function renderOrders() {
+  ordersDiv.innerHTML = "";
+  orders.forEach(o => {
+    ordersDiv.innerHTML += `
+      <div class="order">
+        <h4>${o.name} - ${o.phone}</h4>
+        <p>Total: ${o.total} EGP</p>
+      </div>
+    `;
+  });
 }
 
-// ===== INIT =====
-renderAdminProducts();
+renderProducts();
+renderOrders();
