@@ -1,40 +1,44 @@
 let orders = JSON.parse(localStorage.getItem("orders")) || [];
+const ordersList = document.getElementById("ordersList");
 
-const container = document.getElementById("ordersList");
-
-// ===== Render Orders =====
 function renderOrders() {
-  container.innerHTML = "";
+  ordersList.innerHTML = "";
 
-  if (!orders || orders.length === 0) {
-    container.innerHTML = "<p style='color:#94a3b8'>No orders yet 😢</p>";
+  if (orders.length === 0) {
+    ordersList.innerHTML = "<p class='empty'>No orders yet</p>";
     return;
   }
 
-  orders.forEach((order, i) => {
-    container.innerHTML += `
+  orders.forEach((order, index) => {
+    ordersList.innerHTML += `
       <div class="order-card">
 
-        <h3>🧾 Order #${order.id}</h3>
-
-        <div class="order-customer">
-          <p>👤 ${order.name || "-"}</p>
-          <p>📞 ${order.phone || "-"}</p>
-          <p>📍 ${order.address || "-"}</p>
+        <div class="order-head">
+          <h3>Order #${order.id}</h3>
+          <span>${order.date}</span>
         </div>
 
-        <h4>🛍 Items:</h4>
+        <div class="customer">
+          <p><strong>Name:</strong> ${order.customer.name}</p>
+          <p><strong>Phone:</strong> ${order.customer.phone}</p>
+          <p><strong>Address:</strong> ${order.customer.address}</p>
+        </div>
 
-        <div class="order-items">
-          ${(order.cart || []).map(p => `
-            <p>${p.name} x ${p.qty} — ${p.price} EGP</p>
+        <div class="items">
+          ${order.items.map(item => `
+            <div class="item">
+              <span>${item.name}</span>
+              <span>${item.price} EGP</span>
+            </div>
           `).join("")}
         </div>
 
-        <h4>💰 Total: ${order.total || 0} EGP</h4>
+        <div class="total">
+          Total: ${order.total} EGP
+        </div>
 
-        <button class="delete-btn" onclick="deleteOrder(${i})">
-          Delete
+        <button class="delete" onclick="deleteOrder(${index})">
+          Delete Order
         </button>
 
       </div>
@@ -42,14 +46,12 @@ function renderOrders() {
   });
 }
 
-// ===== Delete Order =====
-function deleteOrder(i) {
+function deleteOrder(index) {
   if (!confirm("Delete this order?")) return;
 
-  orders.splice(i, 1);
+  orders.splice(index, 1);
   localStorage.setItem("orders", JSON.stringify(orders));
   renderOrders();
 }
 
-// ===== Init =====
 renderOrders();

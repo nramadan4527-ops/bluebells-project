@@ -2,26 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Orders Dashboard | Admin</title>
-
-  <link rel="stylesheet" href="orders.css">
+  <title>Admin Orders</title>
+  <link rel="stylesheet" href="admin-orders.css">
 </head>
-
 <body>
 
-<header class="navbar">
-  <div class="logo">Admin Orders 📊</div>
-  <nav>
-    <a href="admin.html">Admin</a>
-    <a href="orders.html">Orders</a>
-  </nav>
-</header>
+  <div class="admin-layout">
 
-<section class="orders">
-  <h1>All Orders</h1>
-  <div id="ordersList"></div>
-</section>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>Admin</h2>
+      <a href="admin.html">Products</a>
+      <a href="admin-orders.html" class="active">Orders</a>
+    </aside>
 
-<script src="orders.js"></script>
+    <!-- Content -->
+    <main class="content">
+      <h1>Orders</h1>
+      <div id="ordersList"></div>
+    </main>
+
+  </div>
+
+  <script src="admin-orders.js"></script>
 </body>
 </html>
