@@ -1,47 +1,46 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// ===== CHECKOUT (FORCE WORK) =====
-function checkout() {
-  console.log("checkout clicked");
+// ===== RENDER CART =====
+function renderCart() {
+  const cartItems = document.getElementById("cartItems");
+  if (!cartItems) return;
 
-  const name = document.getElementById("c-name-input");
-  const phone = document.getElementById("c-phone-input");
-  const address = document.getElementById("c-address-input");
+  cartItems.innerHTML = "";
 
-  if (!name || !phone || !address) {
-    alert("Inputs not found");
+  if (cart.length === 0) {
+    cartItems.innerHTML = "<p>Your cart is empty 🛒</p>";
     return;
   }
 
-  if (!name.value || !phone.value || !address.value) {
-    alert("Fill all fields");
-    return;
-  }
+  let total = 0;
 
-  const order = {
-    id: Date.now(),
-    customer: {
-      name: name.value,
-      phone: phone.value,
-      address: address.value
-    },
-    items: cart,
-    total: cart.reduce((s, i) => s + i.price * (i.qty || 1), 0)
-  };
+  cart.forEach(item => {
+    const itemTotal = item.price * item.qty;
+    total += itemTotal;
 
-  localStorage.setItem("orderData", JSON.stringify(order));
+    cartItems.innerHTML += `
+      <div class="cart-item">
+        <img src="${item.image}">
+        <div>
+          <h3>${item.name}</h3>
+          <p>${item.price} EGP</p>
+          <p>Qty: ${item.qty}</p>
+        </div>
+      </div>
+    `;
+  });
 
-  // clear cart
-  localStorage.setItem("cart", JSON.stringify([]));
+  document.getElementById("subtotal").innerText = total + " EGP";
+  document.getElementById("cartTotal").innerText = total + " EGP";
+}
 
-  // FORCE REDIRECT (no conditions)
-  window.location.assign("confirmation.html");
+// ===== CART COUNT =====
+function updateCartCount() {
+  const count = cart.reduce((sum, i) => sum + i.qty, 0);
+  const counter = document.getElementById("cart-count");
+  if (counter) counter.innerText = count;
 }
 
 // ===== INIT =====
-document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.querySelector("button");
-  if (btn) {
-    btn.addEventListener("click", checkout);
-  }
-});
+renderCart();
+updateCartCount();
