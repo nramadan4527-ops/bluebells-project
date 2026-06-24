@@ -40,3 +40,22 @@ function removeFromCart(index) {
 }
 
 renderCart();
+function checkout() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  if (cart.length === 0) {
+    alert("Cart is empty 🛒");
+    return;
+  }
+
+  // خزّني بيانات الأوردر
+  const orderData = {
+    items: cart,
+    total: cart.reduce((sum, i) => sum + i.price * (i.qty || 1), 0)
+  };
+
+  localStorage.setItem("orderData", JSON.stringify(orderData));
+
+  // روحي على صفحة التأكيد
+  window.location.href = "confirmation.html";
+}

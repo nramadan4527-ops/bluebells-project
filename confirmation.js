@@ -22,3 +22,11 @@ if (!order) {
     `;
   });
 }
+const order = JSON.parse(localStorage.getItem("orderData"));
+
+if (!order) {
+  document.body.innerHTML = "<h2>No order found</h2>";
+} else {
+  document.getElementById("cartTotal").innerText =
+    order.total + " EGP";
+}
