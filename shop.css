@@ -1,74 +1,96 @@
+/* ===== GLOBAL ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
 body {
-  background: linear-gradient(-45deg, #fdf6e3, #efe2c8, #e7d3a3);
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #fdf6e3, #efe2c8, #e7d3a3, #fdf6e3);
   background-size: 400% 400%;
-  animation: bg 15s ease infinite;
+  animation: bgMove 18s ease infinite;
+  color: #2e2a25;
 }
 
-@keyframes bg {
+@keyframes bgMove {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* ===== NAVBAR ===== */
+/* ===== NAVBAR (FIXED & CLEAN) ===== */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 18px 30px;
-  backdrop-filter: blur(10px);
-  background: rgba(255,255,255,0.6);
+  background: rgba(255, 248, 235, 0.75);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
+/* ===== BIG LOGO ===== */
+.logo-box {
+  padding: 18px 30px;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+
 .logo-img {
-  width: 180px;
+  width: 200px;   /* 🔥 كبرنا اللوجو هنا */
+  display: block;
 }
 
 /* ===== NAV LINKS ===== */
-nav {
+.navbar nav {
   display: flex;
   gap: 12px;
+  align-items: center;
 }
 
-nav a {
+.navbar nav a {
   text-decoration: none;
   color: #5a4a2f;
-  padding: 8px 14px;
-  border-radius: 10px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  transition: 0.3s ease;
+  font-weight: 500;
 }
 
-nav a:hover,
-nav a.active {
-  background: rgba(184,155,94,0.3);
+.navbar nav a:hover,
+.navbar nav a.active {
+  background: rgba(184, 155, 94, 0.25);
+  transform: translateY(-2px);
 }
 
 /* ===== HERO ===== */
 .shop-hero {
   text-align: center;
-  padding: 60px 20px;
+  padding: 80px 20px 40px;
 }
 
 .shop-hero h1 {
-  font-size: 40px;
+  font-size: 42px;
   color: #8c6a3f;
+}
+
+.shop-hero p {
+  color: #6b5a3c;
+  margin-top: 8px;
 }
 
 /* ===== PRODUCTS ===== */
 .products {
+  padding: 50px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 25px;
-  padding: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
 }
 
 /* ===== PRODUCT CARD ===== */
@@ -77,12 +99,7 @@ nav a.active {
   padding: 20px;
   border-radius: 20px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  transition: 0.3s;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
 .product-card img {
@@ -90,19 +107,7 @@ nav a.active {
   border-radius: 15px;
 }
 
-.product-card button {
-  margin-top: 10px;
-  padding: 10px;
-  width: 100%;
-  border: none;
-  border-radius: 10px;
-  background: #8c6a3f;
-  color: white;
-  cursor: pointer;
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  margin-top: 30px;
+.product-card h3 {
+  margin: 10px 0;
+  color: #6b4f2c;
 }
