@@ -2,20 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin</title>
+  <title>Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
-<h2>Add Product</h2>
+<div class="admin-container">
+  <h1>Add Product</h1>
 
-<form id="adminForm">
-  <input type="text" id="p-name" placeholder="Name">
-  <input type="number" id="p-price" placeholder="Price">
-  <input type="text" id="p-image" placeholder="Image URL">
-  <button type="submit">Add</button>
-</form>
+  <form id="adminForm">
+    <input type="text" id="p-name" placeholder="Product Name" required>
+    <input type="number" id="p-price" placeholder="Price" required>
+    <input type="text" id="p-image" placeholder="Image URL" required>
 
-<!-- ❗❗ لازم يكون آخر حاجة قبل body -->
+    <button type="submit">Add Product</button>
+  </form>
+</div>
+
 <script src="admin.js"></script>
 </body>
 </html>

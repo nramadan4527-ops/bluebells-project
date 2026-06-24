@@ -1,20 +1,21 @@
-document.getElementById("adminForm").onsubmit = function (e) {
+document.getElementById("adminForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
   const name = document.getElementById("p-name").value;
   const price = document.getElementById("p-price").value;
   const image = document.getElementById("p-image").value;
 
-  const product = {
+  let products = JSON.parse(localStorage.getItem("products")) || [];
+
+  products.push({
     id: Date.now(),
     name,
-    price,
+    price: Number(price),
     image
-  };
+  });
 
-  let products = JSON.parse(localStorage.getItem("products")) || [];
-  products.push(product);
   localStorage.setItem("products", JSON.stringify(products));
 
-  alert("ADDED ✅");
-};
+  alert("Product Added ✅");
+  this.reset();
+});
