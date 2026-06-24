@@ -1,26 +1,21 @@
-/* ===== Load Products ===== */
+// ===== Load Products =====
 let products = JSON.parse(localStorage.getItem("products")) || [];
 
 const grid = document.getElementById("productsGrid");
 const searchInput = document.getElementById("search");
 
-/* ===== Render Products ===== */
+// ===== Render =====
 function renderProducts(list = products) {
   grid.innerHTML = "";
 
-  list.forEach(product => {
+  list.forEach((p, index) => {
     grid.innerHTML += `
       <div class="product-card">
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>${product.price} EGP</p>
+        <img src="${p.image}">
+        <h3>${p.name}</h3>
+        <p>${p.price} EGP</p>
 
-        <button onclick='addToCart({
-          id: ${product.id},
-          name: "${product.name}",
-          price: ${product.price},
-          image: "${product.image}"
-        })'>
+        <button onclick="addToCart(products[${index}])">
           Add to Cart 🛒
         </button>
       </div>
@@ -28,14 +23,15 @@ function renderProducts(list = products) {
   });
 }
 
-/* ===== SEARCH ===== */
+// ===== Search =====
 searchInput.addEventListener("input", function () {
-  const value = this.value.toLowerCase();
+  const val = this.value.toLowerCase();
   const filtered = products.filter(p =>
-    p.name.toLowerCase().includes(value)
+    p.name.toLowerCase().includes(val)
   );
   renderProducts(filtered);
 });
 
-/* ===== INIT ===== */
+// ===== Init =====
 renderProducts();
+updateCartCount();

@@ -2,8 +2,7 @@
 let cart = [];
 
 function initCart() {
-  const stored = localStorage.getItem("cart");
-  cart = stored ? JSON.parse(stored) : [];
+  cart = JSON.parse(localStorage.getItem("cart")) || [];
   updateCartCount();
 }
 
@@ -13,14 +12,13 @@ function saveCart() {
 }
 
 function addToCart(product) {
-  console.log("ADD CLICKED", product); // 🔥 مهم
-
   if (!product || !product.id) {
-    alert("Product data missing");
+    alert("Product data missing ❌");
+    console.log(product);
     return;
   }
 
-  const existing = cart.find(item => item.id === product.id);
+  const existing = cart.find(i => i.id === product.id);
 
   if (existing) {
     existing.qty += 1;
@@ -39,7 +37,7 @@ function addToCart(product) {
 }
 
 function updateCartCount() {
-  const count = cart.reduce((sum, i) => sum + i.qty, 0);
+  const count = cart.reduce((s, i) => s + i.qty, 0);
   document.querySelectorAll("#cart-count")
     .forEach(el => el.innerText = count);
 }
