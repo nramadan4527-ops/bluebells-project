@@ -1,36 +1,29 @@
-function checkout() {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+document.getElementById("checkoutForm").addEventListener("submit", function (e) {
+  e.preventDefault();
 
   if (cart.length === 0) {
-    alert("Cart is empty 🛒");
-    return;
-  }
-
-  const name = document.getElementById("c-name-input").value;
-  const phone = document.getElementById("c-phone-input").value;
-  const address = document.getElementById("c-address-input").value;
-
-  if (!name || !phone || !address) {
-    alert("Please fill all info ❌");
+    alert("Cart is empty");
     return;
   }
 
   const order = {
     id: Date.now(),
-    customer: { name, phone, address },
-    items: cart,
-    total: cart.reduce((sum, i) => sum + (i.price * (i.qty || 1)), 0)
+    customer: document.getElementById("name").value,
+    address: document.getElementById("address").value,
+    phone: document.getElementById("phone").value,
+    products: cart,
+    date: new Date().toLocaleString(),
+    status: "Pending"
   };
 
-  let orders = JSON.parse(localStorage.getItem("orders")) || [];
   orders.push(order);
-
   localStorage.setItem("orders", JSON.stringify(orders));
 
-  // clear cart AFTER saving order
-  localStorage.setItem("cart", JSON.stringify([]));
+  localStorage.removeItem("cart");
 
-  alert("Order placed successfully 💙");
-
-  window.location.href = "confirmation.html";
-}
+  alert("Order Confirmed ✅");
+  window.location.href = "index.html";
+});
