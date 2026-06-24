@@ -5,7 +5,6 @@ const totalEl = document.getElementById("total");
 const cartCount = document.getElementById("cart-count");
 const msg = document.getElementById("msg");
 
-// Render checkout items
 function renderCheckout() {
   itemsDiv.innerHTML = "";
 
@@ -33,7 +32,6 @@ function renderCheckout() {
 
 renderCheckout();
 
-// Submit order
 document.getElementById("checkoutForm").addEventListener("submit", function (e) {
   e.preventDefault();
 

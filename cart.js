@@ -7,6 +7,7 @@ const cartCount = document.getElementById("cart-count");
 
 function renderCart() {
   cartItems.innerHTML = "";
+
   let total = 0;
 
   cart.forEach((item, index) => {
