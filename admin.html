@@ -9,24 +9,29 @@
 
 <div class="admin">
 
-  <!-- Sidebar -->
   <aside class="sidebar">
     <h2>ADMIN</h2>
-    <p>Dashboard</p>
-    <p>Products</p>
-    <p>Orders</p>
+    <span>Products</span>
+    <span>Orders</span>
   </aside>
 
-  <!-- Content -->
   <main class="content">
 
     <!-- Add Product -->
     <section class="box">
       <h3>Add Product</h3>
+
       <div class="form">
         <input id="name" placeholder="Product name">
         <input id="price" type="number" placeholder="Price">
-        <input id="image" placeholder="Image URL">
+
+        <label class="upload">
+          Choose Image
+          <input type="file" id="image" accept="image/*">
+        </label>
+
+        <img id="preview" class="preview" />
+
         <button onclick="addProduct()">Add Product</button>
       </div>
     </section>
@@ -34,13 +39,7 @@
     <!-- Products -->
     <section class="box">
       <h3>Products</h3>
-      <div class="products" id="products"></div>
-    </section>
-
-    <!-- Orders -->
-    <section class="box">
-      <h3>Orders</h3>
-      <div class="orders" id="orders"></div>
+      <div class="products" id="adminProducts"></div>
     </section>
 
   </main>
