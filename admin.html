@@ -2,38 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin | Bluebells</title>
+  <title>Admin | Add Product</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
-<header class="admin-navbar">
-  <h1>Bluebells Admin</h1>
-</header>
+<h2>Add New Product</h2>
 
-<main class="admin-wrapper">
+<form id="adminForm">
+  <input type="text" id="p-name" placeholder="Product Name" required>
+  <input type="number" id="p-price" placeholder="Price" required>
+  <input type="text" id="p-image" placeholder="Image URL" required>
 
-  <!-- ADD PRODUCT -->
-  <section class="card">
-    <h2>Add Product</h2>
-
-    <input type="text" id="name" placeholder="Product name">
-    <input type="number" id="price" placeholder="Price">
-    <input type="file" id="image" accept="image/*">
-
-    <button onclick="addProduct()">Add</button>
-    <p id="error"></p>
-  </section>
-
-  <!-- PRODUCT LIST -->
-  <section class="card">
-    <h2>Products</h2>
-    <div id="products"></div>
-  </section>
-
-</main>
+  <button type="submit">Add Product</button>
+</form>
 
 <script src="admin.js"></script>
 </body>

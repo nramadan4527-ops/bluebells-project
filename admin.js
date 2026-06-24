@@ -3,12 +3,12 @@ const form = document.getElementById("adminForm");
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const name = document.getElementById("p-name").value;
+  const name = document.getElementById("p-name").value.trim();
   const price = document.getElementById("p-price").value;
-  const image = document.getElementById("p-image").value;
+  const image = document.getElementById("p-image").value.trim();
 
   if (!name || !price || !image) {
-    alert("Fill all fields");
+    alert("Fill all fields ❌");
     return;
   }
 
@@ -25,5 +25,6 @@ form.addEventListener("submit", function (e) {
   localStorage.setItem("products", JSON.stringify(products));
 
   alert("Product added successfully ✅");
+
   form.reset();
 });
