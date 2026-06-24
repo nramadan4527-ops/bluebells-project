@@ -9,8 +9,6 @@ document.getElementById("checkoutForm").addEventListener("submit", function (e) 
     return;
   }
 
-  const total = cart.reduce((sum, p) => sum + Number(p.price), 0);
-
   const order = {
     id: Date.now(),
     customer: {
@@ -19,15 +17,16 @@ document.getElementById("checkoutForm").addEventListener("submit", function (e) 
       address: document.getElementById("address").value
     },
     items: cart,
-    total: total,
+    total: cart.reduce((sum, p) => sum + Number(p.price), 0),
     date: new Date().toLocaleString(),
     status: "Pending"
   };
 
   orders.push(order);
   localStorage.setItem("orders", JSON.stringify(orders));
+
+  // تفريغ الكارت
   localStorage.removeItem("cart");
 
-  alert("Order Confirmed ✅");
-  window.location.href = "index.html";
+  window.location.href = "confirmation.html";
 });
