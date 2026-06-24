@@ -1,34 +1,56 @@
 let products = JSON.parse(localStorage.getItem("products")) || [];
-let orders = JSON.parse(localStorage.getItem("orders")) || [];
 
-const productsDiv = document.getElementById("products");
-const ordersDiv = document.getElementById("orders");
+const adminProducts = document.getElementById("adminProducts");
+const imageInput = document.getElementById("image");
+const preview = document.getElementById("preview");
 
-function addProduct() {
-  const name = document.getElementById("name").value;
+/* Preview */
+imageInput.addEventListener("change", () => {
+  const file = imageInput.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    preview.src = reader.result;
+    preview.style.display = "block";
+  };
+  reader.readAsDataURL(file);
+});
+
+/* Add Product */
+function addProduct(){
+  const name = document.getElementById("name").value.trim();
   const price = Number(document.getElementById("price").value);
-  const image = document.getElementById("image").value;
 
-  if (!name || !price || !image) {
+  if(!name || !price || !preview.src){
     alert("Fill all fields");
     return;
   }
 
-  products.push({
+  const product = {
     id: Date.now(),
     name,
     price,
-    image
-  });
+    image: preview.src
+  };
 
+  products.push(product);
   localStorage.setItem("products", JSON.stringify(products));
+
   renderProducts();
+
+  document.getElementById("name").value = "";
+  document.getElementById("price").value = "";
+  imageInput.value = "";
+  preview.style.display = "none";
 }
 
-function renderProducts() {
-  productsDiv.innerHTML = "";
-  products.forEach(p => {
-    productsDiv.innerHTML += `
+/* Render */
+function renderProducts(){
+  adminProducts.innerHTML = "";
+
+  products.forEach(p=>{
+    adminProducts.innerHTML += `
       <div class="card">
         <img src="${p.image}">
         <h4>${p.name}</h4>
@@ -38,17 +60,4 @@ function renderProducts() {
   });
 }
 
-function renderOrders() {
-  ordersDiv.innerHTML = "";
-  orders.forEach(o => {
-    ordersDiv.innerHTML += `
-      <div class="order">
-        <h4>${o.name} - ${o.phone}</h4>
-        <p>Total: ${o.total} EGP</p>
-      </div>
-    `;
-  });
-}
-
 renderProducts();
-renderOrders();

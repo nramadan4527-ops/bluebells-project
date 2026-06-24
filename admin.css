@@ -6,7 +6,7 @@
 }
 
 body{
-  background:#f4f5f7;
+  background:#f1f1f1;
 }
 
 .admin{
@@ -14,106 +14,100 @@ body{
   min-height:100vh;
 }
 
-/* Sidebar */
+/* SIDEBAR */
 .sidebar{
-  width:200px;
+  width:220px;
   background:#111;
   color:#fff;
-  padding:20px;
+  padding:25px;
 }
 
 .sidebar h2{
   margin-bottom:30px;
 }
 
-.sidebar span{
-  display:block;
+.sidebar p{
   margin-bottom:15px;
   opacity:.7;
 }
 
-/* Content */
+/* CONTENT */
 .content{
   flex:1;
-  padding:25px;
+  padding:30px;
 }
 
+/* BOX */
 .box{
   background:#fff;
-  padding:20px;
+  padding:25px;
   border-radius:12px;
-  margin-bottom:25px;
+  margin-bottom:30px;
 }
 
-/* Form */
+/* FORM */
 .form{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  max-width:350px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  max-width:700px;
 }
 
 .form input{
-  padding:12px;
+  padding:14px;
   border-radius:8px;
-  border:1px solid #ddd;
+  border:1px solid #ccc;
+  font-size:15px;
 }
 
-.upload{
-  padding:12px;
-  background:#eee;
-  text-align:center;
-  border-radius:8px;
-  cursor:pointer;
+.form input[type="file"]{
+  grid-column:span 2;
 }
 
-.upload input{
-  display:none;
-}
-
-.preview{
+#preview{
+  grid-column:span 2;
   width:100%;
-  height:180px;
+  height:220px;
   object-fit:cover;
   border-radius:10px;
   display:none;
 }
 
-button{
-  padding:12px;
-  border:none;
+.form button{
+  grid-column:span 2;
+  padding:14px;
   background:#111;
   color:#fff;
+  border:none;
   border-radius:8px;
+  font-size:16px;
   cursor:pointer;
 }
 
-/* Products */
+/* PRODUCTS */
 .products{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-  gap:15px;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:20px;
 }
 
 .card{
   background:#fafafa;
-  padding:10px;
+  padding:12px;
   border-radius:10px;
-  text-align:center;
 }
 
 .card img{
   width:100%;
-  height:120px;
+  height:150px;
   object-fit:cover;
   border-radius:8px;
 }
 
 .card h4{
-  margin:8px 0 4px;
+  margin:10px 0 5px;
 }
 
 .card p{
-  font-size:14px;
   opacity:.7;
 }
