@@ -1,250 +1,60 @@
-/* =====================
-   RESET
-===================== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-}
-
-/* =====================
-   PAGE BACKGROUND
-===================== */
-.confirmation-page {
-  min-height: 100vh;
-  background: linear-gradient(
-    135deg,
-    #f6f1eb,
-    #e8dfd2,
-    #f2ece4
-  );
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-/* =====================
-   CARD
-===================== */
-.confirmation-card {
-  background: #fffaf3;
-  width: 100%;
-  max-width: 680px;
-  padding: 40px;
-  border-radius: 28px;
-  box-shadow: 0 30px 70px rgba(140,106,63,0.25);
-  text-align: center;
-}
-
-/* =====================
-   ICON
-===================== */
-.success-icon {
-  width: 85px;
-  height: 85px;
-  background: linear-gradient(135deg, #b89b5e, #8c6a3f);
-  color: #fff;
-  font-size: 42px;
-  font-weight: bold;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 22px;
-  box-shadow: 0 12px 30px rgba(184,155,94,0.5);
-}
-
-/* =====================
-   TITLES
-===================== */
-h1 {
-  font-size: 28px;
-  color: #8c6a3f;
-}
-
-.subtitle {
-  color: #7a6550;
-  margin-bottom: 25px;
-}
-
-/* =====================
-   ADMIN PANEL
-===================== */
-.admin-panel {
-  background: #fff7ed;
-  padding: 25px;
-  border-radius: 22px;
-  margin-bottom: 30px;
-  border: 1px solid #e3d2b8;
-}
-
-.admin-panel h2 {
-  margin-bottom: 15px;
-  color: #8c6a3f;
-}
-
-.admin-panel input,
-.admin-panel textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 12px;
-  border-radius: 14px;
-  border: 1px solid #d6c3a5;
-  outline: none;
-  background: #fffaf3;
-  color: #3b2f2f;
-}
-
-.admin-panel input:focus,
-.admin-panel textarea:focus {
-  border-color: #b89b5e;
-}
-
-/* =====================
-   IMAGE PREVIEW
-===================== */
-.image-preview {
-  margin-top: 10px;
-  display: none;
-}
-
-.image-preview img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 18px;
-  border: 2px dashed #b89b5e;
-}
-
-/* =====================
-   BUTTONS
-===================== */
-.btn {
-  width: 100%;
-  padding: 14px;
-  border-radius: 30px;
-  border: none;
-  font-weight: 600;
-  background: linear-gradient(135deg, #b89b5e, #8c6a3f);
-  color: #fff;
-  cursor: pointer;
-  transition: 0.35s;
-}
-
-.btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 30px rgba(140,106,63,0.45);
-}
-
-/* =====================
-   PRODUCTS LIST
-===================== */
-.products {
-  text-align: left;
-}
-
-.products h3 {
-  margin-bottom: 10px;
-  color: #8c6a3f;
-}
-
-.products ul {
-  list-style: none;
-}
-
-.products li {
-  background: #fff7ed;
-  padding: 18px;
-  border-radius: 20px;
-  margin-bottom: 15px;
-  border: 1px solid #e3d2b8;
-}
-
-/* Product Image */
-.product-img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 16px;
-  margin-bottom: 10px;
-}
-
-/* =====================
-   ACTION BUTTONS
-===================== */
-.action-btn {
-  margin-top: 8px;
-  padding: 6px 14px;
-  border-radius: 16px;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.edit {
-  background: linear-gradient(135deg, #c9a86a, #a8844f);
-  color: #fff;
-}
-
-.delete {
-  background: linear-gradient(135deg, #b45309, #92400e);
-  color: #fff;
-}
-
-/* =====================
-   NOTE
-===================== */
-.note {
-  margin-top: 20px;
-  font-size: 13px;
-  color: #7a6550;
-}
-
-/* =====================
-   ORDERS SECTION
-===================== */
-.orders-section {
-  margin-top: 40px;
-  padding: 20px;
-  color: #3b2f2f;
-}
-
-.order-card {
-  background: #fff7ed;
-  padding: 18px;
-  margin-bottom: 15px;
-  border-radius: 18px;
-  border: 1px solid #e3d2b8;
-  box-shadow: 0 8px 20px rgba(140,106,63,0.15);
-}
-
-.order-card h3 {
-  color: #8c6a3f;
-}
-
-.order-card p {
-  margin: 5px 0;
-  color: #5c4632;
-}
-
-.order-card button {
-  margin-top: 10px;
-  padding: 6px 12px;
-  background: linear-gradient(135deg, #b45309, #92400e);
+body {
+  background: #0f172a;
   color: white;
+  font-family: Arial;
+}
+
+.navbar {
+  padding: 15px 30px;
+  background: #020617;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar a {
+  color: white;
+  margin-left: 15px;
+  text-decoration: none;
+}
+
+.admin-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  padding: 40px;
+}
+
+.admin-card {
+  background: #020617;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.admin-card input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.admin-card button {
+  width: 100%;
+  padding: 10px;
+  background: #2563eb;
   border: none;
-  border-radius: 10px;
+  color: white;
   cursor: pointer;
 }
 
-/* =====================
-   RESPONSIVE
-===================== */
-@media (max-width: 600px) {
-  .confirmation-card {
-    padding: 25px;
-  }
+.admin-product {
+  background: #020617;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.admin-product img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
 }

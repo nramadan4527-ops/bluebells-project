@@ -2,96 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Dashboard</title>
+  <title>Admin | Bluebells</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="admin.css">
-
-  <!-- Auth Token Handler -->
-  <script>
-    (function() {
-      try {
-        const params = new URLSearchParams(window.location.search);
-        const t = params.get('token');
-
-        if (t) {
-          localStorage.setItem('authToken', t);
-
-          params.delete('token');
-          const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
-          history.replaceState({}, document.title, newUrl);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  </script>
 </head>
 
 <body>
-<div class="logo">
-  <img src="img/logo.png" alt="Bluebells Logo">
-</div>
-<div class="admin-container">
 
-  <!-- ===== HEADER ===== -->
-  <div class="confirmation-card">
+<header class="navbar">
+  <div class="logo">Admin Panel</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+  </nav>
+</header>
 
-    <div class="success-icon">✓</div>
+<section class="admin-page">
 
-    <h1>Admin Dashboard</h1>
-    <p class="subtitle">Manage products & orders</p>
+  <!-- ADD PRODUCT -->
+  <div class="admin-card">
 
-    <!-- ===== PRODUCT FORM ===== -->
-    <div class="admin-panel">
+    <h2>Add Product</h2>
 
-      <h2>➕ Add / Edit Product</h2>
+    <input type="text" id="productName" placeholder="Product Name">
+    <input type="number" id="productPrice" placeholder="Price">
+    <input type="file" id="productImage" accept="image/*">
 
-      <input type="text" id="productName" placeholder="Product Name">
-      <input type="number" id="productPrice" placeholder="Product Price">
-      <textarea id="productDesc" placeholder="Product Description"></textarea>
+    <button onclick="addProduct()">Add Product</button>
 
-      <input type="file" id="productImage" accept="image/*" onchange="previewImage(event)">
-
-      <div class="image-preview">
-        <img id="preview" src="">
-      </div>
-
-      <button class="btn" onclick="addProduct()">Save Product</button>
-    </div>
-
-    <!-- ===== PRODUCTS LIST ===== -->
-    <div class="products">
-      <h3>🛍 Products List</h3>
-      <ul id="productList"></ul>
-    </div>
-
-    <!-- ===== ORDERS DASHBOARD (NEW) ===== -->
-    <div class="orders-section">
-
-      <h3>📊 Orders Dashboard</h3>
-
-      <div id="ordersList"></div>
-
-    </div>
-
-    <p class="note">Everything is saved in localStorage</p>
+    <p id="admin-error"></p>
 
   </div>
 
-</div>
+  <!-- PRODUCTS LIST -->
+  <div class="admin-card">
 
-<!-- ===== SCRIPTS ===== -->
-<!-- Auth -->
-<script src="api.js"></script>
-<script src="auth-manager.js"></script>
+    <h2>Products</h2>
+    <div id="adminProducts"></div>
 
-<!-- Products -->
-<script src="product-api.js"></script>
-<script src="admin-api.js"></script>
+  </div>
 
-<!-- Orders -->
-<script src="orders.js"></script>
+</section>
 
+<script src="admin.js"></script>
 </body>
 </html>
