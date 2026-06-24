@@ -1,57 +1,87 @@
-/* ===== GLOBAL ===== */
 body {
   margin: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: linear-gradient(120deg, #f6f1eb, #efe2d2);
+  font-family: Arial;
+  background: #f6f1eb;
 }
 
-/* ===== NAVBAR ===== */
+/* NAVBAR */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  padding: 12px 25px;
-  background: rgba(255,255,255,0.85);
+  padding: 12px 20px;
+  background: white;
 
-  position: sticky;
-  top: 0;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-/* ===== LOGO ===== */
+/* LOGO */
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .logo img {
-  width: 45px;
-  height: 45px;
-  object-fit: cover;
+  width: 40px;
+}
+
+/* LAYOUT */
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+/* FORM */
+.form {
+  width: 250px;
+  background: white;
+  padding: 15px;
   border-radius: 10px;
 }
 
-.logo span {
-  font-size: 18px;
-  font-weight: bold;
-  color: #8c6a3f;
+.form input {
+  width: 100%;
+  margin: 5px 0;
+  padding: 8px;
 }
 
-/* ===== NAV ===== */
-.navbar nav {
+/* CART */
+#cartItems {
+  flex: 1;
+}
+
+.cart-item {
   display: flex;
-  gap: 12px;
+  gap: 10px;
+  background: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
 }
 
-.navbar nav a {
-  text-decoration: none;
-  color: #5c4632;
-  padding: 6px 10px;
-  border-radius: 8px;
+.cart-item img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
 }
 
-.navbar nav a:hover {
-  background: rgba(184,155,94,0.2);
+/* SUMMARY */
+.summary {
+  width: 250px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.summary button {
+  width: 100%;
+  padding: 10px;
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
 }

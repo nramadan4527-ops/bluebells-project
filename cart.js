@@ -1,8 +1,40 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+function renderCart() {
+  const cartItems = document.getElementById("cartItems");
+  if (!cartItems) return;
+
+  cartItems.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach((item, i) => {
+
+    let price = item.price * (item.qty || 1);
+    total += price;
+
+    cartItems.innerHTML += `
+      <div class="cart-item">
+        <img src="${item.image}">
+        <div>
+          <h4>${item.name}</h4>
+          <p>${price} EGP</p>
+          <p>Qty: ${item.qty || 1}</p>
+        </div>
+      </div>
+    `;
+  });
+
+  document.getElementById("subtotal").innerText = total;
+  document.getElementById("cartTotal").innerText = total;
+  document.getElementById("cart-count").innerText =
+    cart.reduce((s, i) => s + (i.qty || 1), 0);
+}
+
 function checkout() {
+
   if (cart.length === 0) {
-    alert("Cart is empty");
+    alert("Cart empty");
     return;
   }
 
@@ -30,3 +62,5 @@ function checkout() {
 
   window.location.href = "confirmation.html";
 }
+
+renderCart();
