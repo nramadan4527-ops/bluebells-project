@@ -3,15 +3,11 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 // ===== RENDER CART =====
 function renderCart() {
   const cartItems = document.getElementById("cartItems");
-
-  if (!cartItems) return;
-
   cartItems.innerHTML = "";
 
   let total = 0;
 
   cart.forEach((item) => {
-
     let itemTotal = item.price * (item.qty || 1);
     total += itemTotal;
 
@@ -37,9 +33,7 @@ function renderCart() {
 // ===== CART COUNT =====
 function updateCartCount() {
   let totalQty = cart.reduce((s, i) => s + (i.qty || 1), 0);
-
-  let counter = document.getElementById("cart-count");
-  if (counter) counter.innerText = totalQty;
+  document.getElementById("cart-count").innerText = totalQty;
 }
 
 // ===== CHECKOUT =====
@@ -59,17 +53,15 @@ function checkout() {
     return;
   }
 
-  let order = {
+  const order = {
     id: Date.now(),
     customer: { name, phone, address },
     items: cart,
     total: cart.reduce((s, i) => s + i.price * (i.qty || 1), 0)
   };
 
-  let orders = JSON.parse(localStorage.getItem("orders")) || [];
-  orders.push(order);
-
-  localStorage.setItem("orders", JSON.stringify(orders));
+  // 🔥 أهم سطر (ده اللي اتعدل)
+  localStorage.setItem("orderData", JSON.stringify(order));
 
   // clear cart
   cart = [];
@@ -78,6 +70,5 @@ function checkout() {
   window.location.href = "confirmation.html";
 }
 
-// ===== INIT =====
 renderCart();
 updateCartCount();
