@@ -32,6 +32,14 @@ function getConfirmedOrders() {
     });
 }
 
+function deleteOrder(orderId) {
+  if (!confirm("Delete this order?")) return;
+
+  orders = orders.filter((order) => order.id !== orderId);
+  localStorage.setItem("orders", JSON.stringify(orders));
+  renderOrders();
+}
+
 /* Preview */
 imageInput.addEventListener("change", () => {
   const file = imageInput.files[0];
@@ -132,6 +140,10 @@ function renderOrders(){
         <ul>
           ${itemsMarkup || "<li>No items</li>"}
         </ul>
+
+        <button class="delete-btn" onclick="deleteOrder(${o.id})">
+          Delete Order
+        </button>
       </div>
     `;
   });
