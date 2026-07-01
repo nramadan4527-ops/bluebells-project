@@ -6,6 +6,32 @@ const adminProducts = document.getElementById("adminProducts");
 const imageInput = document.getElementById("image");
 const preview = document.getElementById("preview");
 
+function normalizeOrder(order) {
+  const customer = order.customer || {};
+  const items = Array.isArray(order.items) ? order.items : Array.isArray(order.cart) ? order.cart : [];
+
+  return {
+    ...order,
+    customer,
+    name: customer.name || order.name || "Unknown customer",
+    phone: customer.phone || order.phone || "N/A",
+    address: customer.address || order.address || "N/A",
+    items,
+    cart: items,
+    total: order.total || order.amount || 0,
+    status: order.status || "Confirmed"
+  };
+}
+
+function getConfirmedOrders() {
+  return orders
+    .map(normalizeOrder)
+    .filter((order) => {
+      const status = (order.status || "").toString().trim().toLowerCase();
+      return !status || ["confirmed", "processing", "shipped", "delivered", "paid"].includes(status);
+    });
+}
+
 /* Preview */
 imageInput.addEventListener("change", () => {
   const file = imageInput.files[0];
@@ -77,21 +103,34 @@ renderProducts();
 function renderOrders(){
   adminOrders.innerHTML = "";
 
-  if(orders.length === 0){
-    adminOrders.innerHTML = "<p>No orders yet</p>";
+  const confirmedOrders = getConfirmedOrders();
+
+  if(confirmedOrders.length === 0){
+    adminOrders.innerHTML = "<p>No confirmed orders yet</p>";
     return;
   }
 
-  orders.forEach(o=>{
+  confirmedOrders.forEach(o=>{
+    const itemsMarkup = (o.items || []).map(item => {
+      const itemName = item.name || item.productName || "Item";
+      const itemQty = item.qty || item.quantity || 1;
+      const itemPrice = item.price || 0;
+      return `<li>${itemName} × ${itemQty} — ${itemPrice} EGP</li>`;
+    }).join("");
+
     adminOrders.innerHTML += `
       <div class="order-card">
-        <h4>${o.name}</h4>
+        <div class="order-head">
+          <h4>Order #${o.id}</h4>
+          <span class="status-badge">${o.status}</span>
+        </div>
+        <p>👤 ${o.name}</p>
         <p>📞 ${o.phone}</p>
         <p>📍 ${o.address}</p>
         <p><strong>Total:</strong> ${o.total} EGP</p>
 
         <ul>
-          ${o.cart.map(p=>`<li>${p.name} x ${p.qty}</li>`).join("")}
+          ${itemsMarkup || "<li>No items</li>"}
         </ul>
       </div>
     `;

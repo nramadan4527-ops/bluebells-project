@@ -19,7 +19,7 @@ document.getElementById("checkoutForm").addEventListener("submit", function (e) 
     items: cart,
     total: cart.reduce((sum, p) => sum + Number(p.price), 0),
     date: new Date().toLocaleString(),
-    status: "Pending"
+    status: "Confirmed"
   };
 
   orders.push(order);
