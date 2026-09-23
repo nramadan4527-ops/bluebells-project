@@ -31,9 +31,7 @@ function setupImagePreview(inputId, previewId) {
     const preview =
         document.getElementById(previewId);
 
-
     if (!input || !preview) return;
-
 
     input.addEventListener(
         "change",
@@ -44,22 +42,19 @@ function setupImagePreview(inputId, previewId) {
 
             if (!file) return;
 
-
             const reader =
                 new FileReader();
 
-
             reader.onload =
-                function () {
+                function (event) {
 
                     preview.src =
-                        reader.result;
+                        event.target.result;
 
                     preview.style.display =
                         "block";
 
                 };
-
 
             reader.readAsDataURL(file);
 
@@ -91,95 +86,175 @@ setupImagePreview(
 );
 
 
+// ==========================================
+// ADD PRODUCT
+// ==========================================
+
 function addProduct() {
 
-    const name =
-        document
-            .getElementById("name")
-            .value
-            .trim();
+    const nameInput =
+        document.getElementById("name");
 
+    const priceInput =
+        document.getElementById("price");
 
-    const price =
-        Number(
-            document
-                .getElementById("price")
-                .value
-        );
+    const imageInput =
+        document.getElementById("image");
 
+    if (!nameInput || !priceInput || !imageInput) {
 
-    const imagePreview =
-        document.getElementById("preview");
-
-
-    if (
-        !name ||
-        Number.isNaN(price) ||
-        price < 0 ||
-        !imagePreview.src ||
-        imagePreview.style.display === "none"
-    ) {
-
-        alert(
-            "Please fill the product name, price and image."
-        );
+        alert("Product form could not be found.");
 
         return;
-
     }
 
 
-    const product = {
-
-        id:
-            Date.now(),
-
-        name:
-            name,
-
-        price:
-            price,
-
-        image:
-            imagePreview.src
-
-    };
+    const name =
+        nameInput.value.trim();
 
 
-    products.push(product);
+    const price =
+        Number(priceInput.value);
 
 
-    localStorage.setItem(
-        "products",
-        JSON.stringify(products)
-    );
+    const file =
+        imageInput.files[0];
 
 
-    renderProducts();
+    // CHECK NAME
+
+    if (!name) {
+
+        alert(
+            "Please enter the product name."
+        );
+
+        return;
+    }
 
 
-    document.getElementById(
-        "name"
-    ).value = "";
+    // CHECK PRICE
+
+    if (
+        priceInput.value === "" ||
+        Number.isNaN(price) ||
+        price < 0
+    ) {
+
+        alert(
+            "Please enter a valid product price."
+        );
+
+        return;
+    }
 
 
-    document.getElementById(
-        "price"
-    ).value = "";
+    // CHECK IMAGE
+
+    if (!file) {
+
+        alert(
+            "Please choose a product image."
+        );
+
+        return;
+    }
 
 
-    document.getElementById(
-        "image"
-    ).value = "";
+    // READ IMAGE
+
+    const reader =
+        new FileReader();
 
 
-    imagePreview.src = "";
+    reader.onload =
+        function (event) {
 
-    imagePreview.style.display =
-        "none";
+            const product = {
+
+                id:
+                    Date.now(),
+
+                name:
+                    name,
+
+                price:
+                    price,
+
+                image:
+                    event.target.result
+
+            };
+
+
+            // ADD PRODUCT
+
+            products.push(product);
+
+
+            // SAVE PRODUCT
+
+            localStorage.setItem(
+                "products",
+                JSON.stringify(products)
+            );
+
+
+            // SHOW PRODUCTS
+
+            renderProducts();
+
+
+            // CLEAR FORM
+
+            nameInput.value = "";
+
+            priceInput.value = "";
+
+            imageInput.value = "";
+
+
+            const preview =
+                document.getElementById(
+                    "preview"
+                );
+
+
+            if (preview) {
+
+                preview.src = "";
+
+                preview.style.display =
+                    "none";
+
+            }
+
+
+            alert(
+                "Product added successfully!"
+            );
+
+        };
+
+
+    reader.onerror =
+        function () {
+
+            alert(
+                "Could not read the image. Please try again."
+            );
+
+        };
+
+
+    reader.readAsDataURL(file);
 
 }
 
+
+// ==========================================
+// RENDER PRODUCTS
+// ==========================================
 
 function renderProducts() {
 
@@ -189,46 +264,54 @@ function renderProducts() {
     if (products.length === 0) {
 
         adminProducts.innerHTML =
-            `<p class="empty-state">
+            `
+            <p class="empty-state">
                 No products added yet.
-            </p>`;
+            </p>
+            `;
 
         return;
     }
 
 
     adminProducts.innerHTML =
-        products.map(product => `
+        products
+            .map(product => `
 
-            <div class="card">
+                <div class="card">
 
-                <img
-                    src="${product.image || ""}"
-                    alt="${escapeHTML(product.name)}"
-                >
+                    <img
+                        src="${product.image || ""}"
+                        alt="${escapeHTML(product.name)}"
+                    >
 
-                <h4>
-                    ${escapeHTML(product.name)}
-                </h4>
+                    <h4>
+                        ${escapeHTML(product.name)}
+                    </h4>
 
-                <p>
-                    ${Number(product.price) || 0} EGP
-                </p>
+                    <p>
+                        ${Number(product.price) || 0} EGP
+                    </p>
 
-                <button
-                    type="button"
-                    class="delete-btn"
-                    onclick="deleteProduct(${JSON.stringify(product.id)})"
-                >
-                    Delete
-                </button>
+                    <button
+                        type="button"
+                        class="delete-btn"
+                        onclick="deleteProduct(${JSON.stringify(product.id)})"
+                    >
+                        Delete
+                    </button>
 
-            </div>
+                </div>
 
-        `).join("");
+            `)
+            .join("");
 
 }
 
+
+// ==========================================
+// DELETE PRODUCT
+// ==========================================
 
 function deleteProduct(id) {
 
@@ -642,9 +725,11 @@ function renderPieces() {
     ) {
 
         container.innerHTML =
-            `<p class="empty-state">
+            `
+            <p class="empty-state">
                 No pieces added yet.
-            </p>`;
+            </p>
+            `;
 
         return;
     }
@@ -751,9 +836,11 @@ function renderMetals() {
     ) {
 
         container.innerHTML =
-            `<p class="empty-state">
+            `
+            <p class="empty-state">
                 No metals added yet.
-            </p>`;
+            </p>
+            `;
 
         return;
     }
@@ -858,9 +945,11 @@ function renderCharms() {
     ) {
 
         container.innerHTML =
-            `<p class="empty-state">
+            `
+            <p class="empty-state">
                 No charms added yet.
-            </p>`;
+            </p>
+            `;
 
         return;
     }
@@ -977,6 +1066,9 @@ function toggleCustomization(
             customizationCharms;
 
     }
+
+
+    if (!list) return;
 
 
     const item =
@@ -1567,9 +1659,11 @@ function renderGiftBoxes() {
     if (giftBoxes.length === 0) {
 
         container.innerHTML =
-            `<p class="empty-state">
+            `
+            <p class="empty-state">
                 No gift boxes added yet.
-            </p>`;
+            </p>
+            `;
 
         return;
     }
@@ -1591,7 +1685,6 @@ function renderGiftBoxes() {
                         :
                         ""
                     }
-
 
                     <div class="option-info">
 
@@ -1676,9 +1769,11 @@ function renderGiftRibbons() {
     if (giftRibbons.length === 0) {
 
         container.innerHTML =
-            `<p class="empty-state">
+            `
+            <p class="empty-state">
                 No ribbons added yet.
-            </p>`;
+            </p>
+            `;
 
         return;
     }
@@ -1707,7 +1802,6 @@ function renderGiftRibbons() {
                         ></div>
                         `
                     }
-
 
                     <div class="option-info">
 
@@ -1792,9 +1886,11 @@ function renderGiftCards() {
     if (giftCards.length === 0) {
 
         container.innerHTML =
-            `<p class="empty-state">
+            `
+            <p class="empty-state">
                 No cards added yet.
-            </p>`;
+            </p>
+            `;
 
         return;
     }
@@ -1816,7 +1912,6 @@ function renderGiftCards() {
                         :
                         ""
                     }
-
 
                     <div class="option-info">
 
@@ -1917,6 +2012,9 @@ function toggleGiftOption(
             giftCards;
 
     }
+
+
+    if (!list) return;
 
 
     const item =
@@ -2248,9 +2346,11 @@ function renderOrders() {
     if (orders.length === 0) {
 
         adminOrders.innerHTML =
-            `<p class="empty-state">
+            `
+            <p class="empty-state">
                 No orders yet.
-            </p>`;
+            </p>
+            `;
 
         return;
     }
@@ -2261,11 +2361,9 @@ function renderOrders() {
             .map(normalizeOrder)
             .map(order => {
 
-
                 const itemsMarkup =
                     order.items
                         .map(item => {
-
 
                             const itemName =
                                 item.name ||
@@ -2288,6 +2386,7 @@ function renderOrders() {
 
 
                             // CUSTOMIZE
+
                             if (
                                 item.customization &&
                                 item.customization.piece
@@ -2357,6 +2456,7 @@ function renderOrders() {
 
 
                             // GIFT BOX
+
                             if (
                                 item.customization &&
                                 item.customization.giftBox
