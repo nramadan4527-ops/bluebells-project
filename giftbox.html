@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Your Gift Box | Bluebells</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="giftbox.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         NAVBAR
+    ========================================== -->
+
+    <header class="gift-header">
+
+        <a href="index.html" class="logo">
+            <img src="img/logo.png" alt="Bluebells">
+        </a>
+
+        <nav>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="shop.html">
+                Shop
+            </a>
+
+            <a href="customize.html">
+                Customize
+            </a>
+
+            <a href="giftbox.html" class="active">
+                Gift Box
+            </a>
+
+            <a href="cart.html">
+                Cart
+                <span id="cartCount">0</span>
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================================
+         HERO
+    ========================================== -->
+
+    <main>
+
+        <section class="gift-hero">
+
+            <p class="eyebrow">
+                MADE FOR SPECIAL MOMENTS
+            </p>
+
+            <h1>
+                Create Your Gift Box
+                <span>🎁</span>
+            </h1>
+
+            <p class="hero-text">
+                Choose your jewelry, box, ribbon and card
+                to create a gift made just for them.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================
+             GIFT BOX BUILDER
+        ====================================== -->
+
+        <section class="gift-builder">
+
+
+            <!-- LEFT SIDE -->
+
+            <div class="gift-preview-card">
+
+                <div class="preview-label">
+                    YOUR GIFT
+                </div>
+
+                <div class="gift-preview">
+
+                    <div class="preview-box">
+
+                        <div class="preview-ribbon" id="previewRibbon">
+                        </div>
+
+                        <div class="preview-jewelry" id="previewJewelry">
+                            ✨
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="preview-info">
+
+                    <h2 id="previewTitle">
+                        Your Gift Box
+                    </h2>
+
+                    <p id="previewDetails">
+                        Start choosing your gift options.
+                    </p>
+
+                    <div class="preview-message" id="previewMessage">
+                    </div>
+
+                    <div class="preview-total">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong id="totalPrice">
+                            0 EGP
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT SIDE -->
+
+            <div class="gift-options-card">
+
+
+                <!-- =================================
+                     STEP 1
+                ================================== -->
+
+                <div class="gift-step">
+
+                    <div class="step-heading">
+
+                        <span class="step-number">
+                            01
+                        </span>
+
+                        <div>
+                            <h2>
+                                Choose Your Jewelry
+                            </h2>
+
+                            <p>
+                                Pick the piece you want to gift.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="jewelryContainer"
+                        class="jewelry-grid"
+                    >
+
+                        <p class="empty-message">
+                            No jewelry available yet.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     STEP 2
+                ================================== -->
+
+                <div class="gift-step">
+
+                    <div class="step-heading">
+
+                        <span class="step-number">
+                            02
+                        </span>
+
+                        <div>
+                            <h2>
+                                Choose Your Box
+                            </h2>
+
+                            <p>
+                                Select the perfect box for your gift.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="boxContainer"
+                        class="options-grid"
+                    >
+
+                        <p class="empty-message">
+                            No boxes available yet.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     STEP 3
+                ================================== -->
+
+                <div class="gift-step">
+
+                    <div class="step-heading">
+
+                        <span class="step-number">
+                            03
+                        </span>
+
+                        <div>
+                            <h2>
+                                Choose Your Ribbon
+                            </h2>
+
+                            <p>
+                                Add a beautiful finishing touch.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="ribbonContainer"
+                        class="options-grid"
+                    >
+
+                        <p class="empty-message">
+                            No ribbons available yet.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     STEP 4
+                ================================== -->
+
+                <div class="gift-step">
+
+                    <div class="step-heading">
+
+                        <span class="step-number">
+                            04
+                        </span>
+
+                        <div>
+                            <h2>
+                                Add a Card
+                            </h2>
+
+                            <p>
+                                Add a personal message.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="cardContainer"
+                        class="options-grid"
+                    >
+
+                        <p class="empty-message">
+                            No cards available yet.
+                        </p>
+
+                    </div>
+
+
+                    <div class="message-box">
+
+                        <label for="giftMessage">
+                            Your Message
+                        </label>
+
+                        <textarea
+                            id="giftMessage"
+                            rows="4"
+                            maxlength="200"
+                            placeholder="Happy Birthday, my favorite person 🤍"
+                        ></textarea>
+
+                        <span id="messageCounter">
+                            0 / 200
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     ADD TO CART
+                ================================== -->
+
+                <button
+                    id="addGiftBoxBtn"
+                    class="add-gift-btn"
+                    type="button"
+                >
+                    Add Gift Box to Cart
+                </button>
+
+                <p
+                    id="giftMessageStatus"
+                    class="status-message"
+                ></p>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer>
+
+        <div class="footer-logo">
+            Bluebells
+        </div>
+
+        <p>
+            Beautiful pieces, made for beautiful moments.
+        </p>
+
+        <span>
+            © 2026 Bluebells. All rights reserved.
+        </span>
+
+    </footer>
+
+
+    <script src="giftbox.js"></script>
+
+</body>
+
+</html>

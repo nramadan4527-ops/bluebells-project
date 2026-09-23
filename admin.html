@@ -1,77 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bluebells | Admin Panel</title>
+    <meta charset="UTF-8">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+    <title>Bluebells | Admin Panel</title>
 
-<link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="admin.css">
+
 </head>
+
 
 <body>
 
 <div class="admin">
 
-    <!-- SIDEBAR -->
+
+    <!-- ==========================================
+         SIDEBAR
+    =========================================== -->
+
     <aside class="sidebar">
 
-        <div class="brand">
-            <img src="img/logo.png" alt="Bluebells">
+        <div class="sidebar-brand">
+
+            <h2>BLUEBELLS</h2>
+
             <span>ADMIN PANEL</span>
+
         </div>
 
-        <nav class="side-nav">
-            <a href="#products">Products</a>
-            <a href="#customize">Customize Your Piece</a>
-            <a href="#orders">Orders</a>
+
+        <nav class="admin-nav">
+
+            <a href="#productsSection">
+                Products
+            </a>
+
+            <a href="#customizeSection">
+                Customize Your Piece
+            </a>
+
+            <a href="#giftBoxSection">
+                🎁 Gift Box
+            </a>
+
+            <a href="#ordersSection">
+                Orders
+            </a>
+
         </nav>
+
+
+        <a
+            href="index.html"
+            class="back-store"
+        >
+            ← Back to Store
+        </a>
 
     </aside>
 
 
-    <!-- MAIN CONTENT -->
+
+    <!-- ==========================================
+         MAIN CONTENT
+    =========================================== -->
+
     <main class="content">
 
-        <div class="page-heading">
 
-            <p class="eyebrow">
-                BLUEBELLS MANAGEMENT
-            </p>
+        <!-- ======================================
+             PAGE HEADER
+        ======================================= -->
 
-            <h1>
-                Admin Panel
-            </h1>
+        <header class="admin-header">
 
-            <p>
-                Manage your products, customization options and orders from one place.
-            </p>
+            <div>
 
-        </div>
+                <p class="eyebrow">
+                    BLUEBELLS MANAGEMENT
+                </p>
+
+                <h1>
+                    Admin Panel
+                </h1>
+
+            </div>
+
+        </header>
 
 
-        <!-- =====================================================
+
+        <!-- ======================================
              PRODUCTS
-        ====================================================== -->
+        ======================================= -->
 
-        <section class="box" id="products">
+        <section
+            class="box"
+            id="productsSection"
+        >
 
             <div class="section-heading">
 
                 <div>
-                    <p class="eyebrow">STORE</p>
-                    <h2>Products</h2>
+
+                    <span class="section-label">
+                        STORE
+                    </span>
+
+                    <h3>
+                        Products
+                    </h3>
+
                 </div>
 
             </div>
 
 
-            <div class="form product-form">
+            <!-- ADD PRODUCT -->
+
+            <div class="admin-form">
 
                 <input
                     id="name"
@@ -79,13 +134,14 @@
                     placeholder="Product Name"
                 >
 
+
                 <input
                     id="price"
                     type="number"
+                    placeholder="Price"
                     min="0"
-                    step="0.01"
-                    placeholder="Price (EGP)"
                 >
+
 
                 <input
                     id="image"
@@ -93,13 +149,16 @@
                     accept="image/*"
                 >
 
+
                 <img
                     id="preview"
-                    alt="Product preview"
+                    class="admin-image-preview"
+                    style="display:none;"
+                    alt="Product Preview"
                 >
 
+
                 <button
-                    class="primary-btn"
                     type="button"
                     onclick="addProduct()"
                 >
@@ -118,348 +177,267 @@
 
 
 
-        <!-- =====================================================
-             CUSTOMIZE
-        ====================================================== -->
+        <!-- ======================================
+             CUSTOMIZE YOUR PIECE
+        ======================================= -->
 
         <section
             class="box"
-            id="customize"
+            id="customizeSection"
         >
 
             <div class="section-heading">
 
                 <div>
 
-                    <p class="eyebrow">
-                        CREATE YOUR OWN PIECE
-                    </p>
+                    <span class="section-label">
+                        CUSTOMIZATION
+                    </span>
 
-                    <h2>
+                    <h3>
                         Customize Your Piece
-                    </h2>
+                    </h3>
 
-                    <p class="section-note">
-                        Everything added here will appear on the customer Customize page.
+                    <p>
+                        Manage the pieces, metals and charms
+                        customers can use.
                     </p>
 
                 </div>
 
-
                 <a
-                    class="preview-link"
                     href="customize.html"
-                    target="_blank"
+                    class="section-link"
                 >
-                    View Customize Page ↗
+                    Open Customize Page →
                 </a>
 
             </div>
 
 
 
-            <div class="customize-grid">
+            <!-- ==================================
+                 PIECES
+            =================================== -->
+
+            <div class="admin-subsection">
+
+                <h4>
+                    01. Pieces
+                </h4>
+
+                <div class="admin-form">
+
+                    <input
+                        id="customPieceName"
+                        type="text"
+                        placeholder="Piece Name"
+                    >
 
 
-                <!-- =================================================
-                     PIECES
-                ================================================== -->
-
-                <div class="custom-card">
-
-                    <div class="custom-card-title">
-
-                        <span>01</span>
-
-                        <h3>
-                            Pieces
-                        </h3>
-
-                    </div>
+                    <input
+                        id="customPieceType"
+                        type="text"
+                        placeholder="Type (Bracelet, Necklace...)"
+                    >
 
 
-                    <p class="hint">
-                        Add the base piece that customers will customize.
-                    </p>
+                    <input
+                        id="customPiecePrice"
+                        type="number"
+                        placeholder="Base Price"
+                        min="0"
+                    >
 
 
-                    <div class="mini-form">
-
-                        <input
-                            id="customPieceName"
-                            type="text"
-                            placeholder="Piece name"
-                        >
+                    <input
+                        id="customPieceImage"
+                        type="file"
+                        accept="image/*"
+                    >
 
 
-                        <select
-                            id="customPieceType"
-                        >
+                    <img
+                        id="customPiecePreview"
+                        class="admin-image-preview"
+                        style="display:none;"
+                        alt="Piece Preview"
+                    >
 
-                            <option value="">
-                                Piece type
-                            </option>
 
-                            <option value="Bracelet">
-                                Bracelet
-                            </option>
-
-                            <option value="Necklace">
-                                Necklace
-                            </option>
-
-                            <option value="Anklet">
-                                Anklet
-                            </option>
-
-                            <option value="Ring">
-                                Ring
-                            </option>
-
-                            <option value="Earrings">
-                                Earrings
-                            </option>
-
-                            <option value="Other">
-                                Other
-                            </option>
-
-                        </select>
-
+                    <label class="checkbox-label">
 
                         <input
-                            id="customPiecePrice"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            placeholder="Base price (EGP)"
+                            id="customPieceActive"
+                            type="checkbox"
+                            checked
                         >
 
+                        Available
 
-                        <input
-                            id="customPieceImage"
-                            type="file"
-                            accept="image/*"
-                        >
+                    </label>
 
 
-                        <label class="check-row">
-
-                            <input
-                                id="customPieceActive"
-                                type="checkbox"
-                                checked
-                            >
-
-                            Available on Customize page
-
-                        </label>
-
-
-                        <img
-                            id="customPiecePreview"
-                            class="custom-preview"
-                            alt="Piece preview"
-                        >
-
-
-                        <button
-                            class="primary-btn"
-                            type="button"
-                            onclick="addCustomizationPiece()"
-                        >
-                            Add Piece
-                        </button>
-
-                    </div>
-
-
-                    <div
-                        id="customPiecesList"
-                        class="option-list"
-                    ></div>
+                    <button
+                        type="button"
+                        onclick="addCustomizationPiece()"
+                    >
+                        Add Piece
+                    </button>
 
                 </div>
 
 
+                <div
+                    id="customPiecesList"
+                    class="option-list"
+                ></div>
 
-                <!-- =================================================
-                     METALS
-                ================================================== -->
-
-                <div class="custom-card">
-
-                    <div class="custom-card-title">
-
-                        <span>02</span>
-
-                        <h3>
-                            Metals
-                        </h3>
-
-                    </div>
+            </div>
 
 
-                    <p class="hint">
-                        Add the metal and the extra price added to the piece.
-                    </p>
+
+            <!-- ==================================
+                 METALS
+            =================================== -->
+
+            <div class="admin-subsection">
+
+                <h4>
+                    02. Metals
+                </h4>
+
+                <div class="admin-form">
+
+                    <input
+                        id="customMetalName"
+                        type="text"
+                        placeholder="Metal Name"
+                    >
 
 
-                    <div class="mini-form">
+                    <input
+                        id="customMetalExtra"
+                        type="number"
+                        placeholder="Extra Price"
+                        min="0"
+                    >
 
+
+                    <label class="color-field">
+
+                        Metal Color
 
                         <input
-                            id="customMetalName"
-                            type="text"
-                            placeholder="Metal name"
+                            id="customMetalColor"
+                            type="color"
+                            value="#D4AF37"
                         >
 
+                    </label>
+
+
+                    <label class="checkbox-label">
 
                         <input
-                            id="customMetalExtra"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            placeholder="Extra price (EGP)"
+                            id="customMetalActive"
+                            type="checkbox"
+                            checked
                         >
 
+                        Available
 
-                        <div class="color-field">
-
-                            <label
-                                for="customMetalColor"
-                            >
-                                Metal color
-                            </label>
-
-                            <input
-                                id="customMetalColor"
-                                type="color"
-                                value="#D4AF37"
-                            >
-
-                        </div>
+                    </label>
 
 
-                        <label class="check-row">
-
-                            <input
-                                id="customMetalActive"
-                                type="checkbox"
-                                checked
-                            >
-
-                            Available on Customize page
-
-                        </label>
-
-
-                        <button
-                            class="primary-btn"
-                            type="button"
-                            onclick="addCustomizationMetal()"
-                        >
-                            Add Metal
-                        </button>
-
-                    </div>
-
-
-                    <div
-                        id="customMetalsList"
-                        class="option-list"
-                    ></div>
+                    <button
+                        type="button"
+                        onclick="addCustomizationMetal()"
+                    >
+                        Add Metal
+                    </button>
 
                 </div>
 
 
+                <div
+                    id="customMetalsList"
+                    class="option-list"
+                ></div>
 
-                <!-- =================================================
-                     CHARMS
-                ================================================== -->
-
-                <div class="custom-card custom-card-wide">
-
-                    <div class="custom-card-title">
-
-                        <span>03</span>
-
-                        <h3>
-                            Charms
-                        </h3>
-
-                    </div>
+            </div>
 
 
-                    <p class="hint">
-                        Add charms customers can choose.
-                        Their price will be added to the final total.
-                    </p>
+
+            <!-- ==================================
+                 CHARMS
+            =================================== -->
+
+            <div class="admin-subsection">
+
+                <h4>
+                    03. Charms
+                </h4>
+
+                <div class="admin-form">
+
+                    <input
+                        id="customCharmName"
+                        type="text"
+                        placeholder="Charm Name"
+                    >
 
 
-                    <div class="mini-form">
+                    <input
+                        id="customCharmPrice"
+                        type="number"
+                        placeholder="Price"
+                        min="0"
+                    >
 
+
+                    <input
+                        id="customCharmImage"
+                        type="file"
+                        accept="image/*"
+                    >
+
+
+                    <img
+                        id="customCharmPreview"
+                        class="admin-image-preview"
+                        style="display:none;"
+                        alt="Charm Preview"
+                    >
+
+
+                    <label class="checkbox-label">
 
                         <input
-                            id="customCharmName"
-                            type="text"
-                            placeholder="Charm name"
+                            id="customCharmActive"
+                            type="checkbox"
+                            checked
                         >
 
+                        Available
 
-                        <input
-                            id="customCharmPrice"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            placeholder="Price (EGP)"
-                        >
+                    </label>
 
 
-                        <input
-                            id="customCharmImage"
-                            type="file"
-                            accept="image/*"
-                        >
-
-
-                        <label class="check-row">
-
-                            <input
-                                id="customCharmActive"
-                                type="checkbox"
-                                checked
-                            >
-
-                            Available on Customize page
-
-                        </label>
-
-
-                        <img
-                            id="customCharmPreview"
-                            class="custom-preview"
-                            alt="Charm preview"
-                        >
-
-
-                        <button
-                            class="primary-btn"
-                            type="button"
-                            onclick="addCustomizationCharm()"
-                        >
-                            Add Charm
-                        </button>
-
-                    </div>
-
-
-                    <div
-                        id="customCharmsList"
-                        class="option-list"
-                    ></div>
+                    <button
+                        type="button"
+                        onclick="addCustomizationCharm()"
+                    >
+                        Add Charm
+                    </button>
 
                 </div>
+
+
+                <div
+                    id="customCharmsList"
+                    class="option-list"
+                ></div>
 
             </div>
 
@@ -467,43 +445,316 @@
 
 
 
-        <!-- =====================================================
-             ORDERS
-        ====================================================== -->
+        <!-- ======================================
+             GIFT BOX
+        ======================================= -->
 
         <section
             class="box"
-            id="orders"
+            id="giftBoxSection"
         >
 
             <div class="section-heading">
 
                 <div>
 
-                    <p class="eyebrow">
-                        STORE ACTIVITY
-                    </p>
+                    <span class="section-label">
+                        GIFTING
+                    </span>
 
-                    <h2>
-                        Confirmed Orders
-                    </h2>
+                    <h3>
+                        🎁 Gift Box
+                    </h3>
+
+                    <p>
+                        Create the gift boxes, ribbons and cards
+                        customers can choose from.
+                    </p>
 
                 </div>
 
-
                 <a
-                    class="preview-link"
-                    href="orders.html"
+                    href="giftbox.html"
+                    class="section-link"
                 >
-                    Open Orders Page ↗
+                    Open Gift Box Page →
                 </a>
 
             </div>
 
 
-            <div
-                id="adminOrders"
-            ></div>
+
+            <!-- ==================================
+                 GIFT BOXES
+            =================================== -->
+
+            <div class="admin-subsection">
+
+                <h4>
+                    01. Gift Boxes
+                </h4>
+
+                <div class="admin-form">
+
+                    <input
+                        id="giftBoxName"
+                        type="text"
+                        placeholder="Gift Box Name"
+                    >
+
+
+                    <input
+                        id="giftBoxPrice"
+                        type="number"
+                        placeholder="Price"
+                        min="0"
+                    >
+
+
+                    <input
+                        id="giftBoxImage"
+                        type="file"
+                        accept="image/*"
+                    >
+
+
+                    <img
+                        id="giftBoxPreview"
+                        class="admin-image-preview"
+                        style="display:none;"
+                        alt="Gift Box Preview"
+                    >
+
+
+                    <label class="checkbox-label">
+
+                        <input
+                            id="giftBoxActive"
+                            type="checkbox"
+                            checked
+                        >
+
+                        Available
+
+                    </label>
+
+
+                    <button
+                        type="button"
+                        onclick="addGiftBox()"
+                    >
+                        Add Gift Box
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="giftBoxesList"
+                    class="option-list"
+                ></div>
+
+            </div>
+
+
+
+            <!-- ==================================
+                 RIBBONS
+            =================================== -->
+
+            <div class="admin-subsection">
+
+                <h4>
+                    02. Ribbons
+                </h4>
+
+                <div class="admin-form">
+
+                    <input
+                        id="giftRibbonName"
+                        type="text"
+                        placeholder="Ribbon Name"
+                    >
+
+
+                    <input
+                        id="giftRibbonPrice"
+                        type="number"
+                        placeholder="Extra Price"
+                        min="0"
+                    >
+
+
+                    <label class="color-field">
+
+                        Ribbon Color
+
+                        <input
+                            id="giftRibbonColor"
+                            type="color"
+                            value="#B49668"
+                        >
+
+                    </label>
+
+
+                    <input
+                        id="giftRibbonImage"
+                        type="file"
+                        accept="image/*"
+                    >
+
+
+                    <img
+                        id="giftRibbonPreview"
+                        class="admin-image-preview"
+                        style="display:none;"
+                        alt="Ribbon Preview"
+                    >
+
+
+                    <label class="checkbox-label">
+
+                        <input
+                            id="giftRibbonActive"
+                            type="checkbox"
+                            checked
+                        >
+
+                        Available
+
+                    </label>
+
+
+                    <button
+                        type="button"
+                        onclick="addGiftRibbon()"
+                    >
+                        Add Ribbon
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="giftRibbonsList"
+                    class="option-list"
+                ></div>
+
+            </div>
+
+
+
+            <!-- ==================================
+                 CARDS
+            =================================== -->
+
+            <div class="admin-subsection">
+
+                <h4>
+                    03. Cards
+                </h4>
+
+                <div class="admin-form">
+
+                    <input
+                        id="giftCardName"
+                        type="text"
+                        placeholder="Card Name"
+                    >
+
+
+                    <input
+                        id="giftCardPrice"
+                        type="number"
+                        placeholder="Price"
+                        min="0"
+                    >
+
+
+                    <input
+                        id="giftCardImage"
+                        type="file"
+                        accept="image/*"
+                    >
+
+
+                    <img
+                        id="giftCardPreview"
+                        class="admin-image-preview"
+                        style="display:none;"
+                        alt="Card Preview"
+                    >
+
+
+                    <label class="checkbox-label">
+
+                        <input
+                            id="giftCardActive"
+                            type="checkbox"
+                            checked
+                        >
+
+                        Available
+
+                    </label>
+
+
+                    <button
+                        type="button"
+                        onclick="addGiftCard()"
+                    >
+                        Add Card
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="giftCardsList"
+                    class="option-list"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================
+             ORDERS
+        ======================================= -->
+
+        <section
+            class="box"
+            id="ordersSection"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        SALES
+                    </span>
+
+                    <h3>
+                        Confirmed Orders
+                    </h3>
+
+                </div>
+
+                <a
+                    href="orders.html"
+                    class="section-link"
+                >
+                    Open Orders Page →
+                </a>
+
+            </div>
+
+
+            <div id="adminOrders"></div>
 
         </section>
 
@@ -516,4 +767,5 @@
 <script src="admin.js"></script>
 
 </body>
+
 </html>

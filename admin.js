@@ -1,66 +1,123 @@
-/* =========================================================
-   PRODUCTS
-========================================================= */
-
-let products =
-    JSON.parse(localStorage.getItem("products")) || [];
-
-const adminProducts =
-    document.getElementById("adminProducts");
-
-const imageInput =
-    document.getElementById("image");
-
-const preview =
-    document.getElementById("preview");
+// ==========================================
+// BLUEBELLS - ADMIN PANEL
+// ==========================================
 
 
+// ==========================================
+// HELPER
+// ==========================================
 
-/* PRODUCT IMAGE PREVIEW */
+function escapeHTML(value) {
 
-if (imageInput) {
-
-    imageInput.addEventListener("change", function () {
-
-        const file = imageInput.files[0];
-
-        if (!file) return;
-
-        const reader = new FileReader();
-
-        reader.onload = function () {
-
-            preview.src = reader.result;
-
-            preview.style.display = "block";
-
-        };
-
-        reader.readAsDataURL(file);
-
-    });
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 
 }
 
 
+// ==========================================
+// IMAGE PREVIEW
+// ==========================================
 
-/* ADD NORMAL PRODUCT */
+function setupImagePreview(inputId, previewId) {
+
+    const input =
+        document.getElementById(inputId);
+
+    const preview =
+        document.getElementById(previewId);
+
+
+    if (!input || !preview) return;
+
+
+    input.addEventListener(
+        "change",
+        function () {
+
+            const file =
+                input.files[0];
+
+            if (!file) return;
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function () {
+
+                    preview.src =
+                        reader.result;
+
+                    preview.style.display =
+                        "block";
+
+                };
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+}
+
+
+// ==========================================
+// PRODUCTS
+// ==========================================
+
+let products =
+    JSON.parse(
+        localStorage.getItem("products")
+    ) || [];
+
+
+const adminProducts =
+    document.getElementById(
+        "adminProducts"
+    );
+
+
+setupImagePreview(
+    "image",
+    "preview"
+);
+
 
 function addProduct() {
 
     const name =
-        document.getElementById("name").value.trim();
+        document
+            .getElementById("name")
+            .value
+            .trim();
+
 
     const price =
-        Number(document.getElementById("price").value);
+        Number(
+            document
+                .getElementById("price")
+                .value
+        );
+
+
+    const imagePreview =
+        document.getElementById("preview");
 
 
     if (
         !name ||
         Number.isNaN(price) ||
         price < 0 ||
-        !preview.src ||
-        preview.style.display === "none"
+        !imagePreview.src ||
+        imagePreview.style.display === "none"
     ) {
 
         alert(
@@ -68,23 +125,29 @@ function addProduct() {
         );
 
         return;
+
     }
 
 
     const product = {
 
-        id: Date.now(),
+        id:
+            Date.now(),
 
-        name: name,
+        name:
+            name,
 
-        price: price,
+        price:
+            price,
 
-        image: preview.src
+        image:
+            imagePreview.src
 
     };
 
 
     products.push(product);
+
 
     localStorage.setItem(
         "products",
@@ -95,41 +158,47 @@ function addProduct() {
     renderProducts();
 
 
-    document.getElementById("name").value = "";
+    document.getElementById(
+        "name"
+    ).value = "";
 
-    document.getElementById("price").value = "";
 
-    imageInput.value = "";
+    document.getElementById(
+        "price"
+    ).value = "";
 
-    preview.src = "";
 
-    preview.style.display = "none";
+    document.getElementById(
+        "image"
+    ).value = "";
+
+
+    imagePreview.src = "";
+
+    imagePreview.style.display =
+        "none";
 
 }
 
-
-
-/* SHOW PRODUCTS */
 
 function renderProducts() {
 
     if (!adminProducts) return;
 
-    adminProducts.innerHTML = "";
-
 
     if (products.length === 0) {
 
         adminProducts.innerHTML =
-            '<p class="empty-state">No products added yet.</p>';
+            `<p class="empty-state">
+                No products added yet.
+            </p>`;
 
         return;
     }
 
 
-    products.forEach(function (product) {
-
-        adminProducts.innerHTML += `
+    adminProducts.innerHTML =
+        products.map(product => `
 
             <div class="card">
 
@@ -147,6 +216,7 @@ function renderProducts() {
                 </p>
 
                 <button
+                    type="button"
                     class="delete-btn"
                     onclick="deleteProduct(${JSON.stringify(product.id)})"
                 >
@@ -155,27 +225,25 @@ function renderProducts() {
 
             </div>
 
-        `;
-
-    });
+        `).join("");
 
 }
 
 
-
-/* DELETE PRODUCT */
-
 function deleteProduct(id) {
 
-    if (!confirm("Delete this product?")) return;
+    if (
+        !confirm(
+            "Delete this product?"
+        )
+    ) return;
 
 
     products =
-        products.filter(function (product) {
-
-            return product.id !== id;
-
-        });
+        products.filter(
+            product =>
+                product.id !== id
+        );
 
 
     localStorage.setItem(
@@ -189,10 +257,9 @@ function deleteProduct(id) {
 }
 
 
-
-/* =========================================================
-   CUSTOMIZATION DATA
-========================================================= */
+// ==========================================
+// CUSTOMIZE DATA
+// ==========================================
 
 let customizationPieces =
     JSON.parse(
@@ -218,91 +285,25 @@ let customizationCharms =
     ) || [];
 
 
-
-/* IMAGE INPUTS */
-
-const pieceImageInput =
-    document.getElementById(
-        "customPieceImage"
-    );
-
-const piecePreview =
-    document.getElementById(
-        "customPiecePreview"
-    );
-
-
-const charmImageInput =
-    document.getElementById(
-        "customCharmImage"
-    );
-
-const charmPreview =
-    document.getElementById(
-        "customCharmPreview"
-    );
-
-
-
-/* =========================================================
-   IMAGE PREVIEW FUNCTION
-========================================================= */
-
-function setupImagePreview(input, image) {
-
-    if (!input || !image) return;
-
-
-    input.addEventListener(
-        "change",
-        function () {
-
-            const file =
-                input.files[0];
-
-            if (!file) return;
-
-
-            const reader =
-                new FileReader();
-
-
-            reader.onload =
-                function () {
-
-                    image.src =
-                        reader.result;
-
-                    image.style.display =
-                        "block";
-
-                };
-
-
-            reader.readAsDataURL(file);
-
-        }
-    );
-
-}
-
+// ==========================================
+// CUSTOMIZE IMAGE PREVIEWS
+// ==========================================
 
 setupImagePreview(
-    pieceImageInput,
-    piecePreview
+    "customPieceImage",
+    "customPiecePreview"
 );
 
 
 setupImagePreview(
-    charmImageInput,
-    charmPreview
+    "customCharmImage",
+    "customCharmPreview"
 );
 
 
-
-/* =========================================================
-   SAVE CUSTOMIZATION DATA
-========================================================= */
+// ==========================================
+// SAVE CUSTOMIZATION
+// ==========================================
 
 function saveCustomizationData() {
 
@@ -332,10 +333,9 @@ function saveCustomizationData() {
 }
 
 
-
-/* =========================================================
-   ADD PIECE
-========================================================= */
+// ==========================================
+// ADD PIECE
+// ==========================================
 
 function addCustomizationPiece() {
 
@@ -349,21 +349,28 @@ function addCustomizationPiece() {
 
 
     const type =
-        document.getElementById(
-            "customPieceType"
-        ).value;
+        document
+            .getElementById(
+                "customPieceType"
+            )
+            .value
+            .trim();
 
 
     const price =
         Number(
-            document.getElementById(
-                "customPiecePrice"
-            ).value
+            document
+                .getElementById(
+                    "customPiecePrice"
+                )
+                .value
         );
 
 
-    const image =
-        piecePreview?.src || "";
+    const preview =
+        document.getElementById(
+            "customPiecePreview"
+        );
 
 
     const active =
@@ -377,8 +384,8 @@ function addCustomizationPiece() {
         !type ||
         Number.isNaN(price) ||
         price < 0 ||
-        !image ||
-        piecePreview.style.display === "none"
+        !preview.src ||
+        preview.style.display === "none"
     ) {
 
         alert(
@@ -391,22 +398,30 @@ function addCustomizationPiece() {
 
     const piece = {
 
-        id: Date.now(),
+        id:
+            Date.now(),
 
-        name: name,
+        name:
+            name,
 
-        type: type,
+        type:
+            type,
 
-        price: price,
+        price:
+            price,
 
-        image: image,
+        image:
+            preview.src,
 
-        active: active
+        active:
+            active
 
     };
 
 
-    customizationPieces.push(piece);
+    customizationPieces.push(
+        piece
+    );
 
 
     saveCustomizationData();
@@ -418,10 +433,9 @@ function addCustomizationPiece() {
 }
 
 
-
-/* =========================================================
-   ADD METAL
-========================================================= */
+// ==========================================
+// ADD METAL
+// ==========================================
 
 function addCustomizationMetal() {
 
@@ -436,16 +450,20 @@ function addCustomizationMetal() {
 
     const extraPrice =
         Number(
-            document.getElementById(
-                "customMetalExtra"
-            ).value
+            document
+                .getElementById(
+                    "customMetalExtra"
+                )
+                .value
         );
 
 
     const color =
-        document.getElementById(
-            "customMetalColor"
-        ).value;
+        document
+            .getElementById(
+                "customMetalColor"
+            )
+            .value;
 
 
     const active =
@@ -470,20 +488,27 @@ function addCustomizationMetal() {
 
     const metal = {
 
-        id: Date.now(),
+        id:
+            Date.now(),
 
-        name: name,
+        name:
+            name,
 
-        extraPrice: extraPrice,
+        extraPrice:
+            extraPrice,
 
-        color: color,
+        color:
+            color,
 
-        active: active
+        active:
+            active
 
     };
 
 
-    customizationMetals.push(metal);
+    customizationMetals.push(
+        metal
+    );
 
 
     saveCustomizationData();
@@ -495,10 +520,9 @@ function addCustomizationMetal() {
 }
 
 
-
-/* =========================================================
-   ADD CHARM
-========================================================= */
+// ==========================================
+// ADD CHARM
+// ==========================================
 
 function addCustomizationCharm() {
 
@@ -513,14 +537,18 @@ function addCustomizationCharm() {
 
     const price =
         Number(
-            document.getElementById(
-                "customCharmPrice"
-            ).value
+            document
+                .getElementById(
+                    "customCharmPrice"
+                )
+                .value
         );
 
 
-    const image =
-        charmPreview?.src || "";
+    const preview =
+        document.getElementById(
+            "customCharmPreview"
+        );
 
 
     const active =
@@ -533,8 +561,8 @@ function addCustomizationCharm() {
         !name ||
         Number.isNaN(price) ||
         price < 0 ||
-        !image ||
-        charmPreview.style.display === "none"
+        !preview.src ||
+        preview.style.display === "none"
     ) {
 
         alert(
@@ -547,20 +575,27 @@ function addCustomizationCharm() {
 
     const charm = {
 
-        id: Date.now(),
+        id:
+            Date.now(),
 
-        name: name,
+        name:
+            name,
 
-        price: price,
+        price:
+            price,
 
-        image: image,
+        image:
+            preview.src,
 
-        active: active
+        active:
+            active
 
     };
 
 
-    customizationCharms.push(charm);
+    customizationCharms.push(
+        charm
+    );
 
 
     saveCustomizationData();
@@ -572,76 +607,350 @@ function addCustomizationCharm() {
 }
 
 
+// ==========================================
+// RENDER CUSTOMIZATION
+// ==========================================
 
-/* =========================================================
-   DELETE
-========================================================= */
+function renderCustomizationLists() {
 
-function deleteCustomizationPiece(id) {
+    renderPieces();
 
-    if (!confirm("Delete this piece?"))
-        return;
+    renderMetals();
 
-
-    customizationPieces =
-        customizationPieces.filter(
-            item => item.id !== id
-        );
-
-
-    saveCustomizationData();
-
-    renderCustomizationLists();
+    renderCharms();
 
 }
 
 
+// ==========================================
+// RENDER PIECES
+// ==========================================
 
-function deleteCustomizationMetal(id) {
+function renderPieces() {
 
-    if (!confirm("Delete this metal?"))
-        return;
-
-
-    customizationMetals =
-        customizationMetals.filter(
-            item => item.id !== id
+    const container =
+        document.getElementById(
+            "customPiecesList"
         );
 
 
-    saveCustomizationData();
+    if (!container) return;
 
-    renderCustomizationLists();
+
+    if (
+        customizationPieces.length === 0
+    ) {
+
+        container.innerHTML =
+            `<p class="empty-state">
+                No pieces added yet.
+            </p>`;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        customizationPieces
+            .map(item => `
+
+                <div class="option-item">
+
+                    <img
+                        src="${item.image || ""}"
+                        alt="${escapeHTML(item.name)}"
+                    >
+
+                    <div class="option-info">
+
+                        <strong>
+                            ${escapeHTML(item.name)}
+                        </strong>
+
+                        <span>
+                            Type:
+                            ${escapeHTML(item.type)}
+                        </span>
+
+                        <span>
+                            ${Number(item.price) || 0} EGP
+                        </span>
+
+                        <span
+                            class="availability ${
+                                item.active
+                                    ? "active"
+                                    : "inactive"
+                            }"
+                        >
+                            ${
+                                item.active
+                                    ? "Available"
+                                    : "Hidden"
+                            }
+                        </span>
+
+                    </div>
+
+
+                    <div class="option-actions">
+
+                        <button
+                            type="button"
+                            class="small-btn"
+                            onclick="toggleCustomization(
+                                'piece',
+                                ${JSON.stringify(item.id)}
+                            )"
+                        >
+                            ${
+                                item.active
+                                    ? "Hide"
+                                    : "Show"
+                            }
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="small-delete"
+                            onclick="deleteCustomizationPiece(
+                                ${JSON.stringify(item.id)}
+                            )"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `)
+            .join("");
 
 }
 
 
+// ==========================================
+// RENDER METALS
+// ==========================================
 
-function deleteCustomizationCharm(id) {
+function renderMetals() {
 
-    if (!confirm("Delete this charm?"))
-        return;
-
-
-    customizationCharms =
-        customizationCharms.filter(
-            item => item.id !== id
+    const container =
+        document.getElementById(
+            "customMetalsList"
         );
 
 
-    saveCustomizationData();
+    if (!container) return;
 
-    renderCustomizationLists();
+
+    if (
+        customizationMetals.length === 0
+    ) {
+
+        container.innerHTML =
+            `<p class="empty-state">
+                No metals added yet.
+            </p>`;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        customizationMetals
+            .map(item => `
+
+                <div class="option-item">
+
+                    <div
+                        class="metal-color"
+                        style="
+                            background:${item.color || "#D4AF37"};
+                        "
+                    ></div>
+
+
+                    <div class="option-info">
+
+                        <strong>
+                            ${escapeHTML(item.name)}
+                        </strong>
+
+                        <span>
+                            + ${Number(item.extraPrice) || 0} EGP
+                        </span>
+
+                        <span
+                            class="availability ${
+                                item.active
+                                    ? "active"
+                                    : "inactive"
+                            }"
+                        >
+                            ${
+                                item.active
+                                    ? "Available"
+                                    : "Hidden"
+                            }
+                        </span>
+
+                    </div>
+
+
+                    <div class="option-actions">
+
+                        <button
+                            type="button"
+                            class="small-btn"
+                            onclick="toggleCustomization(
+                                'metal',
+                                ${JSON.stringify(item.id)}
+                            )"
+                        >
+                            ${
+                                item.active
+                                    ? "Hide"
+                                    : "Show"
+                            }
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="small-delete"
+                            onclick="deleteCustomizationMetal(
+                                ${JSON.stringify(item.id)}
+                            )"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `)
+            .join("");
 
 }
 
 
+// ==========================================
+// RENDER CHARMS
+// ==========================================
 
-/* =========================================================
-   SHOW / HIDE
-========================================================= */
+function renderCharms() {
 
-function toggleCustomization(type, id) {
+    const container =
+        document.getElementById(
+            "customCharmsList"
+        );
+
+
+    if (!container) return;
+
+
+    if (
+        customizationCharms.length === 0
+    ) {
+
+        container.innerHTML =
+            `<p class="empty-state">
+                No charms added yet.
+            </p>`;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        customizationCharms
+            .map(item => `
+
+                <div class="option-item">
+
+                    <img
+                        src="${item.image || ""}"
+                        alt="${escapeHTML(item.name)}"
+                    >
+
+
+                    <div class="option-info">
+
+                        <strong>
+                            ${escapeHTML(item.name)}
+                        </strong>
+
+                        <span>
+                            ${Number(item.price) || 0} EGP
+                        </span>
+
+                        <span
+                            class="availability ${
+                                item.active
+                                    ? "active"
+                                    : "inactive"
+                            }"
+                        >
+                            ${
+                                item.active
+                                    ? "Available"
+                                    : "Hidden"
+                            }
+                        </span>
+
+                    </div>
+
+
+                    <div class="option-actions">
+
+                        <button
+                            type="button"
+                            class="small-btn"
+                            onclick="toggleCustomization(
+                                'charm',
+                                ${JSON.stringify(item.id)}
+                            )"
+                        >
+                            ${
+                                item.active
+                                    ? "Hide"
+                                    : "Show"
+                            }
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="small-delete"
+                            onclick="deleteCustomizationCharm(
+                                ${JSON.stringify(item.id)}
+                            )"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `)
+            .join("");
+
+}
+
+
+// ==========================================
+// TOGGLE CUSTOMIZATION
+// ==========================================
+
+function toggleCustomization(
+    type,
+    id
+) {
 
     let list;
 
@@ -651,12 +960,18 @@ function toggleCustomization(type, id) {
         list =
             customizationPieces;
 
-    } else if (type === "metal") {
+    }
+
+
+    if (type === "metal") {
 
         list =
             customizationMetals;
 
-    } else {
+    }
+
+
+    if (type === "charm") {
 
         list =
             customizationCharms;
@@ -666,7 +981,8 @@ function toggleCustomization(type, id) {
 
     const item =
         list.find(
-            x => x.id === id
+            item =>
+                item.id === id
         );
 
 
@@ -684,304 +1000,90 @@ function toggleCustomization(type, id) {
 }
 
 
+// ==========================================
+// DELETE PIECE
+// ==========================================
 
-/* =========================================================
-   RENDER CUSTOMIZATION
-========================================================= */
+function deleteCustomizationPiece(id) {
 
-function renderCustomizationLists() {
+    if (
+        !confirm(
+            "Delete this piece?"
+        )
+    ) return;
 
-    const piecesList =
-        document.getElementById(
-            "customPiecesList"
+
+    customizationPieces =
+        customizationPieces.filter(
+            item =>
+                item.id !== id
         );
 
 
-    const metalsList =
-        document.getElementById(
-            "customMetalsList"
-        );
+    saveCustomizationData();
 
-
-    const charmsList =
-        document.getElementById(
-            "customCharmsList"
-        );
-
-
-
-    /* PIECES */
-
-    piecesList.innerHTML =
-        customizationPieces.length
-
-        ?
-
-        customizationPieces.map(
-            item => `
-
-            <div class="option-item">
-
-                <img
-                    src="${item.image}"
-                    alt="${escapeHTML(item.name)}"
-                >
-
-                <div class="option-info">
-
-                    <strong>
-                        ${escapeHTML(item.name)}
-                    </strong>
-
-                    <span>
-                        ${escapeHTML(item.type)}
-                        ·
-                        ${item.price} EGP
-                    </span>
-
-                    <span
-                        class="availability ${
-                            item.active
-                                ? "active"
-                                : "inactive"
-                        }"
-                    >
-                        ${
-                            item.active
-                                ? "Available"
-                                : "Hidden"
-                        }
-                    </span>
-
-                </div>
-
-
-                <div class="option-actions">
-
-                    <button
-                        class="small-btn"
-                        onclick="
-                            toggleCustomization(
-                                'piece',
-                                ${JSON.stringify(item.id)}
-                            )
-                        "
-                    >
-                        ${
-                            item.active
-                                ? "Hide"
-                                : "Show"
-                        }
-                    </button>
-
-
-                    <button
-                        class="small-delete"
-                        onclick="
-                            deleteCustomizationPiece(
-                                ${JSON.stringify(item.id)}
-                            )
-                        "
-                    >
-                        Delete
-                    </button>
-
-                </div>
-
-            </div>
-
-        `
-        ).join("")
-
-        :
-
-        '<p class="empty-state">No pieces added yet.</p>';
-
-
-
-    /* METALS */
-
-    metalsList.innerHTML =
-        customizationMetals.length
-
-        ?
-
-        customizationMetals.map(
-            item => `
-
-            <div class="option-item metal-item">
-
-                <span
-                    class="metal-dot"
-                    style="background:${escapeHTML(
-                        item.color || "#ccc"
-                    )}"
-                ></span>
-
-
-                <div class="option-info">
-
-                    <strong>
-                        ${escapeHTML(item.name)}
-                    </strong>
-
-                    <span>
-                        + ${item.extraPrice} EGP
-                    </span>
-
-                    <span
-                        class="availability ${
-                            item.active
-                                ? "active"
-                                : "inactive"
-                        }"
-                    >
-                        ${
-                            item.active
-                                ? "Available"
-                                : "Hidden"
-                        }
-                    </span>
-
-                </div>
-
-
-                <div class="option-actions">
-
-                    <button
-                        class="small-btn"
-                        onclick="
-                            toggleCustomization(
-                                'metal',
-                                ${JSON.stringify(item.id)}
-                            )
-                        "
-                    >
-                        ${
-                            item.active
-                                ? "Hide"
-                                : "Show"
-                        }
-                    </button>
-
-
-                    <button
-                        class="small-delete"
-                        onclick="
-                            deleteCustomizationMetal(
-                                ${JSON.stringify(item.id)}
-                            )
-                        "
-                    >
-                        Delete
-                    </button>
-
-                </div>
-
-            </div>
-
-        `
-        ).join("")
-
-        :
-
-        '<p class="empty-state">No metals added yet.</p>';
-
-
-
-    /* CHARMS */
-
-    charmsList.innerHTML =
-        customizationCharms.length
-
-        ?
-
-        customizationCharms.map(
-            item => `
-
-            <div class="option-item">
-
-                <img
-                    src="${item.image}"
-                    alt="${escapeHTML(item.name)}"
-                >
-
-
-                <div class="option-info">
-
-                    <strong>
-                        ${escapeHTML(item.name)}
-                    </strong>
-
-                    <span>
-                        ${item.price} EGP
-                    </span>
-
-                    <span
-                        class="availability ${
-                            item.active
-                                ? "active"
-                                : "inactive"
-                        }"
-                    >
-                        ${
-                            item.active
-                                ? "Available"
-                                : "Hidden"
-                        }
-                    </span>
-
-                </div>
-
-
-                <div class="option-actions">
-
-                    <button
-                        class="small-btn"
-                        onclick="
-                            toggleCustomization(
-                                'charm',
-                                ${JSON.stringify(item.id)}
-                            )
-                        "
-                    >
-                        ${
-                            item.active
-                                ? "Hide"
-                                : "Show"
-                        }
-                    </button>
-
-
-                    <button
-                        class="small-delete"
-                        onclick="
-                            deleteCustomizationCharm(
-                                ${JSON.stringify(item.id)}
-                            )
-                        "
-                    >
-                        Delete
-                    </button>
-
-                </div>
-
-            </div>
-
-        `
-        ).join("")
-
-        :
-
-        '<p class="empty-state">No charms added yet.</p>';
+    renderCustomizationLists();
 
 }
 
 
+// ==========================================
+// DELETE METAL
+// ==========================================
 
-/* =========================================================
-   CLEAR FORMS
-========================================================= */
+function deleteCustomizationMetal(id) {
+
+    if (
+        !confirm(
+            "Delete this metal?"
+        )
+    ) return;
+
+
+    customizationMetals =
+        customizationMetals.filter(
+            item =>
+                item.id !== id
+        );
+
+
+    saveCustomizationData();
+
+    renderCustomizationLists();
+
+}
+
+
+// ==========================================
+// DELETE CHARM
+// ==========================================
+
+function deleteCustomizationCharm(id) {
+
+    if (
+        !confirm(
+            "Delete this charm?"
+        )
+    ) return;
+
+
+    customizationCharms =
+        customizationCharms.filter(
+            item =>
+                item.id !== id
+        );
+
+
+    saveCustomizationData();
+
+    renderCustomizationLists();
+
+}
+
+
+// ==========================================
+// CLEAR CUSTOMIZATION FORMS
+// ==========================================
 
 function clearPieceForm() {
 
@@ -1010,13 +1112,18 @@ function clearPieceForm() {
     ).checked = true;
 
 
-    piecePreview.src = "";
+    const preview =
+        document.getElementById(
+            "customPiecePreview"
+        );
 
-    piecePreview.style.display =
+
+    preview.src = "";
+
+    preview.style.display =
         "none";
 
 }
-
 
 
 function clearMetalForm() {
@@ -1043,7 +1150,6 @@ function clearMetalForm() {
 }
 
 
-
 function clearCharmForm() {
 
     document.getElementById(
@@ -1066,18 +1172,975 @@ function clearCharmForm() {
     ).checked = true;
 
 
-    charmPreview.src = "";
+    const preview =
+        document.getElementById(
+            "customCharmPreview"
+        );
 
-    charmPreview.style.display =
+
+    preview.src = "";
+
+    preview.style.display =
         "none";
 
 }
 
 
+// ==========================================
+// GIFT BOX DATA
+// ==========================================
 
-/* =========================================================
-   ORDERS
-========================================================= */
+let giftBoxes =
+    JSON.parse(
+        localStorage.getItem(
+            "bluebellsGiftBoxes"
+        )
+    ) || [];
+
+
+let giftRibbons =
+    JSON.parse(
+        localStorage.getItem(
+            "bluebellsGiftRibbons"
+        )
+    ) || [];
+
+
+let giftCards =
+    JSON.parse(
+        localStorage.getItem(
+            "bluebellsGiftCards"
+        )
+    ) || [];
+
+
+// ==========================================
+// GIFT BOX IMAGE PREVIEWS
+// ==========================================
+
+setupImagePreview(
+    "giftBoxImage",
+    "giftBoxPreview"
+);
+
+
+setupImagePreview(
+    "giftRibbonImage",
+    "giftRibbonPreview"
+);
+
+
+setupImagePreview(
+    "giftCardImage",
+    "giftCardPreview"
+);
+
+
+// ==========================================
+// SAVE GIFT BOX DATA
+// ==========================================
+
+function saveGiftBoxData() {
+
+    localStorage.setItem(
+        "bluebellsGiftBoxes",
+        JSON.stringify(
+            giftBoxes
+        )
+    );
+
+
+    localStorage.setItem(
+        "bluebellsGiftRibbons",
+        JSON.stringify(
+            giftRibbons
+        )
+    );
+
+
+    localStorage.setItem(
+        "bluebellsGiftCards",
+        JSON.stringify(
+            giftCards
+        )
+    );
+
+}
+
+
+// ==========================================
+// ADD GIFT BOX
+// ==========================================
+
+function addGiftBox() {
+
+    const name =
+        document
+            .getElementById(
+                "giftBoxName"
+            )
+            .value
+            .trim();
+
+
+    const price =
+        Number(
+            document
+                .getElementById(
+                    "giftBoxPrice"
+                )
+                .value
+        );
+
+
+    const preview =
+        document.getElementById(
+            "giftBoxPreview"
+        );
+
+
+    const active =
+        document.getElementById(
+            "giftBoxActive"
+        ).checked;
+
+
+    if (
+        !name ||
+        Number.isNaN(price) ||
+        price < 0 ||
+        !preview.src ||
+        preview.style.display === "none"
+    ) {
+
+        alert(
+            "Please fill the gift box name, price and image."
+        );
+
+        return;
+    }
+
+
+    const box = {
+
+        id:
+            Date.now(),
+
+        name:
+            name,
+
+        price:
+            price,
+
+        image:
+            preview.src,
+
+        active:
+            active
+
+    };
+
+
+    giftBoxes.push(box);
+
+
+    saveGiftBoxData();
+
+    renderGiftBoxAdmin();
+
+    clearGiftBoxForm();
+
+}
+
+
+// ==========================================
+// ADD RIBBON
+// ==========================================
+
+function addGiftRibbon() {
+
+    const name =
+        document
+            .getElementById(
+                "giftRibbonName"
+            )
+            .value
+            .trim();
+
+
+    const extraPrice =
+        Number(
+            document
+                .getElementById(
+                    "giftRibbonPrice"
+                )
+                .value
+        );
+
+
+    const color =
+        document
+            .getElementById(
+                "giftRibbonColor"
+            )
+            .value;
+
+
+    const preview =
+        document.getElementById(
+            "giftRibbonPreview"
+        );
+
+
+    const active =
+        document.getElementById(
+            "giftRibbonActive"
+        ).checked;
+
+
+    if (
+        !name ||
+        Number.isNaN(extraPrice) ||
+        extraPrice < 0
+    ) {
+
+        alert(
+            "Please enter the ribbon name and extra price."
+        );
+
+        return;
+    }
+
+
+    const ribbon = {
+
+        id:
+            Date.now(),
+
+        name:
+            name,
+
+        extraPrice:
+            extraPrice,
+
+        color:
+            color,
+
+        image:
+            preview.style.display !== "none"
+                ? preview.src
+                : "",
+
+        active:
+            active
+
+    };
+
+
+    giftRibbons.push(ribbon);
+
+
+    saveGiftBoxData();
+
+    renderGiftBoxAdmin();
+
+    clearGiftRibbonForm();
+
+}
+
+
+// ==========================================
+// ADD CARD
+// ==========================================
+
+function addGiftCard() {
+
+    const name =
+        document
+            .getElementById(
+                "giftCardName"
+            )
+            .value
+            .trim();
+
+
+    const price =
+        Number(
+            document
+                .getElementById(
+                    "giftCardPrice"
+                )
+                .value
+        );
+
+
+    const preview =
+        document.getElementById(
+            "giftCardPreview"
+        );
+
+
+    const active =
+        document.getElementById(
+            "giftCardActive"
+        ).checked;
+
+
+    if (
+        !name ||
+        Number.isNaN(price) ||
+        price < 0
+    ) {
+
+        alert(
+            "Please enter the card name and price."
+        );
+
+        return;
+    }
+
+
+    const card = {
+
+        id:
+            Date.now(),
+
+        name:
+            name,
+
+        price:
+            price,
+
+        image:
+            preview.style.display !== "none"
+                ? preview.src
+                : "",
+
+        active:
+            active
+
+    };
+
+
+    giftCards.push(card);
+
+
+    saveGiftBoxData();
+
+    renderGiftBoxAdmin();
+
+    clearGiftCardForm();
+
+}
+
+
+// ==========================================
+// RENDER GIFT BOX ADMIN
+// ==========================================
+
+function renderGiftBoxAdmin() {
+
+    renderGiftBoxes();
+
+    renderGiftRibbons();
+
+    renderGiftCards();
+
+}
+
+
+// ==========================================
+// RENDER GIFT BOXES
+// ==========================================
+
+function renderGiftBoxes() {
+
+    const container =
+        document.getElementById(
+            "giftBoxesList"
+        );
+
+
+    if (!container) return;
+
+
+    if (giftBoxes.length === 0) {
+
+        container.innerHTML =
+            `<p class="empty-state">
+                No gift boxes added yet.
+            </p>`;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        giftBoxes
+            .map(item => `
+
+                <div class="option-item">
+
+                    ${
+                        item.image
+                        ?
+                        `<img
+                            src="${item.image}"
+                            alt="${escapeHTML(item.name)}"
+                        >`
+                        :
+                        ""
+                    }
+
+
+                    <div class="option-info">
+
+                        <strong>
+                            ${escapeHTML(item.name)}
+                        </strong>
+
+                        <span>
+                            ${Number(item.price) || 0} EGP
+                        </span>
+
+                        <span
+                            class="availability ${
+                                item.active
+                                    ? "active"
+                                    : "inactive"
+                            }"
+                        >
+                            ${
+                                item.active
+                                    ? "Available"
+                                    : "Hidden"
+                            }
+                        </span>
+
+                    </div>
+
+
+                    <div class="option-actions">
+
+                        <button
+                            type="button"
+                            class="small-btn"
+                            onclick="toggleGiftOption(
+                                'box',
+                                ${JSON.stringify(item.id)}
+                            )"
+                        >
+                            ${
+                                item.active
+                                    ? "Hide"
+                                    : "Show"
+                            }
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="small-delete"
+                            onclick="deleteGiftBox(
+                                ${JSON.stringify(item.id)}
+                            )"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `)
+            .join("");
+
+}
+
+
+// ==========================================
+// RENDER RIBBONS
+// ==========================================
+
+function renderGiftRibbons() {
+
+    const container =
+        document.getElementById(
+            "giftRibbonsList"
+        );
+
+
+    if (!container) return;
+
+
+    if (giftRibbons.length === 0) {
+
+        container.innerHTML =
+            `<p class="empty-state">
+                No ribbons added yet.
+            </p>`;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        giftRibbons
+            .map(item => `
+
+                <div class="option-item">
+
+                    ${
+                        item.image
+                        ?
+                        `<img
+                            src="${item.image}"
+                            alt="${escapeHTML(item.name)}"
+                        >`
+                        :
+                        `
+                        <div
+                            class="metal-color"
+                            style="
+                                background:${item.color || "#B49668"};
+                            "
+                        ></div>
+                        `
+                    }
+
+
+                    <div class="option-info">
+
+                        <strong>
+                            ${escapeHTML(item.name)}
+                        </strong>
+
+                        <span>
+                            + ${Number(item.extraPrice) || 0} EGP
+                        </span>
+
+                        <span
+                            class="availability ${
+                                item.active
+                                    ? "active"
+                                    : "inactive"
+                            }"
+                        >
+                            ${
+                                item.active
+                                    ? "Available"
+                                    : "Hidden"
+                            }
+                        </span>
+
+                    </div>
+
+
+                    <div class="option-actions">
+
+                        <button
+                            type="button"
+                            class="small-btn"
+                            onclick="toggleGiftOption(
+                                'ribbon',
+                                ${JSON.stringify(item.id)}
+                            )"
+                        >
+                            ${
+                                item.active
+                                    ? "Hide"
+                                    : "Show"
+                            }
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="small-delete"
+                            onclick="deleteGiftRibbon(
+                                ${JSON.stringify(item.id)}
+                            )"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `)
+            .join("");
+
+}
+
+
+// ==========================================
+// RENDER CARDS
+// ==========================================
+
+function renderGiftCards() {
+
+    const container =
+        document.getElementById(
+            "giftCardsList"
+        );
+
+
+    if (!container) return;
+
+
+    if (giftCards.length === 0) {
+
+        container.innerHTML =
+            `<p class="empty-state">
+                No cards added yet.
+            </p>`;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        giftCards
+            .map(item => `
+
+                <div class="option-item">
+
+                    ${
+                        item.image
+                        ?
+                        `<img
+                            src="${item.image}"
+                            alt="${escapeHTML(item.name)}"
+                        >`
+                        :
+                        ""
+                    }
+
+
+                    <div class="option-info">
+
+                        <strong>
+                            ${escapeHTML(item.name)}
+                        </strong>
+
+                        <span>
+                            ${Number(item.price) || 0} EGP
+                        </span>
+
+                        <span
+                            class="availability ${
+                                item.active
+                                    ? "active"
+                                    : "inactive"
+                            }"
+                        >
+                            ${
+                                item.active
+                                    ? "Available"
+                                    : "Hidden"
+                            }
+                        </span>
+
+                    </div>
+
+
+                    <div class="option-actions">
+
+                        <button
+                            type="button"
+                            class="small-btn"
+                            onclick="toggleGiftOption(
+                                'card',
+                                ${JSON.stringify(item.id)}
+                            )"
+                        >
+                            ${
+                                item.active
+                                    ? "Hide"
+                                    : "Show"
+                            }
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="small-delete"
+                            onclick="deleteGiftCard(
+                                ${JSON.stringify(item.id)}
+                            )"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `)
+            .join("");
+
+}
+
+
+// ==========================================
+// TOGGLE GIFT OPTION
+// ==========================================
+
+function toggleGiftOption(
+    type,
+    id
+) {
+
+    let list;
+
+
+    if (type === "box") {
+
+        list =
+            giftBoxes;
+
+    }
+
+
+    if (type === "ribbon") {
+
+        list =
+            giftRibbons;
+
+    }
+
+
+    if (type === "card") {
+
+        list =
+            giftCards;
+
+    }
+
+
+    const item =
+        list.find(
+            item =>
+                item.id === id
+        );
+
+
+    if (!item) return;
+
+
+    item.active =
+        !item.active;
+
+
+    saveGiftBoxData();
+
+    renderGiftBoxAdmin();
+
+}
+
+
+// ==========================================
+// DELETE GIFT BOX
+// ==========================================
+
+function deleteGiftBox(id) {
+
+    if (
+        !confirm(
+            "Delete this gift box?"
+        )
+    ) return;
+
+
+    giftBoxes =
+        giftBoxes.filter(
+            item =>
+                item.id !== id
+        );
+
+
+    saveGiftBoxData();
+
+    renderGiftBoxAdmin();
+
+}
+
+
+// ==========================================
+// DELETE RIBBON
+// ==========================================
+
+function deleteGiftRibbon(id) {
+
+    if (
+        !confirm(
+            "Delete this ribbon?"
+        )
+    ) return;
+
+
+    giftRibbons =
+        giftRibbons.filter(
+            item =>
+                item.id !== id
+        );
+
+
+    saveGiftBoxData();
+
+    renderGiftBoxAdmin();
+
+}
+
+
+// ==========================================
+// DELETE CARD
+// ==========================================
+
+function deleteGiftCard(id) {
+
+    if (
+        !confirm(
+            "Delete this card?"
+        )
+    ) return;
+
+
+    giftCards =
+        giftCards.filter(
+            item =>
+                item.id !== id
+        );
+
+
+    saveGiftBoxData();
+
+    renderGiftBoxAdmin();
+
+}
+
+
+// ==========================================
+// CLEAR GIFT BOX FORMS
+// ==========================================
+
+function clearGiftBoxForm() {
+
+    document.getElementById(
+        "giftBoxName"
+    ).value = "";
+
+
+    document.getElementById(
+        "giftBoxPrice"
+    ).value = "";
+
+
+    document.getElementById(
+        "giftBoxImage"
+    ).value = "";
+
+
+    document.getElementById(
+        "giftBoxActive"
+    ).checked = true;
+
+
+    const preview =
+        document.getElementById(
+            "giftBoxPreview"
+        );
+
+
+    preview.src = "";
+
+    preview.style.display =
+        "none";
+
+}
+
+
+function clearGiftRibbonForm() {
+
+    document.getElementById(
+        "giftRibbonName"
+    ).value = "";
+
+
+    document.getElementById(
+        "giftRibbonPrice"
+    ).value = "";
+
+
+    document.getElementById(
+        "giftRibbonColor"
+    ).value = "#B49668";
+
+
+    document.getElementById(
+        "giftRibbonImage"
+    ).value = "";
+
+
+    document.getElementById(
+        "giftRibbonActive"
+    ).checked = true;
+
+
+    const preview =
+        document.getElementById(
+            "giftRibbonPreview"
+        );
+
+
+    preview.src = "";
+
+    preview.style.display =
+        "none";
+
+}
+
+
+function clearGiftCardForm() {
+
+    document.getElementById(
+        "giftCardName"
+    ).value = "";
+
+
+    document.getElementById(
+        "giftCardPrice"
+    ).value = "";
+
+
+    document.getElementById(
+        "giftCardImage"
+    ).value = "";
+
+
+    document.getElementById(
+        "giftCardActive"
+    ).checked = true;
+
+
+    const preview =
+        document.getElementById(
+            "giftCardPreview"
+        );
+
+
+    preview.src = "";
+
+    preview.style.display =
+        "none";
+
+}
+
+
+// ==========================================
+// ORDERS
+// ==========================================
 
 let orders =
     JSON.parse(
@@ -1089,7 +2152,6 @@ const adminOrders =
     document.getElementById(
         "adminOrders"
     );
-
 
 
 function normalizeOrder(order) {
@@ -1129,8 +2191,6 @@ function normalizeOrder(order) {
 
         items,
 
-        cart: items,
-
         total:
             order.total ||
             order.amount ||
@@ -1145,16 +2205,23 @@ function normalizeOrder(order) {
 }
 
 
+// ==========================================
+// DELETE ORDER
+// ==========================================
 
-function deleteOrder(orderId) {
+function deleteOrder(id) {
 
-    if (!confirm("Delete this order?"))
-        return;
+    if (
+        !confirm(
+            "Delete this order?"
+        )
+    ) return;
 
 
     orders =
         orders.filter(
-            order => order.id !== orderId
+            order =>
+                order.id !== id
         );
 
 
@@ -1169,249 +2236,335 @@ function deleteOrder(orderId) {
 }
 
 
+// ==========================================
+// RENDER ORDERS
+// ==========================================
 
 function renderOrders() {
 
     if (!adminOrders) return;
 
 
-    adminOrders.innerHTML = "";
-
-
     if (orders.length === 0) {
 
         adminOrders.innerHTML =
-            '<p class="empty-state">No orders yet.</p>';
+            `<p class="empty-state">
+                No orders yet.
+            </p>`;
 
         return;
-
     }
 
 
-    orders
-        .map(normalizeOrder)
-        .forEach(order => {
+    adminOrders.innerHTML =
+        orders
+            .map(normalizeOrder)
+            .map(order => {
 
 
-            const itemsMarkup =
-                order.items.map(item => {
+                const itemsMarkup =
+                    order.items
+                        .map(item => {
 
 
-                    const itemName =
-                        item.name ||
-                        item.productName ||
-                        "Item";
+                            const itemName =
+                                item.name ||
+                                item.productName ||
+                                "Item";
 
 
-                    const itemQty =
-                        item.qty ||
-                        item.quantity ||
-                        1;
+                            const itemQty =
+                                item.quantity ||
+                                item.qty ||
+                                1;
 
 
-                    const itemPrice =
-                        Number(item.price) || 0;
+                            const itemPrice =
+                                Number(item.price) || 0;
 
 
-                    const customization =
-                        item.customization;
+                            let extraMarkup =
+                                "";
 
 
-                    let customizationMarkup =
-                        "";
+                            // CUSTOMIZE
+                            if (
+                                item.customization &&
+                                item.customization.piece
+                            ) {
+
+                                const customization =
+                                    item.customization;
 
 
-                    if (customization) {
-
-                        const piece =
-                            customization.piece?.name ||
-                            customization.pieceName ||
-                            "-";
-
-
-                        const metal =
-                            customization.metal?.name ||
-                            customization.metalName ||
-                            "-";
+                                const piece =
+                                    customization
+                                        .piece
+                                        ?.name ||
+                                    "-";
 
 
-                        const charms =
-                            Array.isArray(
-                                customization.charms
-                            )
+                                const metal =
+                                    customization
+                                        .metal
+                                        ?.name ||
+                                    "-";
 
-                                ?
 
-                                customization.charms
-                                    .map(
-                                        c => c.name
+                                const charms =
+                                    Array.isArray(
+                                        customization.charms
                                     )
-                                    .join(", ")
-
-                                || "None"
-
-                                :
-
-                                "None";
-
-
-                        customizationMarkup = `
-
-                            <div class="order-customization">
-
-                                <strong>
-                                    Customized Piece
-                                </strong>
-
-                                <span>
-                                    Piece:
-                                    ${escapeHTML(piece)}
-                                </span>
-
-                                <span>
-                                    Metal:
-                                    ${escapeHTML(metal)}
-                                </span>
-
-                                <span>
-                                    Charms:
-                                    ${escapeHTML(charms)}
-                                </span>
-
-                            </div>
-
-                        `;
-
-                    }
+                                    ?
+                                    customization.charms
+                                        .map(
+                                            charm =>
+                                                charm.name
+                                        )
+                                        .join(", ")
+                                    :
+                                    "None";
 
 
-                    return `
+                                extraMarkup = `
 
-                        <li>
+                                    <div class="order-customization">
 
-                            <div class="order-item-row">
+                                        <strong>
+                                            Customized Piece
+                                        </strong>
 
-                                <span>
-                                    ${escapeHTML(itemName)}
-                                    ×
-                                    ${itemQty}
-                                </span>
+                                        <span>
+                                            Piece:
+                                            ${escapeHTML(piece)}
+                                        </span>
 
-                                <strong>
-                                    ${itemPrice} EGP
-                                </strong>
+                                        <span>
+                                            Metal:
+                                            ${escapeHTML(metal)}
+                                        </span>
 
-                            </div>
+                                        <span>
+                                            Charms:
+                                            ${escapeHTML(charms)}
+                                        </span>
 
-                            ${customizationMarkup}
+                                    </div>
 
-                        </li>
+                                `;
 
-                    `;
-
-                }).join("");
+                            }
 
 
-            adminOrders.innerHTML += `
+                            // GIFT BOX
+                            if (
+                                item.customization &&
+                                item.customization.giftBox
+                            ) {
 
-                <div class="order-card">
+                                const customization =
+                                    item.customization;
 
-                    <div class="order-head">
 
-                        <h4>
-                            Order #${escapeHTML(
-                                String(order.id)
+                                const jewelry =
+                                    customization
+                                        .jewelry
+                                        ?.name ||
+                                    "-";
+
+
+                                const box =
+                                    customization
+                                        .giftBox
+                                        ?.name ||
+                                    "-";
+
+
+                                const ribbon =
+                                    customization
+                                        .ribbon
+                                        ?.name ||
+                                    "None";
+
+
+                                const card =
+                                    customization
+                                        .card
+                                        ?.name ||
+                                    "None";
+
+
+                                const message =
+                                    customization
+                                        .message ||
+                                    "";
+
+
+                                extraMarkup = `
+
+                                    <div class="order-customization">
+
+                                        <strong>
+                                            🎁 Gift Box
+                                        </strong>
+
+                                        <span>
+                                            Jewelry:
+                                            ${escapeHTML(jewelry)}
+                                        </span>
+
+                                        <span>
+                                            Box:
+                                            ${escapeHTML(box)}
+                                        </span>
+
+                                        <span>
+                                            Ribbon:
+                                            ${escapeHTML(ribbon)}
+                                        </span>
+
+                                        <span>
+                                            Card:
+                                            ${escapeHTML(card)}
+                                        </span>
+
+                                        ${
+                                            message
+                                            ?
+                                            `
+                                            <span>
+                                                Message:
+                                                ${escapeHTML(message)}
+                                            </span>
+                                            `
+                                            :
+                                            ""
+                                        }
+
+                                    </div>
+
+                                `;
+
+                            }
+
+
+                            return `
+
+                                <li>
+
+                                    <div class="order-item-row">
+
+                                        <span>
+                                            ${escapeHTML(itemName)}
+                                            ×
+                                            ${itemQty}
+                                        </span>
+
+                                        <strong>
+                                            ${itemPrice} EGP
+                                        </strong>
+
+                                    </div>
+
+                                    ${extraMarkup}
+
+                                </li>
+
+                            `;
+
+                        })
+                        .join("");
+
+
+                return `
+
+                    <div class="order-card">
+
+                        <div class="order-head">
+
+                            <h4>
+                                Order #${escapeHTML(
+                                    String(order.id)
+                                )}
+                            </h4>
+
+                            <span class="status-badge">
+                                ${escapeHTML(
+                                    order.status
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <p>
+                            👤
+                            ${escapeHTML(order.name)}
+                        </p>
+
+
+                        <p>
+                            📞
+                            ${escapeHTML(order.phone)}
+                        </p>
+
+
+                        <p>
+                            📍
+                            ${escapeHTML(order.address)}
+                        </p>
+
+
+                        <p>
+                            <strong>
+                                Total:
+                            </strong>
+
+                            ${escapeHTML(
+                                String(order.total)
                             )}
-                        </h4>
+                            EGP
+                        </p>
 
-                        <span class="status-badge">
-                            ${escapeHTML(order.status)}
-                        </span>
+
+                        <ul>
+
+                            ${
+                                itemsMarkup ||
+                                "<li>No items</li>"
+                            }
+
+                        </ul>
+
+
+                        <button
+                            type="button"
+                            class="delete-btn"
+                            onclick="deleteOrder(
+                                ${JSON.stringify(order.id)}
+                            )"
+                        >
+                            Delete Order
+                        </button>
 
                     </div>
 
+                `;
 
-                    <p>
-                        👤
-                        ${escapeHTML(order.name)}
-                    </p>
-
-                    <p>
-                        📞
-                        ${escapeHTML(order.phone)}
-                    </p>
-
-                    <p>
-                        📍
-                        ${escapeHTML(order.address)}
-                    </p>
-
-                    <p>
-                        <strong>Total:</strong>
-                        ${escapeHTML(
-                            String(order.total)
-                        )}
-                        EGP
-                    </p>
-
-
-                    <ul>
-                        ${
-                            itemsMarkup ||
-                            "<li>No items</li>"
-                        }
-                    </ul>
-
-
-                    <button
-                        class="delete-btn"
-                        onclick="
-                            deleteOrder(
-                                ${JSON.stringify(order.id)}
-                            )
-                        "
-                    >
-                        Delete Order
-                    </button>
-
-                </div>
-
-            `;
-
-        });
+            })
+            .join("");
 
 }
 
 
-
-/* =========================================================
-   SECURITY HELPER
-========================================================= */
-
-function escapeHTML(value) {
-
-    return String(value ?? "")
-
-        .replaceAll("&", "&amp;")
-
-        .replaceAll("<", "&lt;")
-
-        .replaceAll(">", "&gt;")
-
-        .replaceAll('"', "&quot;")
-
-        .replaceAll("'", "&#039;");
-
-}
-
-
-
-/* =========================================================
-   START
-========================================================= */
+// ==========================================
+// INITIALIZE
+// ==========================================
 
 renderProducts();
 
-renderOrders();
-
 renderCustomizationLists();
+
+renderGiftBoxAdmin();
+
+renderOrders();
