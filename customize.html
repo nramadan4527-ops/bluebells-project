@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Bluebells | Customize</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="customize.css">
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+
+<header class="navbar">
+
+  <div class="logo-box">
+    <img
+      src="img/logo.png"
+      alt="Bluebells Logo"
+      class="logo-img"
+    >
+  </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="customize.html" class="active">Customize</a>
+    <a href="cart.html">
+      🛒 Cart <span id="cart-count">0</span>
+    </a>
+  </nav>
+
+</header>
+
+
+<!-- ===== HERO ===== -->
+
+<section class="customize-hero">
+
+  <span class="section-label">
+    YOUR STYLE, YOUR STORY
+  </span>
+
+  <h1>
+    Create Your Own<br>
+    <em>Beautiful Piece.</em>
+  </h1>
+
+  <p>
+    Choose your favorite piece, metal and charms
+    to create something uniquely yours.
+  </p>
+
+</section>
+
+
+<!-- ===== CUSTOMIZER ===== -->
+
+<section class="customizer">
+
+  <!-- PREVIEW -->
+
+  <div class="preview-section">
+
+    <div class="preview-card">
+
+      <div class="preview-image-wrapper">
+
+        <img
+          id="piecePreview"
+          src="img/logo.png"
+          alt="Customized Piece"
+        >
+
+      </div>
+
+    </div>
+
+
+    <div class="preview-info">
+
+      <span class="section-label">
+        YOUR CREATION
+      </span>
+
+      <h2 id="previewName">
+        Your Custom Piece
+      </h2>
+
+      <p id="previewDetails">
+        Select your options to start creating your piece.
+      </p>
+
+      <div class="price-box">
+
+        <span>
+          TOTAL
+        </span>
+
+        <strong id="totalPrice">
+          0.00
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- OPTIONS -->
+
+  <div class="options-card">
+
+    <div class="option-group">
+
+      <label for="pieceSelect">
+        01 — Choose Your Piece
+      </label>
+
+      <select id="pieceSelect">
+
+        <option value="">
+          Select a piece
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="option-group">
+
+      <label for="metalSelect">
+        02 — Choose Your Metal
+      </label>
+
+      <select id="metalSelect">
+
+        <option value="">
+          Select a metal
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="option-group">
+
+      <div class="label-row">
+
+        <label>
+          03 — Choose Your Charms
+        </label>
+
+        <span id="charmsCounter">
+          0 selected
+        </span>
+
+      </div>
+
+
+      <div
+        id="charmsContainer"
+        class="charms-grid"
+      >
+
+        <p class="empty-message">
+          Choose a piece first.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <button
+      id="addToCartBtn"
+      class="add-cart-btn"
+      type="button"
+    >
+      Add to Cart
+    </button>
+
+
+    <p
+      id="customizeMessage"
+      class="message"
+    ></p>
+
+  </div>
+
+</section>
+
+
+<!-- ===== FOOTER ===== -->
+
+<footer>
+  © 2026 Bluebells
+</footer>
+
+
+<script src="customize.js"></script>
+
+</body>
+</html>

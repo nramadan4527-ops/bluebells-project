@@ -2,60 +2,518 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bluebells | Admin Panel</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="admin.css">
 </head>
+
 <body>
 
 <div class="admin">
 
-  <aside class="sidebar">
-    <h2>ADMIN</h2>
-    <p>Products</p>
-    <p>Orders</p>
-  </aside>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-  <main class="content">
+        <div class="brand">
+            <img src="img/logo.png" alt="Bluebells">
+            <span>ADMIN PANEL</span>
+        </div>
 
-    <!-- ADD PRODUCT -->
-    <section class="box">
-      <h3>Add Product</h3>
+        <nav class="side-nav">
+            <a href="#products">Products</a>
+            <a href="#customize">Customize Your Piece</a>
+            <a href="#orders">Orders</a>
+        </nav>
 
-      <div class="form">
+    </aside>
 
-        <input id="name" type="text" placeholder="Product Name">
-        <input id="price" type="number" placeholder="Price">
 
-        <input id="image" type="file" accept="image/*">
+    <!-- MAIN CONTENT -->
+    <main class="content">
 
-        <img id="preview">
+        <div class="page-heading">
 
-        <!-- مهم: type=button -->
-        <button type="button" onclick="addProduct()">Add Product</button>
+            <p class="eyebrow">
+                BLUEBELLS MANAGEMENT
+            </p>
 
-      </div>
-    </section>
+            <h1>
+                Admin Panel
+            </h1>
 
-    <!-- PRODUCTS -->
-    <section class="box">
-      <h3>Products</h3>
-      <div id="adminProducts" class="products"></div>
-    </section>
-    <li>
-  <a href="orders.html">📦 Orders</a>
-</li>
-<section class="box">
-  <h3>Confirmed Orders</h3>
-  <div id="adminOrders"></div>
-</section>
-  </main>
+            <p>
+                Manage your products, customization options and orders from one place.
+            </p>
+
+        </div>
+
+
+        <!-- =====================================================
+             PRODUCTS
+        ====================================================== -->
+
+        <section class="box" id="products">
+
+            <div class="section-heading">
+
+                <div>
+                    <p class="eyebrow">STORE</p>
+                    <h2>Products</h2>
+                </div>
+
+            </div>
+
+
+            <div class="form product-form">
+
+                <input
+                    id="name"
+                    type="text"
+                    placeholder="Product Name"
+                >
+
+                <input
+                    id="price"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="Price (EGP)"
+                >
+
+                <input
+                    id="image"
+                    type="file"
+                    accept="image/*"
+                >
+
+                <img
+                    id="preview"
+                    alt="Product preview"
+                >
+
+                <button
+                    class="primary-btn"
+                    type="button"
+                    onclick="addProduct()"
+                >
+                    Add Product
+                </button>
+
+            </div>
+
+
+            <div
+                id="adminProducts"
+                class="products"
+            ></div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CUSTOMIZE
+        ====================================================== -->
+
+        <section
+            class="box"
+            id="customize"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        CREATE YOUR OWN PIECE
+                    </p>
+
+                    <h2>
+                        Customize Your Piece
+                    </h2>
+
+                    <p class="section-note">
+                        Everything added here will appear on the customer Customize page.
+                    </p>
+
+                </div>
+
+
+                <a
+                    class="preview-link"
+                    href="customize.html"
+                    target="_blank"
+                >
+                    View Customize Page ↗
+                </a>
+
+            </div>
+
+
+
+            <div class="customize-grid">
+
+
+                <!-- =================================================
+                     PIECES
+                ================================================== -->
+
+                <div class="custom-card">
+
+                    <div class="custom-card-title">
+
+                        <span>01</span>
+
+                        <h3>
+                            Pieces
+                        </h3>
+
+                    </div>
+
+
+                    <p class="hint">
+                        Add the base piece that customers will customize.
+                    </p>
+
+
+                    <div class="mini-form">
+
+                        <input
+                            id="customPieceName"
+                            type="text"
+                            placeholder="Piece name"
+                        >
+
+
+                        <select
+                            id="customPieceType"
+                        >
+
+                            <option value="">
+                                Piece type
+                            </option>
+
+                            <option value="Bracelet">
+                                Bracelet
+                            </option>
+
+                            <option value="Necklace">
+                                Necklace
+                            </option>
+
+                            <option value="Anklet">
+                                Anklet
+                            </option>
+
+                            <option value="Ring">
+                                Ring
+                            </option>
+
+                            <option value="Earrings">
+                                Earrings
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+
+                        <input
+                            id="customPiecePrice"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="Base price (EGP)"
+                        >
+
+
+                        <input
+                            id="customPieceImage"
+                            type="file"
+                            accept="image/*"
+                        >
+
+
+                        <label class="check-row">
+
+                            <input
+                                id="customPieceActive"
+                                type="checkbox"
+                                checked
+                            >
+
+                            Available on Customize page
+
+                        </label>
+
+
+                        <img
+                            id="customPiecePreview"
+                            class="custom-preview"
+                            alt="Piece preview"
+                        >
+
+
+                        <button
+                            class="primary-btn"
+                            type="button"
+                            onclick="addCustomizationPiece()"
+                        >
+                            Add Piece
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="customPiecesList"
+                        class="option-list"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     METALS
+                ================================================== -->
+
+                <div class="custom-card">
+
+                    <div class="custom-card-title">
+
+                        <span>02</span>
+
+                        <h3>
+                            Metals
+                        </h3>
+
+                    </div>
+
+
+                    <p class="hint">
+                        Add the metal and the extra price added to the piece.
+                    </p>
+
+
+                    <div class="mini-form">
+
+
+                        <input
+                            id="customMetalName"
+                            type="text"
+                            placeholder="Metal name"
+                        >
+
+
+                        <input
+                            id="customMetalExtra"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="Extra price (EGP)"
+                        >
+
+
+                        <div class="color-field">
+
+                            <label
+                                for="customMetalColor"
+                            >
+                                Metal color
+                            </label>
+
+                            <input
+                                id="customMetalColor"
+                                type="color"
+                                value="#D4AF37"
+                            >
+
+                        </div>
+
+
+                        <label class="check-row">
+
+                            <input
+                                id="customMetalActive"
+                                type="checkbox"
+                                checked
+                            >
+
+                            Available on Customize page
+
+                        </label>
+
+
+                        <button
+                            class="primary-btn"
+                            type="button"
+                            onclick="addCustomizationMetal()"
+                        >
+                            Add Metal
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="customMetalsList"
+                        class="option-list"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     CHARMS
+                ================================================== -->
+
+                <div class="custom-card custom-card-wide">
+
+                    <div class="custom-card-title">
+
+                        <span>03</span>
+
+                        <h3>
+                            Charms
+                        </h3>
+
+                    </div>
+
+
+                    <p class="hint">
+                        Add charms customers can choose.
+                        Their price will be added to the final total.
+                    </p>
+
+
+                    <div class="mini-form">
+
+
+                        <input
+                            id="customCharmName"
+                            type="text"
+                            placeholder="Charm name"
+                        >
+
+
+                        <input
+                            id="customCharmPrice"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="Price (EGP)"
+                        >
+
+
+                        <input
+                            id="customCharmImage"
+                            type="file"
+                            accept="image/*"
+                        >
+
+
+                        <label class="check-row">
+
+                            <input
+                                id="customCharmActive"
+                                type="checkbox"
+                                checked
+                            >
+
+                            Available on Customize page
+
+                        </label>
+
+
+                        <img
+                            id="customCharmPreview"
+                            class="custom-preview"
+                            alt="Charm preview"
+                        >
+
+
+                        <button
+                            class="primary-btn"
+                            type="button"
+                            onclick="addCustomizationCharm()"
+                        >
+                            Add Charm
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="customCharmsList"
+                        class="option-list"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             ORDERS
+        ====================================================== -->
+
+        <section
+            class="box"
+            id="orders"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        STORE ACTIVITY
+                    </p>
+
+                    <h2>
+                        Confirmed Orders
+                    </h2>
+
+                </div>
+
+
+                <a
+                    class="preview-link"
+                    href="orders.html"
+                >
+                    Open Orders Page ↗
+                </a>
+
+            </div>
+
+
+            <div
+                id="adminOrders"
+            ></div>
+
+        </section>
+
+
+    </main>
+
 </div>
-<section class="admin-section">
-  <h2>📦 Orders</h2>
-  <div id="ordersList"></div>
-</section>
+
 
 <script src="admin.js"></script>
-<script src="orders.js"></script>
+
 </body>
 </html>
